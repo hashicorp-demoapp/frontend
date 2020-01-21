@@ -3,8 +3,7 @@ jobs:
   build-react:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
-
+      - image: circleci/node:13.6-stretch-browsers-legacy
     working_directory: ~/github.com/hashicorpdemoapp/frontend
 
     steps:
