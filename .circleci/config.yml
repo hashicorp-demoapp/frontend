@@ -46,11 +46,11 @@ jobs:
       - run:
           name: docker build
           command: |
-            docker build -t hashicorpdemoapp/product-api:${CIRCLE_TAG} .
+            docker build -t hashicorpdemoapp/frontend:${CIRCLE_TAG} .
       - run:
           name: docker push
           command: |
-            docker push hashicorpdemoapp/product-api:${CIRCLE_TAG}
+            docker push hashicorpdemoapp/frontend:${CIRCLE_TAG}
   
   publish-github-release:
     docker:
@@ -62,7 +62,7 @@ jobs:
       - run:
           name: "Publish Release on GitHub"
           command: |
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -replace ${CIRCLE_TAG} ./bin/
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -replace ${CIRCLE_TAG} ./build
 
 workflows:
   version: 2
