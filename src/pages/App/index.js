@@ -1,7 +1,7 @@
-import React, { useState} from 'react'
+import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import styled, { css, keyframes } from 'styled-components'
+import styled from 'styled-components'
 
 import { Header } from '../../components/Header'
 import { Slider } from '../../components/Slider'

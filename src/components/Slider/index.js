@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 
 import { useCarousel } from '../../hooks/Carousel'
@@ -126,7 +125,7 @@ const createItem = ({ id, name, image }, active, ready) => (
 )
 
 export const Slider = ({ className, items }) => {
-    const [active, setActive, handlers, style] = useCarousel(items.length, -1)
+    const [active, handlers, style] = useCarousel(items.length, -1)
 
     const [ready, setReady] = useState(false)
 
@@ -139,7 +138,7 @@ export const Slider = ({ className, items }) => {
         <Container className={className}>
             <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
                 {createItem(items[0], false, ready)}
-                {items.map((item, index) => createItem(item, active == index, ready))}
+                {items.map((item, index) => createItem(item, active === index, ready))}
                 {createItem(items[items.length - 1], false, ready)}
             </Items>
             <Buy ready={ready}>Buy</Buy>
