@@ -3,6 +3,8 @@ import styled, { css, keyframes } from 'styled-components'
 
 import { useCarousel } from '../../hooks/Carousel'
 
+import { Payment } from '../Payment'
+
 const Container = styled.div`
     position: relative;
     overflow: hidden;
@@ -77,7 +79,7 @@ const Image = styled.div`
 
     background-size: auto 360px;
     background-repeat: no-repeat;
-    background-position: 20px 80px;
+    background-position: center 80px;
     width: 100%;
     height: 500px;
 `
@@ -117,6 +119,8 @@ const Items = styled.div`
     overscroll-behavior: none;
 `
 
+
+
 const createItem = ({ id, name, image }, active, ready) => (
     <Item key={id} active={active} ready={ready}>
         <Image alt={name} src={`${process.env.PUBLIC_URL}/img${image}`} />
@@ -128,20 +132,23 @@ export const Slider = ({ className, items }) => {
     const [active, handlers, style] = useCarousel(items.length, -1)
 
     const [ready, setReady] = useState(false)
+    const [showPayment, setShowPayment] = useState(false)
 
     const onAnimationEnd = () => {
         if (!ready) setReady(true)
     }
-    
 
     return (
-        <Container className={className}>
-            <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
-                {createItem(items[0], false, ready)}
-                {items.map((item, index) => createItem(item, active === index, ready))}
-                {createItem(items[items.length - 1], false, ready)}
-            </Items>
-            <Buy ready={ready}>Buy</Buy>
-        </Container>
+        <>
+            <Container className={className}>
+                <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
+                    {createItem(items[items.length - 1], false, ready)}
+                    {items.map((item, index) => createItem(item, active == index, ready))}
+                    {createItem(items[0], false, ready)}
+                </Items>
+                <Buy ready={ready} onClick={() => setShowPayment(true)}>Buy</Buy>
+            </Container>
+            <Payment show={showPayment} setShow={setShowPayment}/>
+        </>
     )
 }

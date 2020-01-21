@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 
 const animate = keyframes`
-    20% { stroke-dashoffset: 40; stroke: #1563ff;}
-    40% { stroke-dashoffset: 0;  stroke: rgba(255, 255, 255, 0.2);}
-    100% { stroke-dashoffset: 0;  stroke: rgba(255, 255, 255, 0.2);}
+    20% { stroke-dashoffset: 40; stroke: #ffffff; }
+    40% { stroke-dashoffset: 0;  stroke: rgba(255, 255, 255, 0.3); }
+    80% { stroke-dashoffset: 0;  stroke: rgba(255, 255, 255, 0.3); }
+    100% { stroke-dashoffset: 0;  stroke: rgba(255, 255, 255, 0.3); }
 `;
 
   const Thumb = styled.svg`
@@ -12,10 +13,10 @@ const animate = keyframes`
     
     #a, #b, #c, #d, #e {
         fill: none;
-        stroke: rgba(255, 255, 255, 0.2);
+        stroke: rgba(255, 255, 255, 0.3);
         stroke-dashoffset: 0;
-        stroke-width: 1;
-        transition: all 300ms ease;
+        stroke-width: 0.7;
+        transition: all 300ms ease-in-out;
     }
 
     #a {
@@ -45,16 +46,21 @@ const animate = keyframes`
             }
         `
     }
-      
 `
 
-export const Fingerprint = () => {
+export const Fingerprint = ({ onValidate }) => {
     const [active, setActive] = useState(false);
 
     const wrapper = () => {
         setActive(true)
         
-        setTimeout(() => setActive(false), 2000)
+        setTimeout(() => 
+        {
+            setActive(false)
+            onValidate()
+        }, 2000)
+
+        
     }
 
     return (
