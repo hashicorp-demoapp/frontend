@@ -76,11 +76,11 @@ const Image = styled.div`
         background-image: url(${props.src});
     `}
 
-    background-size: auto 700px;
+    background-size: auto 360px;
     background-repeat: no-repeat;
-    background-position: center 30%;
+    background-position: 20px 80px;
     width: 100%;
-    height: 570px;
+    height: 500px;
 `
 
 const animateTitle = keyframes`
@@ -120,7 +120,7 @@ const Items = styled.div`
 
 const createItem = ({ id, name, image }, active, ready) => (
     <Item key={id} active={active} ready={ready}>
-        <Image alt={name} src={`${process.env.PUBLIC_URL}/img/${image}.png`} />
+        <Image alt={name} src={`${process.env.PUBLIC_URL}/img${image}`} />
         <Name>{name}</Name>
     </Item>
 )
