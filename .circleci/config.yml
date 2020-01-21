@@ -5,12 +5,7 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:7.10
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: /go/src/github.com/hashicorpdemoapp/frontend
+    working_directory: ~/github.com/hashicorpdemoapp/frontend
 
     steps:
       - checkout
@@ -33,7 +28,7 @@ jobs:
       - run: yarn test
 
       - persist_to_workspace:
-          root: /go/src/github.com/hashicorpdemoapp
+          root: ~/github.com/hashicorpdemoapp
           paths:
             - frontend
 
@@ -42,11 +37,11 @@ jobs:
       - image: circleci/golang:1.13
     environment:
       GO111MODULE: "on"
-    working_directory: /go/src/github.com/hashicorpdemoapp/product-api-go
+    working_directory: ~/github.com/hashicorpdemoapp/frontend
     steps:
       - setup_remote_docker
       - attach_workspace:
-          at: /go/src/github.com/hashicorpdemoapp
+          at: ~/github.com/hashicorpdemoapp
       - run:
           name: docker login
           command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
@@ -59,35 +54,13 @@ jobs:
           command: |
             docker push hashicorpdemoapp/product-api:${CIRCLE_TAG}
   
-  publish-docker-db-release:
-    docker:
-      - image: circleci/golang:1.13
-    environment:
-      GO111MODULE: "on"
-    working_directory: /go/src/github.com/hashicorpdemoapp/product-api-go
-    steps:
-      - setup_remote_docker
-      - attach_workspace:
-          at: /go/src/github.com/hashicorpdemoapp
-      - run:
-          name: docker login
-          command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-      - run:
-          name: docker build
-          command: |
-            cd database && docker build -t hashicorpdemoapp/product-api-db:${CIRCLE_TAG} .
-      - run:
-          name: docker push
-          command: |
-            docker push hashicorpdemoapp/product-api-db:${CIRCLE_TAG}
-
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
-    working_directory: ~/go/src/github.com/hashicorpdemoapp/product-api-go
+    working_directory: ~/github.com/hashicorpdemoapp/frontend
     steps:
       - attach_workspace:
-          at: ~/go/src/github.com/hashicorpdemoapp
+          at: ~/github.com/hashicorpdemoapp
       - run:
           name: "Publish Release on GitHub"
           command: |
