@@ -1,6 +1,10 @@
 # frontend
 A GraphQL frontend to the demo app
 
+[![CircleCI](https://circleci.com/gh/hashicorp-demoapp/frontend.svg?style=svg)](https://circleci.com/gh/hashicorp-demoapp/frontend)  
+
+Docker Image: [https://hub.docker.com/repository/docker/hashicorpdemoapp/frontend](https://hub.docker.com/repository/docker/hashicorpdemoapp/frontend)
+
 # Running
 The frontend proxies requests to the graphQL backend at the path /api. When running locally ensure your `public-api` is running at `http://localhost:8080` or change package.json before running `yarn start`.
 
