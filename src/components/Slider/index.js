@@ -143,7 +143,7 @@ export const Slider = ({ className, items }) => {
             <Container className={className}>
                 <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
                     {createItem(items[items.length - 1], false, ready)}
-                    {items.map((item, index) => createItem(item, active == index, ready))}
+                    {items.map((item, index) => createItem(item, active === index, ready))}
                     {createItem(items[0], false, ready)}
                 </Items>
                 <Buy ready={ready} onClick={() => setShowPayment(true)}>Buy</Buy>
