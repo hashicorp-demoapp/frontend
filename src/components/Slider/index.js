@@ -53,6 +53,10 @@ const Buy = styled.div`
         animation-fill-mode: forwards;
         animation-timing-function: linear;
     `}
+
+    ${props => props.paid && css`
+        background: #ffcc00;
+    `}
 `
 
 const Item = styled.div`
@@ -119,8 +123,6 @@ const Items = styled.div`
     overscroll-behavior: none;
 `
 
-
-
 const createItem = ({ id, name, image }, active, ready) => (
     <Item key={id} active={active} ready={ready}>
         <Image alt={name} src={`${process.env.PUBLIC_URL}/img${image}`} />
@@ -129,10 +131,13 @@ const createItem = ({ id, name, image }, active, ready) => (
 )
 
 export const Slider = ({ className, items }) => {
-    const [active, handlers, style] = useCarousel(items.length, -1)
+    // Because circleci chokes on JS warnings, we have to use this nasty syntax to get around it.
+    const [active, , handlers, style] = useCarousel(items.length, -1)
 
     const [ready, setReady] = useState(false)
     const [showPayment, setShowPayment] = useState(false)
+
+    const [paid, setPaid] = useState(false)
 
     const onAnimationEnd = () => {
         if (!ready) setReady(true)
@@ -146,9 +151,9 @@ export const Slider = ({ className, items }) => {
                     {items.map((item, index) => createItem(item, active === index, ready))}
                     {createItem(items[0], false, ready)}
                 </Items>
-                <Buy ready={ready} onClick={() => setShowPayment(true)}>Buy</Buy>
+                <Buy ready={ready} onClick={() => setShowPayment(true)} paid={paid}>Buy</Buy>
             </Container>
-            <Payment show={showPayment} setShow={setShowPayment}/>
+            <Payment show={showPayment} setShow={setShowPayment} setPaid={setPaid} />
         </>
     )
 }

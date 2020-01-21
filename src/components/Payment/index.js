@@ -55,7 +55,7 @@ const slideDown = keyframes`
     }
 `
 
-export const Payment = ({ show, setShow }) => {
+export const Payment = ({ show, setShow, setPaid }) => {
     const [shouldRender, setRender] = useState(show)
 
     useEffect(() => {
@@ -70,7 +70,10 @@ export const Payment = ({ show, setShow }) => {
         shouldRender && (
             <Container show={show} onAnimationEnd={onAnimationEnd}>
                 <Confirm>Confirm your purchase</Confirm>
-                <Fingerprint onValidate={() => setShow(false)} />
+                <Fingerprint onValidate={() => {
+                    setPaid(true)
+                    setShow(false)
+                }} />
             </Container>
         )
     )
