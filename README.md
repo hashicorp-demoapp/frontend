@@ -1,5 +1,5 @@
 # frontend
-A GraphQL frontend to the demo app
+React UI that interacts with GraphQL public api
 
 [![CircleCI](https://circleci.com/gh/hashicorp-demoapp/frontend.svg?style=svg)](https://circleci.com/gh/hashicorp-demoapp/frontend)  
 
