@@ -5,6 +5,8 @@ import styled from 'styled-components'
 
 import { Header } from '../../components/Header'
 import { Slider } from '../../components/Slider'
+import {Card, Container} from '@material-ui/core';
+import Payment from '../Payment'
 
 const QUERY_coffees = gql`
 {
@@ -33,9 +35,12 @@ const App = () => {
     return (
         <>
             <Header loading={loading} />
-            {!loading && 
+            {/* {!loading && 
                 <Coffees items={ data.coffees} />
-            }
+            } */}
+            <Container style={{paddingTop: "5em"}}>
+                <Payment/>
+            </Container>
         </>
     )
 }

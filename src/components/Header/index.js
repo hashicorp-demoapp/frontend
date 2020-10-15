@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import PropTypes from 'prop-types'
 import styled, { keyframes, css } from 'styled-components'
 
@@ -140,6 +140,11 @@ const Container = styled.div`
 `
 
 export const Header = ({ loading }) => {
+
+    useEffect(() => {
+        document.title = 'Hashicups'
+    })
+
     return (
         <Container loading={loading ? 1:0}>
             <Logo>
