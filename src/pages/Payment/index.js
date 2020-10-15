@@ -1,25 +1,12 @@
-import React, {useEffect} from "react";
-import M from "materialize-css";
-import '../../materialize.css'
+import React from "react";
 import PaymentForm from '../../components/PaymentForm'
 
 export default function Payment() {
 
-  function handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
-
-  function handleSubmit(event) {
-    alert("A credit card was submitted: " + this.state.value);
-    event.preventDefault();
-  }
-
     return (
-      <div class="row">
         <PaymentForm
           dropdownDefault="Card Type"
         />
-      </div>
     );
   }
 

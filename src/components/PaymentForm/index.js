@@ -1,78 +1,171 @@
-import React, {useEffect} from "react";
-import M from "materialize-css";
-import '../../materialize.css'
-import {Person, CreditCard, DateRange, Lock, Send} from '@material-ui/icons'
+import React, {useEffect, useState} from "react";
+import {InputLabel, MenuItem, FormHelperText, FormControl, Grid, TextField, Button, Paper} from '@material-ui/core';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+  } from '@material-ui/pickers';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import { makeStyles } from '@material-ui/core/styles';
+import Select from '@material-ui/core/Select';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(1),
+    flexGrow: 1
+  },
+  inputLabel: {
+    margin: theme.spacing(1),
+  },
+  formControl: {
+    margin: theme.spacing(2),
+    marginTop: theme.spacing(2)
+
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+  button: {
+    marginTop: theme.spacing(2)
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  textField: {
+
+  }
+}));
+
+
 
 export default function PaymentForm(props) {
 
-    useEffect(() => {
-      M.AutoInit();
-    })
+    const classes = useStyles();
+    const [cardType, setCardType] = React.useState('');
+    const [name, setCardholderName] = React.useState('');
+    const [cardNumber, setCardNumber] = React.useState('');
+    const [cvc, setCVC] = React.useState('');
+    const [expiryDate, setExpiryDate] = useState(new Date());
+
+    const handleCardTypeChange = (e) => {
+      setCardType(e.target.value);
+    };
+
+    const handleCardNameChange = (e) => {
+      setCardholderName(e.target.value);
+    };
+
+    const handleCardNumberChange = (e) => {
+      setCardNumber(e.target.value);
+    };
+
+    const handleCVC = (e) => {
+      setCVC(e.target.value);
+    };
+
+
+    const handleDateChange = (date) => {
+      setExpiryDate(date);
+    };
+
 
     function handleSubmit(e) {
-        alert("A credit card was submitted: " );
+        console.log(cardType, name, cardNumber, cvc, expiryDate)
+
+        if (!cardType || !name || !cardNumber || !cvc || !expiryDate) {
+         alert('One of the required fields is missing') 
+        }
+
         e.preventDefault();
     }
 
-    return <form class="col s12" onSubmit={handleSubmit}>
-          <div class="row">
-            <div class="input-field col s12">
-              <select id="cardType">
-                <option value="" disabled selected>
-                 {props.dropdownDefault}
-                </option>
-                <option value="1">Visa</option>
-                <option value="2">Mastercard</option>
-                <option value="3">American Express</option>
-              </select>
-            </div>
+//'{"name": "Gerry", "type": "mastercard", "number": "1234-1234-1234-1234", "expiry": "01/23", "cvc": "123"}' localhost:8080  | jq
+    return (
+      <div className={classes.root}>
+        <Grid
+          container
+          spacing={3}
+          direction="column"
+        >
+          <Grid item xs={12}>
+            <Paper className={classes.paper} elevation={3}>
+                <FormControl  fullWidth >
+                  <InputLabel 
+                    id="cardTypeMUILabel" 
+                    variant="standard"
+                    className={classes.inputLabel}
+                    required
+                  >
+                    {props.dropdownDefault}</InputLabel>
+                  <Select
+                    id="cardTypeMUI"
+                    value={cardType}
+                    onChange={handleCardTypeChange}
+                    className={classes.root}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={'Visa'}>Visa</MenuItem>
+                    <MenuItem value={'Mastercard'}>Mastercard</MenuItem>
+                    <MenuItem value={'AmericanExpress'}>AmericanExpress</MenuItem>
+                  </Select>
 
-            <div class="input-field col s12">
-              <input id="name" type="text" class="validate"></input>
-              <label for="name">
-                Cardholder Name
-                <i class="material-icons right" style={{ marginRight: "1em" }}>
-                <Person/> 
-                </i>
-              </label>
-            </div>
-            <div class="input-field col s12">
-              <input id="cardNumber" type="text" class="validate"></input>
-              <label for="cardNumber">
-                Card Number
-                <i class="material-icons right" style={{ marginRight: "1em" }}>
-                <CreditCard/>
-                </i>
-              </label>
-            </div>
+                  <TextField 
+                    id="name" 
+                    label="Cardholder Name"
+                    className={classes.root}
+                    onChange={handleCardNameChange}
+                    required
+                  />
+                  <TextField 
+                    id="number" 
+                    label="Card Number"
+                    className={classes.root}
+                    onChange={handleCardNumberChange}
+                    required
+                  />
+                  <TextField 
+                    id="cvc" 
+                    label="CVC"
+                    className={classes.root}
+                    onChange={handleCVC}
+                    required
+                  />
 
-            <div class="input-field col s12 datepicker">
-              <input id="expiry" type="text" class="validate"></input>
-              <label for="expiry">
-                Expiry Date
-                <i class="material-icons right" style={{ marginRight: "1em" }}>
-                <DateRange/>
-                </i>
-              </label>
-            </div>
-            <div class="input-field col s12">
-              <input id="cvc" type="text" class="validate"></input>
-              <label for="cvc">
-                CVC
-                <i class="material-icons right" style={{ marginRight: "1em" }}>
-                  <Lock/>
-                </i>
-              </label>
-            </div>
-          </div>
-          <button
-            class="btn waves-effect waves-light black"
-            type="submit"
-            name="action"
-          >
-            Submit
-            <i class="material-icons right"><Send/></i>
-          </button>
-        </form>
-;
+                  <MuiPickersUtilsProvider utils={DateFnsUtils} className={classes.root}>
+                      <KeyboardDatePicker
+                        margin="normal"
+                        id="date-picker-dialog"
+                        label="Expiry Date"
+                        format="MM/dd/yyyy"
+                        value={expiryDate}
+                        onChange={handleDateChange}
+                        className={classes.root}
+                        KeyboardButtonProps={{
+                          'aria-label': 'change date',
+                        }}
+                        required
+                      />
+                  </MuiPickersUtilsProvider>
+              </FormControl>
+                  <Button
+                    variant="contained"
+                    className={classes.button}
+                    fullWidth
+                    onClick={handleSubmit}
+                  >Submit Payment</Button>
+
+            </Paper>
+              </Grid>
+            </Grid>
+
+      </div>
+
+    );
+
+
   }
