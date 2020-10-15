@@ -1,4 +1,10 @@
 import React from 'react'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import styled from 'styled-components'
@@ -33,15 +39,22 @@ const App = () => {
     if (error) return <p>Error :(</p>
 
     return (
-        <>
-            <Header loading={loading} />
-            {/* {!loading && 
-                <Coffees items={ data.coffees} />
-            } */}
-            <Container style={{paddingTop: "5em"}}>
-                <Payment/>
-            </Container>
-        </>
+        <Router>
+            <Switch>
+                <Route path="/payments">
+                    <Header loading={loading} />
+                    <Container style={{paddingTop: "5em"}}>
+                        <Payment/>
+                    </Container>
+                </Route>
+                <Route path="/">
+                    <Header loading={loading} />
+                        {!loading && 
+                            <Coffees items={ data.coffees} />
+                        }
+                </Route>
+            </Switch>
+        </Router>
     )
 }
 

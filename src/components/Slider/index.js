@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
+import { useHistory } from "react-router-dom";
 
 import { useCarousel } from '../../hooks/Carousel'
 
@@ -123,6 +124,7 @@ const Items = styled.div`
     overscroll-behavior: none;
 `
 
+
 const createItem = ({ id, name, image }, active, ready) => (
     <Item key={id} active={active} ready={ready}>
         <Image alt={name} src={`${process.env.PUBLIC_URL}/img${image}`} />
@@ -133,6 +135,7 @@ const createItem = ({ id, name, image }, active, ready) => (
 export const Slider = ({ className, items }) => {
     // Because circleci chokes on JS warnings, we have to use this nasty syntax to get around it.
     const [active, , handlers, style] = useCarousel(items.length, -1)
+    let history = useHistory();
 
     const [ready, setReady] = useState(false)
     const [showPayment, setShowPayment] = useState(false)
@@ -151,7 +154,7 @@ export const Slider = ({ className, items }) => {
                     {items.map((item, index) => createItem(item, active === index, ready))}
                     {createItem(items[0], false, ready)}
                 </Items>
-                <Buy ready={ready} onClick={() => setShowPayment(true)} paid={paid}>Buy</Buy>
+                <Buy ready={ready} onClick={() => history.push("/payments")} paid={paid}>Buy</Buy>
             </Container>
             <Payment show={showPayment} setShow={setShowPayment} setPaid={setPaid} />
         </>
