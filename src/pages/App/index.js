@@ -2,8 +2,7 @@ import React from 'react'
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
   } from "react-router-dom";
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -11,7 +10,7 @@ import styled from 'styled-components'
 
 import { Header } from '../../components/Header'
 import { Slider } from '../../components/Slider'
-import {Card, Container} from '@material-ui/core';
+import {Container} from '@material-ui/core';
 import Payment from '../Payment'
 
 const QUERY_coffees = gql`

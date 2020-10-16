@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {InputLabel, MenuItem, FormHelperText, FormControl, Grid, TextField, Button} from '@material-ui/core';
+import React, {useState} from "react";
+import {InputLabel, MenuItem, FormControl, Grid, TextField, Button} from '@material-ui/core';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
   } from '@material-ui/pickers';
+import gql from 'graphql-tag'
+import { useMutation } from '@apollo/react-hooks'
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,14 +43,46 @@ const useStyles = makeStyles((theme) => ({
 
 
 
+
 export default function PaymentForm(props) {
 
     const classes = useStyles();
+    const [paymentConfirmation, setPaymentConfirmation] = React.useState({ message: 'Not Submitted', card_plaintext: 'No value until form is submitted...', card_ciphertext: 'No value until form is submitted...'});
     const [cardType, setCardType] = React.useState('');
     const [name, setCardholderName] = React.useState('');
     const [cardNumber, setCardNumber] = React.useState('');
-    const [cvc, setCVC] = React.useState('');
+    const [cvc, setCVC] = React.useState(0);
     const [expiryDate, setExpiryDate] = useState(new Date());
+    const SUBMIT_PAYMENT = gql`
+mutation {
+  pay(
+    details: {
+      name: "${name}",
+      type: "${cardType}",
+      number: "${cardNumber}",
+      expiry: "${expiryDate}",
+      cv2: ${cvc},
+      amount: 3.99,
+    }
+  ){
+    id,
+    card_plaintext,
+    card_ciphertext,
+    message
+  } 
+}
+`
+    const onCompleted = (data) => {
+      setPaymentConfirmation(data.pay)
+    }
+
+    const onError = (error) => {
+      alert(error)
+    }
+
+    const [submitPayment] = useMutation(SUBMIT_PAYMENT, {onCompleted, onError})
+
+
 
     const handleCardTypeChange = (e) => {
       setCardType(e.target.value);
@@ -73,13 +107,14 @@ export default function PaymentForm(props) {
 
 
     function handleSubmit(e) {
-        console.log(cardType, name, cardNumber, cvc, expiryDate)
+        e.preventDefault();
 
         if (!cardType || !name || !cardNumber || !cvc || !expiryDate) {
          alert('One of the required fields is missing') 
+         return;
         }
 
-        e.preventDefault();
+        submitPayment()
     }
 
 //'{"name": "Gerry", "type": "mastercard", "number": "1234-1234-1234-1234", "expiry": "01/23", "cvc": "123"}' localhost:8080  | jq
@@ -158,6 +193,9 @@ export default function PaymentForm(props) {
                     type="submit"
                     onClick={handleSubmit}
                   >Submit Payment</Button>
+                  <p> Status: <b>{paymentConfirmation.message}</b> </p>
+                  <p> Encryption Status: <b>{paymentConfirmation.card_ciphertext}</b> </p>
+                  <p> CardData Returned from Backend in plaintext :( : <b>{paymentConfirmation.card_plaintext}</b></p>
 
               </Grid>
             </Grid>
