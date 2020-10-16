@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {InputLabel, MenuItem, FormHelperText, FormControl, Grid, TextField, Button, Paper} from '@material-ui/core';
+import {InputLabel, MenuItem, FormHelperText, FormControl, Grid, TextField, Button} from '@material-ui/core';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
@@ -91,12 +91,11 @@ export default function PaymentForm(props) {
           direction="column"
         >
           <Grid item xs={12}>
-            <Paper className={classes.paper} elevation={3}>
                 <FormControl  fullWidth >
                   <InputLabel 
                     id="cardTypeMUILabel" 
                     variant="standard"
-                    className={classes.inputLabel}
+                    className={classes.root}
                     required
                   >
                     {props.dropdownDefault}</InputLabel>
@@ -156,10 +155,10 @@ export default function PaymentForm(props) {
                     variant="contained"
                     className={classes.button}
                     fullWidth
+                    type="submit"
                     onClick={handleSubmit}
                   >Submit Payment</Button>
 
-            </Paper>
               </Grid>
             </Grid>
 
