@@ -2,17 +2,17 @@ import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import { useHistory } from "react-router-dom";
 
-import { useCarousel } from '../../hooks/Carousel'
+import { useCarousel } from '../../hooks/Carousel' //imports useCarousel function
 
-import { Payment } from '../Payment'
+import { Payment } from '../Payment'//imports payment function from payment file
 
-const Container = styled.div`
+const Container = styled.div` //container for "Buy" button
     position: relative;
     overflow: hidden;
     overscroll-behavior: none;
     text-align: center;
 `
-
+//animation for fast sliding at reload of page
 const slide = (props) => keyframes`
     0% {
         left: -${(props.length+2)*100}%;
@@ -22,7 +22,7 @@ const slide = (props) => keyframes`
         left: 0%;
     }
 `
-
+//css styling for each name of the coffees
 const Name = styled.div`
     font-family: 'Montserrat', sans-serif;
     font-size: 20px;
@@ -31,7 +31,7 @@ const Name = styled.div`
     text-align: center;
     transform: translateY(100px);
 `
-
+//controls animation of buy button as well as styling
 const Buy = styled.div`
     box-sizing: border-box;
     font-weight: 600;
@@ -131,7 +131,7 @@ const createItem = ({ id, name, image }, active, ready) => (
         <Name>{name}</Name>
     </Item>
 )
-
+//slider function can be imported onto other files
 export const Slider = ({ className, items }) => {
     // Because circleci chokes on JS warnings, we have to use this nasty syntax to get around it.
     const [active, , handlers, style] = useCarousel(items.length, -1)

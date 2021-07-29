@@ -1,5 +1,5 @@
-import { useReducer, useEffect, useState } from 'react'
-import { useSwipeable } from 'react-swipeable'
+import { useReducer, useEffect, useState } from 'react' //imports various libraries from REACT
+import { useSwipeable } from 'react-swipeable' // imports swipeable
 
 const transitionTime = 400
 const threshold = 0.3

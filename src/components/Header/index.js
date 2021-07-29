@@ -1,19 +1,20 @@
-import React, {useEffect} from 'react'
-import PropTypes from 'prop-types'
-import styled, { keyframes, css } from 'styled-components'
+import React, {useEffect} from 'react' //imports useEffect from React
+import PropTypes from 'prop-types' //typechecking 
+import styled, { keyframes, css } from 'styled-components' //css styling
 
-const Logo = styled.div`
+//css styling for the logo
+const Logo = styled.div` //division in HTML document and it styled with css below
     position: absolute;
     top: calc(50% - 109px);
     width: 100px;
     z-index: 100; 
 
     svg {
-        fill: #fff;
+        fill: #fff; /* light grey */
     }
 `
-
-const Overlay = styled.div`
+//css styling for the overlay
+const Overlay = styled.div` //division in HTML document and it styled with css below
     position: absolute;
     top: 0;
     left: 0;
@@ -22,38 +23,38 @@ const Overlay = styled.div`
     height: 100%;
     z-index: 1;
 `
-
+//animation css for the logo
 const animateLogo = keyframes`
     0% {
-        top: calc(50% - 109px);
+        top: calc(50% - 109px); //starting position of animation
         width: 100px;
     }
 
     33% {
-        top: 20px;
+        top: 20px; //moves to 20 px away from top border
         width: 50px;
     }
 
     100% {
-        top: 20px;
+        top: 20px; //stays the same
         width: 50px;
     }
 `
-
+//changes color of logo from white to black
 const animateColor = keyframes`
     0% {
-        fill: #fff;
+        fill: #fff; //color white
     }
 
     66% {
-        fill: #fff;
+        fill: #fff; //color white
     }
 
     100% {
-        fill: #000;
+        fill: #000; //color black
     }
 `
-
+//animates black background coming up when page is reloaded
 const animateOverlay = keyframes`
     0% {
         height: 100%;
@@ -71,7 +72,7 @@ const animateOverlay = keyframes`
         height: 0%;
     }
 `
-
+//brings up white header to be right under logo
 const animateHeader = keyframes`
     0% {
         min-height: 100%;
@@ -82,7 +83,7 @@ const animateHeader = keyframes`
     }
 
     75% {
-        min-height: 90px;
+        min-height: 90px; //moves to 90px away from top border
     }
 
     100% {
@@ -94,7 +95,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     position: fixed;
-    background: #ffffff;
+    background: #fffff; //header
     min-height: 100%;
     overflow: hidden;
     z-index: 10;
@@ -139,10 +140,10 @@ const Container = styled.div`
     `}
 `
 
-export const Header = ({ loading }) => {
+export const Header = ({ loading }) => { //provides Header function that can now be imported onto other files
 
     useEffect(() => {
-        document.title = 'Hashicups'
+        document.title = 'Hashicups'//name that shows up on browser tab
     })
 
     return (
@@ -154,7 +155,7 @@ export const Header = ({ loading }) => {
                     </g>
                 </svg>
             </Logo>
-            <Overlay/>
+            <Overlay/> 
         </Container>
     )
 }

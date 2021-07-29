@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
-import styled, { css, keyframes } from 'styled-components'
+import React, { useState } from 'react' //imports useState Hook from React (useState is a Hook that lets you add React state to function components)
+import styled, { css, keyframes } from 'styled-components' //adds css and animation for React
 
+//animation
 const animate = keyframes`
     20% { stroke-dashoffset: 40; stroke: #ffffff; }
     40% { stroke-dashoffset: 0;  stroke: rgba(255, 255, 255, 0.3); }
     80% { stroke-dashoffset: 0;  stroke: rgba(255, 255, 255, 0.3); }
     100% { stroke-dashoffset: 0;  stroke: rgba(255, 255, 255, 0.3); }
 `;
-
+    //styling for fingerprint
   const Thumb = styled.svg`
     cursor: pointer;
     
@@ -47,9 +48,9 @@ const animate = keyframes`
         `
     }
 `
-
+//exports information once fingerprint is validated
 export const Fingerprint = ({ onValidate }) => {
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState(false);//creates state variable called "active" with argument 'false' which acts as initial state and 'setActive' is the function needed in order to update value
 
     const wrapper = () => {
         setActive(true)
