@@ -11,7 +11,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 
-
+// Page styling
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
@@ -41,11 +41,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-
-
+  // Component that Payment page will call
 export default function PaymentForm(props) {
-
+    // Declaring payment form components
     const classes = useStyles();
     const [paymentConfirmation, setPaymentConfirmation] = React.useState({ message: 'Not Submitted', card_plaintext: 'No value until form is submitted...', card_ciphertext: 'No value until form is submitted...'});
     const [cardType, setCardType] = React.useState('');
@@ -72,17 +70,20 @@ mutation {
   } 
 }
 `
+    // Call confirm payment upon completing form
     const onCompleted = (data) => {
       setPaymentConfirmation(data.pay)
     }
-
+    // Error handling
     const onError = (error) => {
       alert(error)
     }
-
+    
+    // Modify back-end payment data with mutations using ApolloGraphQL
     const [submitPayment] = useMutation(SUBMIT_PAYMENT, {onCompleted, onError})
 
 
+// Retrieves value of the input it was called on
 
     const handleCardTypeChange = (e) => {
       setCardType(e.target.value);
@@ -105,7 +106,7 @@ mutation {
       setExpiryDate(date);
     };
 
-
+// Submit event with chech for empty fields
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -118,6 +119,7 @@ mutation {
     }
 
 //'{"name": "Gerry", "type": "mastercard", "number": "1234-1234-1234-1234", "expiry": "01/23", "cvc": "123"}' localhost:8080  | jq
+// Returns payment form components and outputs data after submit is pressed
     return (
       <div className={classes.root}>
         <Grid
@@ -169,7 +171,6 @@ mutation {
                     onChange={handleCVC}
                     required
                   />
-
                   <MuiPickersUtilsProvider utils={DateFnsUtils} className={classes.root}>
                       <KeyboardDatePicker
                         margin="normal"
@@ -186,13 +187,14 @@ mutation {
                       />
                   </MuiPickersUtilsProvider>
               </FormControl>
-                  <Button
+                  <Button             
                     variant="contained"
                     className={classes.button}
                     fullWidth
                     type="submit"
                     onClick={handleSubmit}
                   >Submit Payment</Button>
+                  // Return form input data
                   <p> Status: <b>{paymentConfirmation.message}</b> </p>
                   <p> Encryption Status: <b>{paymentConfirmation.card_ciphertext}</b> </p>
                   <p> CardData Returned from Backend in plaintext :( : <b>{paymentConfirmation.card_plaintext}</b></p>

@@ -1,6 +1,7 @@
 import React from "react";
 import PaymentForm from '../../components/PaymentForm'
 
+// Call payment form from components
 export default function Payment() {
 
     return (
