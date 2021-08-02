@@ -18,7 +18,7 @@ const Overlay = styled.div` //division in HTML document and it styled with css b
     position: absolute;
     top: 0;
     left: 0;
-    background: #ffffff; //overlay is white
+    background:linear-gradient(to right, rgb(47,171,206), rgb(137,145,157), rgb(51,170,133), rgb(108,94,197), rgb(41,114,206), rgb(184,60,128)); //header color (black) ; //overlay is white
     width: 100%;
     height: 100%;
     z-index: 1;
