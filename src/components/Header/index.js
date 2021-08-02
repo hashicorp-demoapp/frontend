@@ -143,7 +143,7 @@ const Container = styled.div`
 export const Header = ({ loading }) => { //provides Header function that can now be imported onto other files
 
     useEffect(() => {
-        document.title = 'Hashicups'//name that shows up on browser tab
+        document.title = 'HashiCups'//name that shows up on browser tab
     })
 
     return (

@@ -31,6 +31,25 @@ const Name = styled.div`
     text-align: center;
     transform: translateY(100px);
 `
+//css styling for the teasers
+const Teaser = styled.div`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: Capitalize;
+    text-align: center;
+    transform: translateY(100px);
+`
+//css styling for the price
+const Price = styled.div`
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: Capitalize;
+    text-align: center;
+    transform: translateY(100px);
+`
+
 //controls animation of buy button as well as styling
 const Buy = styled.div`
     box-sizing: border-box;
@@ -59,14 +78,35 @@ const Buy = styled.div`
         background: #ffcc00;
     `}
 `
-
+//styling for the big box around the whole item
 const Item = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 
+    //animations for name
     ${Name} {
+        ${props => props.active && props.ready && css`
+            animation-name: ${animateTitle};
+            animation-duration: 0.3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            animation-timing-function: linear;
+        `}
+    }
+    //animations for teaser
+    ${Teaser} {
+        ${props => props.active && props.ready && css`
+            animation-name: ${animateTitle};
+            animation-duration: 0.3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            animation-timing-function: linear;
+        `}
+    }
+    //animations for price
+    ${Price} {
         ${props => props.active && props.ready && css`
             animation-name: ${animateTitle};
             animation-duration: 0.3s;
@@ -129,8 +169,8 @@ const createItem = ({ id, name, teaser, price, image }, active, ready) => (
     <Item key={id} active={active} ready={ready}>
         <Image alt={name} src={`${process.env.PUBLIC_URL}/img${image}`} />
         <Name>{name}</Name>
-        <Name>{teaser}</Name>
-        <Name>{price}</Name>
+        <Teaser>{teaser}</Teaser>
+        <Price>{price}</Price>
     </Item>
 )
 //slider function can be imported onto other files
