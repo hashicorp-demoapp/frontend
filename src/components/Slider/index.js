@@ -125,7 +125,7 @@ const Image = styled.div`
     ${props => props.src && css`
         background-image: url(${props.src});
     `}
-
+    background-color: #fff; //background color for coffee images
     background-size: auto 360px;
     background-repeat: no-repeat;
     background-position: center 80px;
@@ -159,6 +159,7 @@ const Items = styled.div`
     flex-wrap: nowrap;
     overflow: hidden;
     position: relative;
+    background-color: #fff; //background color for coffee name, teaser, and price
 
     animation-name: ${slide};
     animation-delay: 1s;

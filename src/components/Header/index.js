@@ -10,7 +10,7 @@ const Logo = styled.div` //division in HTML document and it styled with css belo
     z-index: 100; 
 
     svg {
-        fill: #fff; /* light grey */
+        fill: #000000; /* black */
     }
 `
 //css styling for the overlay
@@ -18,7 +18,7 @@ const Overlay = styled.div` //division in HTML document and it styled with css b
     position: absolute;
     top: 0;
     left: 0;
-    background: #000000;
+    background: #ffffff; //overlay is white
     width: 100%;
     height: 100%;
     z-index: 1;
@@ -43,15 +43,15 @@ const animateLogo = keyframes`
 //changes color of logo from white to black
 const animateColor = keyframes`
     0% {
-        fill: #fff; //color white
+        fill: #000; //color black
     }
 
     66% {
-        fill: #fff; //color white
+        fill: #000; //color black
     }
 
     100% {
-        fill: #000; //color black
+        fill: #fff; //color white
     }
 `
 //animates black background coming up when page is reloaded
@@ -95,7 +95,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     position: fixed;
-    background: #fffff; //header
+    background: #000000; //header color (black)
     min-height: 100%;
     overflow: hidden;
     z-index: 10;
