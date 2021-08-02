@@ -15,7 +15,7 @@ const Container = styled.div` //container for "Buy" button
 //animation for fast sliding at reload of page
 const slide = (props) => keyframes`
     0% {
-        left: -${(props.length+2)*100}%;
+        left: -${(props.length+2)*200}%;
     }    
 
     100% {
@@ -24,8 +24,11 @@ const slide = (props) => keyframes`
 `
 //css styling for each name of the coffees
 const Name = styled.div`
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
+    font-family: "Platform Medium",sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: -.01em;
+    line-height: 1.8;
+
     font-weight: 700;
     text-transform: Capitalize;
     text-align: center;
@@ -33,9 +36,11 @@ const Name = styled.div`
 `
 //css styling for the teasers
 const Teaser = styled.div`
-    font-family: 'Montserrat', sans-serif;
+    font-family: SoDoSans,Helvetica Neue,Helvetica,Arial,sans-serif;
     font-size: 20px;
-    font-weight: 700;
+    line-height: 1.8;
+
+    font-weight: 400;
     text-transform: Capitalize;
     text-align: center;
     transform: translateY(100px);
@@ -43,9 +48,10 @@ const Teaser = styled.div`
 //css styling for the price
 const Price = styled.div`
     font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
+    font-size: 17px;
+    line-height: 1.8;
+
     font-weight: 700;
-    text-transform: Capitalize;
     text-align: center;
     transform: translateY(100px);
 `
