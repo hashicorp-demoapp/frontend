@@ -95,7 +95,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     position: fixed;
-    background: #000000; //header color (black)
+    background: linear-gradient(to right, rgb(47,171,206), rgb(137,145,157), rgb(51,170,133), rgb(108,94,197), rgb(41,114,206), rgb(184,60,128)); //header color (black)
     min-height: 100%;
     overflow: hidden;
     z-index: 10;
