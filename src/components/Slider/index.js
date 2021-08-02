@@ -16,6 +16,11 @@ const Circle = styled.div` //container for "Buy" button
     background: #fff;
     padding:0px;
     border-radius: 50%;
+    position: fixed;
+    height: 700px;
+    width: 700px;
+    top: 10%;
+    left: 32%;
 `
 
 
@@ -202,13 +207,13 @@ export const Slider = ({ className, items }) => {
     return (
         <>
             <Container className={className}>
-                <Circle>
+                <Circle></Circle>
                     <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
                         {createItem(items[items.length - 1], false, ready)}
                         {items.map((item, index) => createItem(item, active === index, ready))}
                         {createItem(items[0], false, ready)}
                     </Items>
-                </Circle>
+               
                 <Buy ready={ready} onClick={() => history.push("/payments")} paid={paid}>Buy</Buy>
             </Container>
             <Payment show={showPayment} setShow={setShowPayment} setPaid={setPaid} />
