@@ -18,6 +18,7 @@ const QUERY_coffees = gql`
     coffees {
         id
         name
+        teaser
         image
         price
     }
