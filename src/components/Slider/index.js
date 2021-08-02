@@ -125,11 +125,12 @@ const Items = styled.div`
 `
 
 
-const createItem = ({ id, name, teaser, image }, active, ready) => (
+const createItem = ({ id, name, teaser, price, image }, active, ready) => (
     <Item key={id} active={active} ready={ready}>
         <Image alt={name} src={`${process.env.PUBLIC_URL}/img${image}`} />
         <Name>{name}</Name>
-        <Name>{teaser}</Name> //added functionality for the teaser (catch phrase)
+        <Name>{teaser}</Name>
+        <Name>{price}</Name>
     </Item>
 )
 //slider function can be imported onto other files
