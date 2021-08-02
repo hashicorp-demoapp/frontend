@@ -12,6 +12,13 @@ const Container = styled.div` //container for "Buy" button
     overscroll-behavior: none;
     text-align: center;
 `
+const Circle = styled.div` //container for "Buy" button
+    background: #fff;
+    padding:0px;
+    border-radius: 50%;
+`
+
+
 //animation for fast sliding at reload of page
 const slide = (props) => keyframes`
     0% {
@@ -125,7 +132,7 @@ const Image = styled.div`
     ${props => props.src && css`
         background-image: url(${props.src});
     `}
-    background-color: #fff; //background color for coffee images
+    
     background-size: auto 360px;
     background-repeat: no-repeat;
     background-position: center 80px;
@@ -159,7 +166,6 @@ const Items = styled.div`
     flex-wrap: nowrap;
     overflow: hidden;
     position: relative;
-    background-color: #fff; //background color for coffee name, teaser, and price
 
     animation-name: ${slide};
     animation-delay: 1s;
@@ -196,11 +202,13 @@ export const Slider = ({ className, items }) => {
     return (
         <>
             <Container className={className}>
-                <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
-                    {createItem(items[items.length - 1], false, ready)}
-                    {items.map((item, index) => createItem(item, active === index, ready))}
-                    {createItem(items[0], false, ready)}
-                </Items>
+                <Circle>
+                    <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
+                        {createItem(items[items.length - 1], false, ready)}
+                        {items.map((item, index) => createItem(item, active === index, ready))}
+                        {createItem(items[0], false, ready)}
+                    </Items>
+                </Circle>
                 <Buy ready={ready} onClick={() => history.push("/payments")} paid={paid}>Buy</Buy>
             </Container>
             <Payment show={showPayment} setShow={setShowPayment} setPaid={setPaid} />
