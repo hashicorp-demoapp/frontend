@@ -20,7 +20,7 @@ const Circle = styled.div` //container for "Buy" button
     height: 750px;
     width: 750px;
     top: 10%;
-    left: 32%;
+    left: 30%;
     background: radial-gradient(closest-side, rgb(47,171,206), rgb(137,145,157), rgb(51,170,133), rgb(108,94,197), rgb(41,114,206), rgb(184,60,128),#fff);    
     `
 
