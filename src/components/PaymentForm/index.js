@@ -10,7 +10,7 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
-import { white } from "kleur";
+
 
 // Page styling
 const useStyles = makeStyles((theme) => ({
@@ -33,15 +33,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   button: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    color: 'rgb(184,60,128)', //color of button text
+    backgroundColor: 'rgb(51,170,133)' //background color of button
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   textField: {
-    backgroundColor: "white"
   }
 }));
 
@@ -125,7 +126,11 @@ mutation {
 //'{"name": "Gerry", "type": "mastercard", "number": "1234-1234-1234-1234", "expiry": "01/23", "cvc": "123"}' localhost:8080  | jq
 // Returns payment form components and outputs data after submit is pressed
     return (
-      <div className={classes.root} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '100px', backgroundColor: "#FFffff",  padding: '25px', borderRadius:'75px'}}>
+      <div className={classes.root} style={ //styling for overall payment
+        {display: 'flex', justifyContent: 'center', 
+      alignItems: 'center', marginTop: '100px', backgroundColor: "rgb(47,171,206)",  
+      padding: '25px', borderRadius:'75px'}
+      }>
         <Grid
           container
           spacing={3}
