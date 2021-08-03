@@ -138,7 +138,7 @@ const Image = styled.div`
     ${props => props.src && css`
         background-image: url(${props.src});
     `}
-    
+    padding-left: 500px;
     background-size: auto 360px;
     background-repeat: no-repeat;
     background-position: center 80px;
