@@ -87,7 +87,7 @@ const Buy = styled.div`
     background: #1563ff;
     border-color: #1563ff;
     color: #ffffff;
-    margin: 20px auto 0 auto;
+    margin: 20px auto 20px auto;
     transform: translateY(100px);
     ${props => props.ready && css`
         animation-name: ${animateBuy};
