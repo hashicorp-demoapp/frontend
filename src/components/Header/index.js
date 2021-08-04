@@ -180,8 +180,8 @@ const Container = styled.div`
     ${Title}{
         ${props => !props.loading && css`
         animation-name: ${animateTitle};
-        animation-delay: 4s;
-        animation-duration:2s;
+        animation-delay: 3s;
+        animation-duration:1s;
         animation-fill-mode: forwards;
         animation-timing-function: ease-in;
         `}
