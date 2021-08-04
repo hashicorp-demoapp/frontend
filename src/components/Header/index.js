@@ -32,7 +32,7 @@ const Overlay = styled.div` //division in HTML document and it styled with css b
     position: absolute;
     top: 0;
     left: 0;
-    background:'black'; //header color (black) ; //overlay is white
+    background-color: #000; //header color (black) ; //overlay is white
     width: 100%;
     height: 100%;
     z-index: 1;
