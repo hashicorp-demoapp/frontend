@@ -32,7 +32,7 @@ const Overlay = styled.div` //division in HTML document and it styled with css b
     position: absolute;
     top: 0;
     left: 0;
-    background:linear-gradient(to right, rgb(47,171,206), rgb(137,145,157), rgb(51,170,133), rgb(108,94,197), rgb(41,114,206), rgb(184,60,128)); //header color (black) ; //overlay is white
+    background:'black'; //header color (black) ; //overlay is white
     width: 100%;
     height: 100%;
     z-index: 1;
@@ -84,11 +84,11 @@ const animateLogo = keyframes`
 //changes color of logo from white to black
 const animateColor = keyframes`
     0% {
-        fill: #000; //color black
+        fill: #fff; //color black
     }
 
     66% {
-        fill: #000; //color black
+        fill: #fff; //color black
     }
 
     100% {
@@ -136,11 +136,11 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     position: fixed;
-    background: linear-gradient(to right, rgb(47,171,206), rgb(137,145,157), rgb(51,170,133), rgb(108,94,197), rgb(41,114,206), rgb(184,60,128)); //header color (black)
     min-height: 100%;
     overflow: hidden;
     z-index: 10;
     width: 100%;
+    box-shadow: 1px 1px  white;
 
     ${Logo} {
         svg {
@@ -197,7 +197,7 @@ export const Header = ({ loading }) => { //provides Header function that can now
     })
 
     return (
-        <Container loading={loading ? 1:0}>
+        <Container loading={loading ? 1:0} >
             <Logo>
                 <a href="/">
                 <svg id="logo_image" viewBox="0 0 33 36">

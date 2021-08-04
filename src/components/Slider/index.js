@@ -12,10 +12,12 @@ const Container = styled.div` //container for "Buy" button
     overflow: hidden;
     overscroll-behavior: none;
     text-align: center;
+    box-shadow: 1px 1px white;
     //gradient background for coffee slider
     background: linear-gradient(45deg, rgb(47,171,206), rgb(137,145,157), rgb(51,170,133), rgb(108,94,197), rgb(41,114,206), rgb(184,60,128));
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
+    
 }
 //gradient animation for slider
 @keyframes gradient {
@@ -84,8 +86,8 @@ const Buy = styled.div`
     text-align: center;
     display: inline-block;
     width: 90px;
-    background: #1563ff;
-    border-color: #1563ff;
+    background: #000000;
+    border-color: #000000;
     color: #ffffff;
     margin: 20px auto 20px auto;
     transform: translateY(100px);
@@ -215,9 +217,7 @@ export const Slider = ({ className, items }) => {
     
 
     return (
-        <Box bgcolor = 'white' paddingBottom = '8%'
-
-        >
+        <div>
             <Container className={className}>
                     <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
                         {createItem(items[items.length - 1], false, ready)}
@@ -228,6 +228,6 @@ export const Slider = ({ className, items }) => {
                 <Buy ready={ready} onClick={() => history.push("/payments")} paid={paid}>Buy</Buy>
             </Container>
             <Payment show={showPayment} setShow={setShowPayment} setPaid={setPaid} />
-            </Box>
+            </div>    
     )
 }

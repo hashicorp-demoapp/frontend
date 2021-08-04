@@ -23,7 +23,6 @@ const MuiBox = () => {
           justifyContent="center"
           alignItems="center"
           bgcolor="#dbdbdc"
-          color="#white"
           fontSize={24}
         >
         
