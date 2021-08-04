@@ -3,6 +3,7 @@ import styled, { css, keyframes } from 'styled-components'
 import { useHistory } from "react-router-dom";
 
 import { useCarousel } from '../../hooks/Carousel' //imports useCarousel function
+import Box from '@material-ui/core/Box';
 
 import { Payment } from '../Payment'//imports payment function from payment file
 
@@ -12,17 +13,6 @@ const Container = styled.div` //container for "Buy" button
     overscroll-behavior: none;
     text-align: center;
 `
-const Circle = styled.div` //container for "Buy" button
-    background: #fff;
-    padding:0px;
-    border-radius: 50%;
-    position: fixed;
-    height: 750px;
-    width: 750px;
-    top: 10%;
-    left: 30%;
-    background: radial-gradient(closest-side, rgb(47,171,206), rgb(137,145,157), rgb(51,170,133), rgb(108,94,197), rgb(41,114,206), rgb(184,60,128),#fff);    
-    `
 
 
 //animation for fast sliding at reload of page
@@ -205,10 +195,13 @@ export const Slider = ({ className, items }) => {
         if (!ready) setReady(true)
     }
 
+    
+
     return (
-        <>
+        <Box bgcolor = 'white'
+
+        >
             <Container className={className}>
-                <Circle></Circle>
                     <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
                         {createItem(items[items.length - 1], false, ready)}
                         {items.map((item, index) => createItem(item, active === index, ready))}
@@ -218,6 +211,6 @@ export const Slider = ({ className, items }) => {
                 <Buy ready={ready} onClick={() => history.push("/payments")} paid={paid}>Buy</Buy>
             </Container>
             <Payment show={showPayment} setShow={setShowPayment} setPaid={setPaid} />
-        </>
+            </Box>
     )
 }

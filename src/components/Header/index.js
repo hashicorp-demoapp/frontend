@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react' //imports useEffect from React
 import PropTypes from 'prop-types' //typechecking 
 import styled, { keyframes, css } from 'styled-components' //css styling
+import { style } from '@material-ui/system'
 
 //css styling for the logo
 const Logo = styled.div` //division in HTML document and it styled with css below
@@ -195,7 +196,7 @@ export const Header = ({ loading }) => { //provides Header function that can now
     })
 
     return (
-        <Container loading={loading ? 1:0}>
+        <Container loading={loading ? 1:0} style={{position:'centre'}}>
             <Logo>
                 <a href="/">
                 <svg id="logo_image" viewBox="0 0 33 36">

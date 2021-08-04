@@ -25,7 +25,7 @@ const QUERY_coffees = gql`
 `
 
 const Coffees = styled(Slider)`
-    position: fixed;
+    position: center;
     top: 90px;
     width: 100%;
 `
