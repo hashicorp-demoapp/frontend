@@ -7,12 +7,11 @@ import {
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import styled from 'styled-components'
-
 import { Header } from '../../components/Header'
 import { Slider } from '../../components/Slider'
 import {Container} from '@material-ui/core';
 import Payment from '../Payment'
-
+import MuiBox from '../../components/Boxes';
 const QUERY_coffees = gql`
 {
     coffees {
@@ -30,7 +29,6 @@ const Coffees = styled(Slider)`
     top: 90px;
     width: 100%;
 `
-
 
 
 const App = () => {
@@ -55,6 +53,9 @@ const App = () => {
                 </Route>
                 <Route path="/">
                     <Header loading={loading} />
+                    <Container style={{paddingTop: "5em"}}>
+                        <MuiBox/>
+                    </Container>
                 </Route>
             </Switch>
         </Router>

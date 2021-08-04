@@ -2,7 +2,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './pages/App'
-
 // import entire module contents from ./serviceWorker
 import * as serviceWorker from './serviceWorker'
 
