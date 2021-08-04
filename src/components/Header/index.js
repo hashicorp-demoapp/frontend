@@ -13,6 +13,18 @@ const Logo = styled.div` //division in HTML document and it styled with css belo
         fill: #000000; /* black */
     }
 `
+const Title = styled.div`
+    position: absolute;
+    top: 27px;
+    left: 175px;
+    font-family: montserrat;
+    font-size: 2em;
+    font-weight: 70;
+    z-index: 11;
+    opacity: 0%;
+    color: #fff;
+`
+
 //css styling for the overlay
 const Overlay = styled.div` //division in HTML document and it styled with css below
     position: absolute;
@@ -23,22 +35,33 @@ const Overlay = styled.div` //division in HTML document and it styled with css b
     height: 100%;
     z-index: 1;
 `
+const animateTitle = keyframes`
+    0%{
+        opacity: 0%;
+    }
+    50%{
+        opacity: 100%;
+    }
+    100%{
+        opacity: 100%;
+    }
+`
+
+
 //animation css for the logo
 const animateLogo = keyframes`
     0% {
         top: calc(50% - 109px); //starting position of top animation
         width: 100px;
-        left: calc(50% - 100px);//starting position of left animation
+        left: calc(50% - 50px);//starting position of left animation
     }
-
     16% {
         top: 20px; //moves to 20 px away from top border
         width: 50px;
         left: calc(50% - 50px); //same position but width got smaller
 
         
-    }
-    
+    } 
     50% {
         top: 20px; //stays the same
         width: 50px;
@@ -154,6 +177,15 @@ const Container = styled.div`
         animation-fill-mode: forwards;
         animation-timing-function: ease-in;
     `}
+    ${Title}{
+        ${props => !props.loading && css`
+        animation-name: ${animateTitle};
+        animation-delay: 4s;
+        animation-duration:2s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-in;
+        `}
+    }
 `
 
 export const Header = ({ loading }) => { //provides Header function that can now be imported onto other files
@@ -173,6 +205,7 @@ export const Header = ({ loading }) => { //provides Header function that can now
                 </svg>
                 </a>
             </Logo>
+            <Title>HashiCups</Title>
             <Overlay/> 
         </Container>
     )
