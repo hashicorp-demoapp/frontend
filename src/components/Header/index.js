@@ -26,18 +26,34 @@ const Overlay = styled.div` //division in HTML document and it styled with css b
 //animation css for the logo
 const animateLogo = keyframes`
     0% {
-        top: calc(50% - 109px); //starting position of animation
+        top: calc(50% - 109px); //starting position of top animation
         width: 100px;
+        left: calc(50% - 100px);//starting position of left animation
     }
 
-    33% {
+    16% {
         top: 20px; //moves to 20 px away from top border
         width: 50px;
-    }
+        left: calc(50% - 50px); //same position but width got smaller
 
-    100% {
+        
+    }
+    
+    50% {
         top: 20px; //stays the same
         width: 50px;
+        left: calc(50% - 50px); //same position as above
+    }
+    75%{
+        top:20px;
+        width: 50px;
+        left:100px; //starts moving to left (100px away from border)
+    }
+    100%{
+        top: 20px; //ends 20px away from top
+        width:50px;
+        left:100px; //ends 100px away from left
+    
     }
 `
 //changes color of logo from white to black
@@ -114,7 +130,7 @@ const Container = styled.div`
     
         ${props => !props.loading && css`
             animation-name: ${animateLogo};
-            animation-duration: 2s;
+            animation-duration: 4s;
             animation-iteration-count: 1;
             animation-fill-mode: forwards;
             animation-timing-function: ease-in-out;
