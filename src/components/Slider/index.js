@@ -12,6 +12,23 @@ const Container = styled.div` //container for "Buy" button
     overflow: hidden;
     overscroll-behavior: none;
     text-align: center;
+    //gradient background for coffee slider
+    background: linear-gradient(45deg, rgb(47,171,206), rgb(137,145,157), rgb(51,170,133), rgb(108,94,197), rgb(41,114,206), rgb(184,60,128));
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+//gradient animation for slider
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
 `
 
 
