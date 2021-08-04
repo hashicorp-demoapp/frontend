@@ -52,7 +52,7 @@ const Name = styled.div`
     font-weight: 600;
     text-transform: Capitalize;
     text-align: center;
-    transform: translateY(100px);
+    transform: translateY(200px);
 `
 //css styling for the teasers
 const Teaser = styled.div`
@@ -155,11 +155,11 @@ const Image = styled.div`
 
 const animateTitle = keyframes`
     0% {
-        transform: translateY(50px);
+        transform: translateY(100px);
     }
 
     100% {
-        transform: translateY(0);
+        transform: translateY(-50px);
     }
 `
 
