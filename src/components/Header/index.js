@@ -6,7 +6,7 @@ import styled, { keyframes, css } from 'styled-components' //css styling
 const Logo = styled.div` //division in HTML document and it styled with css below
     position: absolute;
     top: calc(50% - 109px);
-    width: 100px;
+    
     z-index: 100; 
 
     svg {
@@ -14,15 +14,17 @@ const Logo = styled.div` //division in HTML document and it styled with css belo
     }
 `
 const Title = styled.div`
-    position: absolute;
-    top: 27px;
-    left: 175px;
+    position: relative; //positions it relative to the logo
+    top: -50px;
+    left: 80px; //80px away from logo
     font-family: montserrat;
     font-size: 2em;
+    width: 100px;
     font-weight: 70;
     z-index: 11;
     opacity: 0%;
     color: #fff;
+    
 `
 
 //css styling for the overlay
@@ -70,12 +72,12 @@ const animateLogo = keyframes`
     75%{
         top:20px;
         width: 50px;
-        left:100px; //starts moving to left (100px away from border)
+        left:42.5%; //starts moving to left (100px away from border)
     }
     100%{
         top: 20px; //ends 20px away from top
         width:50px;
-        left:100px; //ends 100px away from left
+        left:42.5%; //ends 100px away from left
     
     }
 `
@@ -204,8 +206,8 @@ export const Header = ({ loading }) => { //provides Header function that can now
                     </g>
                 </svg>
                 </a>
+                <Title>HashiCups</Title>
             </Logo>
-            <Title>HashiCups</Title>
             <Overlay/> 
         </Container>
     )
