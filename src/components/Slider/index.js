@@ -198,7 +198,7 @@ export const Slider = ({ className, items }) => {
     
 
     return (
-        <Box bgcolor = 'white'
+        <Box bgcolor = 'white' paddingBottom = '8%'
 
         >
             <Container className={className}>

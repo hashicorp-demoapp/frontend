@@ -9,7 +9,6 @@ const Logo = styled.div` //division in HTML document and it styled with css belo
     top: calc(50% - 109px);
     
     z-index: 100; 
-
     svg {
         fill: #000000; /* black */
     }
@@ -198,13 +197,13 @@ export const Header = ({ loading }) => { //provides Header function that can now
     })
 
     return (
-        <Container loading={loading ? 1:0} style={{position:'centre'}}>
+        <Container loading={loading ? 1:0}>
             <Logo>
                 <a href="/">
                 <svg id="logo_image" viewBox="0 0 33 36">
                     <g id="logo_path"><path d="M20 26.7l5.4-3V3.2L20 0v15.3h-6.9v-6l-5.5 3v20.5l5.5 3.2V20.7H20z"/>
                         <path d="M28 4.6v20.8l-8 4.4V36l13-7.5v-21zM13.1 0L0 7.5v21l5.1 2.9V10.6l8-4.4z"/>
-                    </g>
+                        </g>
                 </svg>
                 </a>
                 <Title>HashiCups</Title>
