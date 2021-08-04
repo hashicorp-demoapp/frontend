@@ -12,7 +12,6 @@ const Container = styled.div` //container for "Buy" button
     overflow: hidden;
     overscroll-behavior: none;
     text-align: center;
-    background-color: #fff;
 `
 
 
@@ -36,7 +35,7 @@ const Name = styled.div`
     font-weight: 600;
     text-transform: Capitalize;
     text-align: center;
-    transform: translateY(200px);
+    transform: translateY(100px);
 `
 //css styling for the teasers
 const Teaser = styled.div`
@@ -94,7 +93,6 @@ const Item = styled.div`
     align-items: center;
 
     //animations for name
-    
     ${Name} {
         ${props => props.active && props.ready && css`
             animation-name: ${animateTitle};
@@ -124,7 +122,6 @@ const Item = styled.div`
             animation-timing-function: linear;
         `}
     }
-    
 `
 
 const Image = styled.div`
@@ -141,11 +138,11 @@ const Image = styled.div`
 
 const animateTitle = keyframes`
     0% {
-        transform: translateY(100px);
+        transform: translateY(50px);
     }
 
     100% {
-        transform: translateY(-60px);
+        transform: translateY(0);
     }
 `
 
@@ -165,7 +162,6 @@ const Items = styled.div`
     flex-wrap: nowrap;
     overflow: hidden;
     position: relative;
-    
 
     animation-name: ${slide};
     animation-delay: 1s;
@@ -206,10 +202,6 @@ export const Slider = ({ className, items }) => {
 
         >
             <Container className={className}>
-<<<<<<< HEAD
-=======
-                
->>>>>>> 130dfb9497b2ed73937528276c387000c0a977bc
                     <Items {...handlers} style={style} length={items.length} onAnimationEnd={onAnimationEnd}>
                         {createItem(items[items.length - 1], false, ready)}
                         {items.map((item, index) => createItem(item, active === index, ready))}
