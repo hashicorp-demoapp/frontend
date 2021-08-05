@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: theme.spacing(2),
-    color: 'rgb(184,60,128)', //color of button text
-    backgroundColor: 'rgb(51,170,133)' //background color of button
+    color: '#fff', //color of button text
+    backgroundColor: '#000' //background color of button
   },
   paper: {
     padding: theme.spacing(2),
@@ -128,7 +128,7 @@ mutation {
     return (
       <div className={classes.root} style={ //styling for overall payment
         {display: 'flex', justifyContent: 'center', 
-      alignItems: 'center', marginTop: '100px', backgroundColor: "rgb(47,171,206)",  
+      alignItems: 'center', marginTop: '100px', backgroundColor: "#fff",  
       padding: '25px', borderRadius:'75px'}
       }>
         <Grid
