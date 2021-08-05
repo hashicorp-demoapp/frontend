@@ -64,7 +64,7 @@ const Teaser = styled.div`
 //css styling for the price
 const Price = styled.div`
     font-family: 'Montserrat', sans-serif;
-    font-size: 17px;
+    font-size: 19px;
     line-height: 1
     padding-top: 20px;
     font-weight: 500;
@@ -85,7 +85,8 @@ const Buy = styled.div`
     background: #000000;
     border-color: #000000;
     color: #ffffff;
-    margin: 20px auto 20px auto;
+    margin: 0px auto 20px auto;
+    margin-top:-500px;
     transform: translateY(100px);
     ${props => props.ready && css`
         animation-name: ${animateBuy};
