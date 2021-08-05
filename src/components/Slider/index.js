@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import { useHistory } from "react-router-dom";
-
 import { useCarousel } from '../../hooks/Carousel' //imports useCarousel function
-import Box from '@material-ui/core/Box';
-
 import { Payment } from '../Payment'//imports payment function from payment file
 
 const Container = styled.div` //container for "Buy" button
@@ -45,21 +42,20 @@ const slide = (props) => keyframes`
 `
 //css styling for each name of the coffees
 const Name = styled.div`
-    font-family: "Archer A", "Archer B", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Montserrat';
     font-size: 2.5rem;
     letter-spacing: -.01em;
-    line-height: 1.8;
-
-    font-weight: 600;
+    line-height:1;
+    font-weight: bold;
     text-transform: Capitalize;
     text-align: center;
     transform: translateY(200px);
 `
 //css styling for the teasers
 const Teaser = styled.div`
-    font-family: SoDoSans,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-family: Helvetica,Arial,sans-serif;
     font-size: 20px;
-    line-height: 1.8;
+    padding-top: 20px;
     font-weight: 400;
     text-transform: Capitalize;
     text-align: center;
@@ -69,7 +65,8 @@ const Teaser = styled.div`
 const Price = styled.div`
     font-family: 'Montserrat', sans-serif;
     font-size: 17px;
-    line-height: 1.8;
+    line-height: 1
+    padding-top: 20px;
     font-weight: 500;
     text-align: center;
     transform: translateY(100px);
@@ -223,7 +220,6 @@ export const Slider = ({ className, items }) => {
                         {items.map((item, index) => createItem(item, active === index, ready))}
                         {createItem(items[0], false, ready)}
                     </Items>
-               
                 <Buy ready={ready} onClick={() => history.push("/payments")} paid={paid}>Buy</Buy>
             </Container>
             <Payment show={showPayment} setShow={setShowPayment} setPaid={setPaid} />

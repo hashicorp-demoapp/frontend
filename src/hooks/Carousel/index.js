@@ -7,6 +7,7 @@ const limit = 1.2
 const elastic = `transform ${transitionTime}ms cubic-bezier(0.68, -0.55, 0.265, 1.55)`
 const smooth = `transform ${transitionTime}ms ease`
 
+
 const initialCarouselState = {
   offset: 0,
   desired: 0,
