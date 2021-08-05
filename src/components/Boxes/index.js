@@ -34,6 +34,11 @@ const Logo = styled.div` //division in HTML document and it styled with css belo
     position: absolute;
     top: calc(95% - 109px);
     
+
+  direction="row";
+  justifyContent="center";
+  alignItems="center";
+
     z-index: 100; 
     svg {
         fill: #ffffff; /* black */
@@ -61,21 +66,16 @@ const MuiBox = ({ color }) => {
 
   return (<div>
      
-        <Box
-          border={25}
-          borderColor="black"
-          height={200}
-          width='100%'
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          bgcolor="black"
-          color="white"
-          fontSize={24}
-        >
+        
                   
         <Grid
-        item
+        
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      
+      m
         component={"a"}
         target="_blank"
         rel="noreferrer noopener"
@@ -92,62 +92,6 @@ const MuiBox = ({ color }) => {
                 <Title>HashiCups</Title>
             </Logo>
       </Grid>
-
-      <Grid item container spacing={4} justify="center">
-      <Grid
-        item
-        component={"a"}
-        target="_blank"
-        rel="noreferrer noopener"
-        href={homepage}
-      >
-        <HomeIcon
-          className={classes.snsIcon}
-          color='black'
-        />
-      </Grid>
-      <Grid
-        item
-        component={"a"}
-        target="_blank"
-        rel="noreferrer noopener"
-        href={facebook}
-      >
-        <FacebookIcon
-          className={classes.snsIcon}
-          color={color ? "white" : "white"}
-        />
-      </Grid>
-      <Grid
-        item
-        component={"a"}
-        target="_blank"
-        rel="noreferrer noopener"
-        href={instagram}
-      >
-        <InstagramIcon
-          className={classes.snsIcon}
-          color={color ? "primary" : "secondary"}
-        />
-      </Grid>
-      <Grid
-        item
-        component={"a"}
-        target="_blank"
-        rel="noreferrer noopener"
-        href={github}
-      >
-        <GitHubIcon
-          className={classes.snsIcon}
-          color={color ? "primary" : "secondary"}
-        />
-      </Grid>
-      {/* add social media*/}
-    </Grid>
-
-
-
-     </Box>
         </div>
   );
 };

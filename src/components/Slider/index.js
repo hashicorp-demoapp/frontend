@@ -12,6 +12,7 @@ const Container = styled.div` //container for "Buy" button
     //gradient background for coffee slider
     background: linear-gradient(45deg, rgb(47,171,206), rgb(137,145,157), rgb(51,170,133), rgb(108,94,197), rgb(41,114,206), rgb(184,60,128));
     background-size: 400% 400%;
+    width:100%
     animation: gradient 15s ease infinite;
     
 }
