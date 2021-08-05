@@ -140,7 +140,6 @@ const Container = styled.div`
     overflow: hidden;
     z-index: 10;
     width: 100%;
-    box-shadow: 1px 1px  grey;
 
     ${Logo} {
         svg {

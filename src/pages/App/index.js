@@ -44,6 +44,7 @@ const App = () => {
                     {!loading && 
                             <Coffees items={ data.coffees} />
                         }
+                        <MuiBox></MuiBox>
                 </Route>
                 <Route path="/payments">
                     <Header loading={loading} />
@@ -54,7 +55,6 @@ const App = () => {
                 <Route path="/">
                     <Header loading={loading} />
                     <Container style={{paddingTop: "5em"}}>
-                        <MuiBox/>
                     </Container>
                 </Route>
             </Switch>
