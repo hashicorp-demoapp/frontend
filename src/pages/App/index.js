@@ -39,13 +39,6 @@ const App = () => {
     return (
         <Router>
             <Switch>
-                <Route path="/coffeeslider">
-                    <Header loading={loading} />
-                    {!loading && 
-                            <Coffees items={ data.coffees} />
-                        }
-                        <MuiBox></MuiBox>
-                </Route>
                 <Route path="/payments">
                     <Header loading={loading} />
                     <Container style={{paddingTop: "5em"}}>
@@ -54,8 +47,10 @@ const App = () => {
                 </Route>
                 <Route path="/">
                     <Header loading={loading} />
-                    <Container style={{paddingTop: "5em"}}>
-                    </Container>
+                        {!loading && 
+                                <Coffees items={ data.coffees} />
+                            }
+                            <MuiBox></MuiBox>
                 </Route>
             </Switch>
         </Router>
