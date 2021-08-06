@@ -44,7 +44,7 @@ const slide = (props) => keyframes`
 //css styling for each name of the coffees
 const Name = styled.div`
     font-family: 'Montserrat';
-    font-size: 2.5rem;
+    font-size: 3rem;
     letter-spacing: -.01em;
     line-height:1;
     font-weight: bold;
@@ -55,7 +55,7 @@ const Name = styled.div`
 //css styling for the teasers
 const Teaser = styled.div`
     font-family: Helvetica,Arial,sans-serif;
-    font-size: 20px;
+    font-size: 1.2em;
     padding-top: 20px;
     font-weight: 400;
     text-transform: Capitalize;

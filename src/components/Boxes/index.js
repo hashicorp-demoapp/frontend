@@ -19,12 +19,12 @@ const MuiBox = () => {
           justifyContent="center"
           alignItems="center"
           bgcolor="#000000"
-          color="black"
+          color="WHITE"
           paddingTop = '30px'
           
         >
-                  
-                  <img src={logo} height = "50%" width = "auto%"    />
+                  Powered by 
+                  <img src={logo} height = "30%" width = "auto"    />
 
 
 
