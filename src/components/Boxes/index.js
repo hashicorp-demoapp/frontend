@@ -1,32 +1,37 @@
 import React from 'react'
 import Box from '@material-ui/core/Box';
 import logo from './HashiCorp_PrimaryLogo_White_RGB.png';
-import { Grid } from '@material-ui/core';
+
 
 
 
 
 const MuiBox = () => {
   return (
-
-    <Grid
-    container
-    direction="row"
-    justifyContent="center"
-    alignItems="center"
-  >
-
+  <div>
      
-        
+        <Box
+          border={25}
+          borderColor="black"
+          height={200}
+          width='100%'
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          bgcolor="#000000"
+          color="black"
+          paddingTop = '30px'
+          
+        >
                   
-            <img src={logo} height = "10%"    />
+                  <img src={logo} height = "50%" width = "auto%"    />
 
 
 
 
                   
-     
-        </Grid>
+     </Box>
+        </div>
   );
 };
 
