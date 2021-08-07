@@ -1,13 +1,15 @@
 import React from "react";
 import PaymentForm from '../../components/PaymentForm'
+import UpdatedPaymentForm from "../../components/UpdatedPaymentForm";
 
 // Call payment form from components
 export default function Payment() {
 
     return (
-        <PaymentForm
-          dropdownDefault="Card Type"
-        />
+        // <PaymentForm
+        //   dropdownDefault="Card Type"
+        // />
+        <UpdatedPaymentForm />
     );
   }
 
