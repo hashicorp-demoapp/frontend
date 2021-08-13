@@ -7,7 +7,7 @@ import { style } from '@material-ui/system'
 const Logo = styled.div` //division in HTML document and it styled with css below
     position: absolute;
     top: calc(50% - 109px);
-    
+    align-content: center;
     z-index: 100; 
     svg {
         fill: #000000; /* black */
@@ -60,24 +60,24 @@ const animateLogo = keyframes`
     16% {
         top: 20px; //moves to 20 px away from top border
         width: 50px;
-        left: calc(50% - 50px); //same position but width got smaller
+        left: calc(45% - 50px); //same position but width got smaller
 
         
     } 
     50% {
         top: 20px; //stays the same
         width: 50px;
-        left: calc(50% - 50px); //same position as above
+        left: calc(45% - 50px); //same position as above
     }
     75%{
         top:20px;
         width: 50px;
-        left:45.5%; //starts moving to left (100px away from border)
+        left:40.5%; //starts moving to left (100px away from border)
     }
     100%{
         top: 20px; //ends 20px away from top
         width:50px;
-        left:45.5%; //ends 100px away from left
+        left:40.5%; //ends 100px away from left
     
     }
 `
