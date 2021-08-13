@@ -11,7 +11,7 @@ const MuiBox = () => {
   
      
         <Box
-          border={25}
+
           borderColor="black"
           height={200}
           width='100%'
@@ -20,7 +20,7 @@ const MuiBox = () => {
           alignItems="center"
           bgcolor="#000000"
           color="WHITE"
-          paddingTop = '30px'
+          paddingTop = '50px'
           
         >
                   Powered by 

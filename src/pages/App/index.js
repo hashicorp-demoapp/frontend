@@ -50,6 +50,7 @@ const App = () => {
                         {!loading && 
                                 <Coffees items={ data.coffees} />
                             }
+                            <MuiBox></MuiBox>
                 </Route>
             </Switch>
         </Router>

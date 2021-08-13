@@ -135,7 +135,7 @@ const animateHeader = keyframes`
 const Container = styled.div`
     display: flex;
     justify-content: center;
-    position: fixed;
+    position: absolute;
     min-height: 100%;
     overflow: hidden;
     z-index: 10;
