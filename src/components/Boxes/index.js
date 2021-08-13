@@ -8,7 +8,7 @@ import logo from './HashiCorp_PrimaryLogo_White_RGB.png';
 
 const MuiBox = () => {
   return (
-  <div>
+  
      
         <Box
           border={25}
@@ -31,7 +31,7 @@ const MuiBox = () => {
 
                   
      </Box>
-        </div>
+       
   );
 };
 
