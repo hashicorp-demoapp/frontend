@@ -4,7 +4,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:13.6-stretch-browsers-legacy
-    working_directory: ~/github.com/hashicorpdemoapp/frontend
+    working_directory: ~/github.com/HashiCups-Enrichment/frontend
 
     steps:
       - checkout
@@ -26,7 +26,7 @@ jobs:
       - run: yarn build
 
       - persist_to_workspace:
-          root: ~/github.com/hashicorpdemoapp
+          root: ~/github.com/HashiCups-Enrichment
           paths:
             - frontend
 
@@ -37,11 +37,11 @@ jobs:
       GO111MODULE: "on"
       DOCKER_BUILDKIT: 1
       BUILDX_PLATFORMS: linux/amd64,linux/arm64
-    working_directory: ~/github.com/hashicorpdemoapp/frontend
+    working_directory: ~/github.com/HashiCups-Enrichment/frontend
     steps:
       - setup_remote_docker
       - attach_workspace:
-          at: ~/github.com/hashicorpdemoapp
+          at: ~/github.com/HashiCups-Enrichment
       - run:
           name: install docker buildx
           command: |
@@ -72,17 +72,17 @@ jobs:
           name: docker buildx build and push
           command: |
             docker buildx build --platform linux/amd64,linux/arm64 \
-              -t hashicorpdemoapp/frontend:${CIRCLE_TAG} \
+              -t HashiCups-Enrichment/frontend:${CIRCLE_TAG} \
               --push \
               .
   
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
-    working_directory: ~/github.com/hashicorpdemoapp/frontend
+    working_directory: ~/github.com/HashiCups-Enrichment/frontend
     steps:
       - attach_workspace:
-          at: ~/github.com/hashicorpdemoapp
+          at: ~/github.com/HashiCups-Enrichment
       - run:
           name: "Publish Release on GitHub"
           command: |
