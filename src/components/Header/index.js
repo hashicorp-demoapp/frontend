@@ -64,20 +64,20 @@ const animateLogo = keyframes`
 
         
     } 
-    50% {
+    40% {
         top: 20px; //stays the same
         width: 50px;
         left: calc(50% - 50px); //same position as above
     }
-    75%{
+    60%{
         top:20px;
         width: 50px;
-        left:42.5%; //starts moving to left (100px away from border)
+        left:calc(45% - 50px); //starts moving to left (100px away from border)
     }
     100%{
         top: 20px; //ends 20px away from top
         width:50px;
-        left:42.5%; //ends 100px away from left
+        left:calc(45% - 50px); //ends 100px away from left
     
     }
 `
@@ -181,7 +181,7 @@ const Container = styled.div`
     ${Title}{
         ${props => !props.loading && css`
         animation-name: ${animateTitle};
-        animation-delay: 3s;
+        animation-delay: 2.5s;
         animation-duration:1s;
         animation-fill-mode: forwards;
         animation-timing-function: ease-in;
