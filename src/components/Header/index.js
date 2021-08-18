@@ -60,24 +60,24 @@ const animateLogo = keyframes`
     16% {
         top: 20px; //moves to 20 px away from top border
         width: 50px;
-        left: calc(45% - 50px); //same position but width got smaller
+        left: calc(50% - 50px); //same position but width got smaller
 
         
     } 
     50% {
         top: 20px; //stays the same
         width: 50px;
-        left: calc(45% - 50px); //same position as above
+        left: calc(50% - 50px); //same position as above
     }
     75%{
         top:20px;
         width: 50px;
-        left:40.5%; //starts moving to left (100px away from border)
+        left:42.5%; //starts moving to left (100px away from border)
     }
     100%{
         top: 20px; //ends 20px away from top
         width:50px;
-        left:40.5%; //ends 100px away from left
+        left:42.5%; //ends 100px away from left
     
     }
 `
