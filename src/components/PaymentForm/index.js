@@ -218,7 +218,7 @@ mutation {
                   >Submit Payment</Button>
                   <p> Status: <b>{paymentConfirmation.message}</b> </p>
                   <p> Encryption Status: <b>{paymentConfirmation.card_ciphertext}</b> </p>
-                  <p> CardData Returned from Backend in plaintext : <b>{paymentConfirmation.card_plaintext}</b></p>
+                  <p> CardData Returned from Backend in plaintext: <b>{paymentConfirmation.card_plaintext}</b></p>
 
               </Grid>
             </Grid>

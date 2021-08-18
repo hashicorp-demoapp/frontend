@@ -6,7 +6,7 @@ import logo from './HashiCorp_PrimaryLogo_White_RGB.png';
 
 
 
-const MuiBox = () => {
+const Footer = () => {
   return (
   
      
@@ -35,4 +35,4 @@ const MuiBox = () => {
   );
 };
 
-export default MuiBox;
+export default Footer;

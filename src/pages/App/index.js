@@ -11,7 +11,7 @@ import { Header } from '../../components/Header'
 import { Slider } from '../../components/Slider'
 import {Container} from '@material-ui/core';
 import Payment from '../Payment'
-import MuiBox from '../../components/Boxes';
+import Footer from '../../components/Boxes';
 const QUERY_coffees = gql`
 {
     coffees {
@@ -50,7 +50,7 @@ const App = () => {
                         {!loading && 
                                 <Coffees items={ data.coffees} />
                             }
-                            <MuiBox></MuiBox>
+                            <Footer></Footer>
                 </Route>
             </Switch>
         </Router>
