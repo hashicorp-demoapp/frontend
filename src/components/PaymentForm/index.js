@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PaymentForm(props) {
     // Declaring payment form components
     const classes = useStyles();
-    const [paymentConfirmation, setPaymentConfirmation] = React.useState({ message: 'Not Submitted', card_plaintext: 'No value until form is submitted...', card_ciphertext: 'No value until form is submitted...'});
+    const [paymentConfirmation, setPaymentConfirmation] = React.useState({ message: 'Not submitted.', card_plaintext: 'No value until form is submitted.', card_ciphertext: 'No value until form is submitted.'});
     const [cardType, setCardType] = React.useState('');
     const [name, setCardholderName] = React.useState('');
     const [cardNumber, setCardNumber] = React.useState('');
@@ -128,8 +128,8 @@ mutation {
     return (
       <div className={classes.root} style={ //styling for overall payment
         {display: 'flex', justifyContent: 'center', 
-      alignItems: 'center', marginTop: '100px', backgroundColor: "#fff",  
-      padding: '25px', borderRadius:'75px'}
+      alignItems: 'center', marginTop: '70px', backgroundColor: "#fff",  
+      padding: '25px', borderRadius:'65px'}
       }>
         <Grid
           container
@@ -150,6 +150,9 @@ mutation {
                     value={cardType}
                     onChange={handleCardTypeChange}
                     className={classes.root}
+                    variant="outlined"
+                    
+
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -165,6 +168,8 @@ mutation {
                     className={classes.root}
                     onChange={handleCardNameChange}
                     required
+                    variant="outlined"
+
                   />
                   <TextField 
                     id="number" 
@@ -172,6 +177,8 @@ mutation {
                     className={classes.root}
                     onChange={handleCardNumberChange}
                     required
+                    variant="outlined"
+
                   />
                   <TextField 
                     id="cvc" 
@@ -179,6 +186,8 @@ mutation {
                     className={classes.root}
                     onChange={handleCVC}
                     required
+                    variant="outlined"
+
                   />
                   <MuiPickersUtilsProvider utils={DateFnsUtils} className={classes.root}>
                       <KeyboardDatePicker
@@ -193,6 +202,7 @@ mutation {
                           'aria-label': 'change date',
                         }}
                         required
+
                       />
                   </MuiPickersUtilsProvider>
               </FormControl>
@@ -202,10 +212,13 @@ mutation {
                     fullWidth
                     type="submit"
                     onClick={handleSubmit}
+                    variant="contained"
+                    color="primary"
+
                   >Submit Payment</Button>
                   <p> Status: <b>{paymentConfirmation.message}</b> </p>
                   <p> Encryption Status: <b>{paymentConfirmation.card_ciphertext}</b> </p>
-                  <p> CardData Returned from Backend in plaintext :( : <b>{paymentConfirmation.card_plaintext}</b></p>
+                  <p> CardData Returned from Backend in plaintext : <b>{paymentConfirmation.card_plaintext}</b></p>
 
               </Grid>
             </Grid>

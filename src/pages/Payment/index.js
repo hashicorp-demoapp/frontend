@@ -6,10 +6,10 @@ import UpdatedPaymentForm from "../../components/UpdatedPaymentForm";
 export default function Payment() {
 
     return (
-         <PaymentForm
-           dropdownDefault="Card Type"
-         />
-        //<UpdatedPaymentForm />
+
+      <PaymentForm
+      dropdownDefault="‎‎‏‏‎ ‏‏‎ ‎‏‏‎‎‏‏‎ ‎Card Type"
+    />
     );
   }
 
