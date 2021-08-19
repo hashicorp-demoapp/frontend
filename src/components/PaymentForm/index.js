@@ -169,7 +169,7 @@ mutation {
                     onChange={handleCardNameChange}
                     required
                     variant="outlined"
-
+                    
                   />
                   <TextField 
                     id="number" 
