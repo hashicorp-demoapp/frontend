@@ -7,17 +7,17 @@ import {
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import styled from 'styled-components'
-
 import { Header } from '../../components/Header'
 import { Slider } from '../../components/Slider'
 import {Container} from '@material-ui/core';
 import Payment from '../Payment'
-
+import Footer from '../../components/Footer';
 const QUERY_coffees = gql`
 {
     coffees {
         id
         name
+        teaser
         image
         price
     }
@@ -25,11 +25,10 @@ const QUERY_coffees = gql`
 `
 
 const Coffees = styled(Slider)`
-    position: fixed;
+    position: center;
     top: 90px;
     width: 100%;
 `
-
 
 
 const App = () => {
@@ -49,8 +48,9 @@ const App = () => {
                 <Route path="/">
                     <Header loading={loading} />
                         {!loading && 
-                            <Coffees items={ data.coffees} />
-                        }
+                                <Coffees items={ data.coffees} />
+                            }
+                            <Footer></Footer>
                 </Route>
             </Switch>
         </Router>

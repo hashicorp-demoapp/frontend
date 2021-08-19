@@ -1,59 +1,101 @@
-import React, {useEffect} from 'react'
-import PropTypes from 'prop-types'
-import styled, { keyframes, css } from 'styled-components'
+import React, {useEffect} from 'react' //imports useEffect from React
+import PropTypes from 'prop-types' //typechecking 
+import styled, { keyframes, css } from 'styled-components' //css styling
+import { style } from '@material-ui/system'
 
-const Logo = styled.div`
+//css styling for the logo
+const Logo = styled.div` //division in HTML document and it styled with css below
     position: absolute;
     top: calc(50% - 109px);
-    width: 100px;
+    align-content: center;
     z-index: 100; 
-
     svg {
-        fill: #fff;
+        fill: #000000; /* black */
     }
 `
+const Title = styled.div`
+    position: relative; //positions it relative to the logo
+    top: -50px;
+    left: 80px; //80px away from logo
+    font-family: montserrat;
+    font-size: 2em;
+    width: 100px;
+    font-weight: 70;
+    z-index: 11;
+    opacity: 0%;
+    color: #fff;
+    
+`
 
-const Overlay = styled.div`
+//css styling for the overlay
+const Overlay = styled.div` //division in HTML document and it styled with css below
     position: absolute;
     top: 0;
     left: 0;
-    background: #000000;
+    background-color: #000; //header color (black) ; //overlay is white
     width: 100%;
     height: 100%;
     z-index: 1;
 `
-
-const animateLogo = keyframes`
-    0% {
-        top: calc(50% - 109px);
-        width: 100px;
+const animateTitle = keyframes`
+    0%{
+        opacity: 0%;
     }
-
-    33% {
-        top: 20px;
-        width: 50px;
+    50%{
+        opacity: 100%;
     }
-
-    100% {
-        top: 20px;
-        width: 50px;
+    100%{
+        opacity: 100%;
     }
 `
 
+
+//animation css for the logo
+const animateLogo = keyframes`
+    0% {
+        top: calc(50% - 109px); //starting position of top animation
+        width: 100px;
+        left: calc(50% - 50px);//starting position of left animation
+    }
+    16% {
+        top: 20px; //moves to 20 px away from top border
+        width: 50px;
+        left: calc(50% - 50px); //same position but width got smaller
+
+        
+    } 
+    40% {
+        top: 20px; //stays the same
+        width: 50px;
+        left: calc(50% - 50px); //same position as above
+    }
+    60%{
+        top:20px;
+        width: 50px;
+        left:calc(45% - 50px); //starts moving to left (100px away from border)
+    }
+    100%{
+        top: 20px; //ends 20px away from top
+        width:50px;
+        left:calc(45% - 50px); //ends 100px away from left
+    
+    }
+`
+//changes color of logo from white to black
 const animateColor = keyframes`
     0% {
-        fill: #fff;
+        fill: #fff; //color black
     }
 
     66% {
-        fill: #fff;
+        fill: #fff; //color black
     }
 
     100% {
-        fill: #000;
+        fill: #fff; //color white
     }
 `
-
+//animates black background coming up when page is reloaded
 const animateOverlay = keyframes`
     0% {
         height: 100%;
@@ -71,7 +113,7 @@ const animateOverlay = keyframes`
         height: 0%;
     }
 `
-
+//brings up white header to be right under logo
 const animateHeader = keyframes`
     0% {
         min-height: 100%;
@@ -82,7 +124,7 @@ const animateHeader = keyframes`
     }
 
     75% {
-        min-height: 90px;
+        min-height: 90px; //moves to 90px away from top border
     }
 
     100% {
@@ -93,8 +135,7 @@ const animateHeader = keyframes`
 const Container = styled.div`
     display: flex;
     justify-content: center;
-    position: fixed;
-    background: #ffffff;
+    position: absolute;
     min-height: 100%;
     overflow: hidden;
     z-index: 10;
@@ -113,7 +154,7 @@ const Container = styled.div`
     
         ${props => !props.loading && css`
             animation-name: ${animateLogo};
-            animation-duration: 2s;
+            animation-duration: 4s;
             animation-iteration-count: 1;
             animation-fill-mode: forwards;
             animation-timing-function: ease-in-out;
@@ -137,24 +178,39 @@ const Container = styled.div`
         animation-fill-mode: forwards;
         animation-timing-function: ease-in;
     `}
+    ${Title}{
+        ${props => !props.loading && css`
+        animation-name: ${animateTitle};
+        animation-delay: 2.5s;
+        animation-duration:1s;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-in;
+        `}
+    }
 `
 
-export const Header = ({ loading }) => {
+export const Header = ({ loading }) => { //provides Header function that can now be imported onto other files
 
     useEffect(() => {
-        document.title = 'Hashicups'
+        document.title = 'HashiCups'//name that shows up on browser tab
     })
 
     return (
-        <Container loading={loading ? 1:0}>
+        <Container loading={loading ? 1:0} >
             <Logo>
+                <a href="/"
+                >
                 <svg id="logo_image" viewBox="0 0 33 36">
                     <g id="logo_path"><path d="M20 26.7l5.4-3V3.2L20 0v15.3h-6.9v-6l-5.5 3v20.5l5.5 3.2V20.7H20z"/>
                         <path d="M28 4.6v20.8l-8 4.4V36l13-7.5v-21zM13.1 0L0 7.5v21l5.1 2.9V10.6l8-4.4z"/>
-                    </g>
+                        </g>
                 </svg>
+                </a>
+                <a href="/" style={{ textDecoration: 'none' }}>
+                <Title > HashiCups</Title>
+                </a>
             </Logo>
-            <Overlay/>
+            <Overlay/> 
         </Container>
     )
 }

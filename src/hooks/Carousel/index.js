@@ -1,11 +1,12 @@
-import { useReducer, useEffect, useState } from 'react'
-import { useSwipeable } from 'react-swipeable'
+import { useReducer, useEffect, useState } from 'react' //imports various libraries from REACT
+import { useSwipeable } from 'react-swipeable' // imports swipeable
 
 const transitionTime = 400
 const threshold = 0.3
 const limit = 1.2
 const elastic = `transform ${transitionTime}ms cubic-bezier(0.68, -0.55, 0.265, 1.55)`
 const smooth = `transform ${transitionTime}ms ease`
+
 
 const initialCarouselState = {
   offset: 0,

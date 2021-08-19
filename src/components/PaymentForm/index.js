@@ -12,11 +12,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
 
 
+// Page styling
 const useStyles = makeStyles((theme) => ({
+  
+  
   root: {
+    
     margin: theme.spacing(1),
     flexGrow: 1
-  },
+    },
   inputLabel: {
     margin: theme.spacing(1),
   },
@@ -29,25 +33,24 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   button: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    color: '#fff', //color of button text
+    backgroundColor: '#000' //background color of button
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   textField: {
-
   }
 }));
 
-
-
-
+  // Component that Payment page will call
 export default function PaymentForm(props) {
-
+    // Declaring payment form components
     const classes = useStyles();
-    const [paymentConfirmation, setPaymentConfirmation] = React.useState({ message: 'Not Submitted', card_plaintext: 'No value until form is submitted...', card_ciphertext: 'No value until form is submitted...'});
+    const [paymentConfirmation, setPaymentConfirmation] = React.useState({ message: 'Not submitted.', card_plaintext: 'No value until form is submitted.', card_ciphertext: 'No value until form is submitted.'});
     const [cardType, setCardType] = React.useState('');
     const [name, setCardholderName] = React.useState('');
     const [cardNumber, setCardNumber] = React.useState('');
@@ -72,17 +75,20 @@ mutation {
   } 
 }
 `
+    // Call confirm payment upon completing form
     const onCompleted = (data) => {
       setPaymentConfirmation(data.pay)
     }
-
+    // Error handling
     const onError = (error) => {
       alert(error)
     }
-
+    
+    // Modify back-end payment data with mutations using ApolloGraphQL
     const [submitPayment] = useMutation(SUBMIT_PAYMENT, {onCompleted, onError})
 
 
+// Retrieves value of the input it was called on
 
     const handleCardTypeChange = (e) => {
       setCardType(e.target.value);
@@ -105,7 +111,7 @@ mutation {
       setExpiryDate(date);
     };
 
-
+// Submit event with chech for empty fields
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -118,8 +124,13 @@ mutation {
     }
 
 //'{"name": "Gerry", "type": "mastercard", "number": "1234-1234-1234-1234", "expiry": "01/23", "cvc": "123"}' localhost:8080  | jq
+// Returns payment form components and outputs data after submit is pressed
     return (
-      <div className={classes.root}>
+      <div className={classes.root} style={ //styling for overall payment
+        {display: 'flex', justifyContent: 'center', 
+      alignItems: 'center', marginTop: '70px', backgroundColor: "#fff",  
+      padding: '25px', borderRadius:'65px'}
+      }>
         <Grid
           container
           spacing={3}
@@ -139,6 +150,9 @@ mutation {
                     value={cardType}
                     onChange={handleCardTypeChange}
                     className={classes.root}
+                    variant="outlined"
+                    
+
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -154,6 +168,8 @@ mutation {
                     className={classes.root}
                     onChange={handleCardNameChange}
                     required
+                    variant="outlined"
+                    
                   />
                   <TextField 
                     id="number" 
@@ -161,6 +177,8 @@ mutation {
                     className={classes.root}
                     onChange={handleCardNumberChange}
                     required
+                    variant="outlined"
+
                   />
                   <TextField 
                     id="cvc" 
@@ -168,8 +186,9 @@ mutation {
                     className={classes.root}
                     onChange={handleCVC}
                     required
-                  />
+                    variant="outlined"
 
+                  />
                   <MuiPickersUtilsProvider utils={DateFnsUtils} className={classes.root}>
                       <KeyboardDatePicker
                         margin="normal"
@@ -183,19 +202,23 @@ mutation {
                           'aria-label': 'change date',
                         }}
                         required
+
                       />
                   </MuiPickersUtilsProvider>
               </FormControl>
-                  <Button
+                  <Button             
                     variant="contained"
                     className={classes.button}
                     fullWidth
                     type="submit"
                     onClick={handleSubmit}
+                    variant="contained"
+                    color="primary"
+
                   >Submit Payment</Button>
                   <p> Status: <b>{paymentConfirmation.message}</b> </p>
                   <p> Encryption Status: <b>{paymentConfirmation.card_ciphertext}</b> </p>
-                  <p> CardData Returned from Backend in plaintext :( : <b>{paymentConfirmation.card_plaintext}</b></p>
+                  <p> CardData Returned from Backend in plaintext: <b>{paymentConfirmation.card_plaintext}</b></p>
 
               </Grid>
             </Grid>
