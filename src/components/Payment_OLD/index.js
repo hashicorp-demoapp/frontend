@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 
-import { Fingerprint } from '../Fingerprint'
+import { Fingerprint } from '../Fingerprint_Payment_OLD'
 
 const Container = styled.div`
     background-color: #1563ff;

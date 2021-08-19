@@ -11,7 +11,7 @@ import { Header } from '../../components/Header'
 import { Slider } from '../../components/Slider'
 import {Container} from '@material-ui/core';
 import Payment from '../Payment'
-import Footer from '../../components/Boxes';
+import Footer from '../../components/Footer';
 const QUERY_coffees = gql`
 {
     coffees {
