@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 import { useHistory } from "react-router-dom";
 import { useCarousel } from '../../hooks/Carousel' //imports useCarousel function
-import { Payment } from '../Payment'//imports payment function from payment file
+import { Payment } from '../Payment_OLD'//imports payment function from payment file
 
 const Container = styled.div` //container for "Buy" button
     position: relative;
