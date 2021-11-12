@@ -1,0 +1,53 @@
+name: "Build and Deploy Vercel"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  vercel:
+    name: "Build and Deploy Vercel"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Build Preview Environment
+        if: github.event_name == 'pull_request_target'
+        run: |
+          REACT_APP_PUBLIC_API_URL=http://localhost:8082 npm run build
+
+      - name: Deploy Preview Environment
+        uses: ./
+        id: vercel-action-preview
+        if: github.event_name == 'pull_request_target'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build Prod Environment
+        run: |
+          npm run build
+
+      - name: Deploy Prod Environment
+        uses: ./
+        id: vercel-action-production
+        if: github.event_name == 'push'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: "--prod "
