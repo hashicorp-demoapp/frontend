@@ -26,7 +26,7 @@ jobs:
         if: github.event_name == 'pull_request_target'
         run: |
           npm install
-          REACT_APP_PUBLIC_API_URL=http://localhost:8082 npm run build
+          REACT_APP_PUBLIC_API_URL=http://localhost:8081 npm run build
 
       - name: Deploy Preview Environment
         uses: amondnet/vercel-action@v20.0.0
