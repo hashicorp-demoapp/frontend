@@ -22,13 +22,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Build Preview Environment
+      - name: Install and Build Preview Environment
         if: github.event_name == 'pull_request_target'
         run: |
+          npm install
           REACT_APP_PUBLIC_API_URL=http://localhost:8082 npm run build
 
       - name: Deploy Preview Environment
-        uses: ./
+        uses: amondnet/vercel-action@v20.0.0
         id: vercel-action-preview
         if: github.event_name == 'pull_request_target'
         with:
@@ -37,12 +38,13 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      - name: Build Prod Environment
+      - name: Install and Build Prod Environment
         run: |
+          npm install
           npm run build
 
       - name: Deploy Prod Environment
-        uses: ./
+        uses: amondnet/vercel-action@v20.0.0
         id: vercel-action-production
         if: github.event_name == 'push'
         with:
