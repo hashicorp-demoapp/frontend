@@ -1,5 +1,5 @@
-VERSION=v0.0.5
-REPOSITORY=hasicorpdemoapp/frontend
+VERSION=v0.0.6
+REPOSITORY=hashicorpdemoapp/frontend
 
 build_docker:
 	docker build -t ${REPOSITORY}:${VERSION} .
