@@ -68,11 +68,19 @@ jobs:
           name: docker login
           command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
       - run:
-          name: docker buildx build and push
+          name: docker buildx build and push production
           command: |
             docker buildx build --platform linux/amd64,linux/arm64 \
               -t hashicorpdemoapp/frontend:${CIRCLE_TAG} \
               --push \
+              .
+      - run:
+          name: docker buildx build and push static
+          command: |
+            docker buildx build --platform linux/amd64,linux/arm64 \
+              -t hashicorpdemoapp/frontend:${CIRCLE_TAG}.static \
+              --push \
+              -f Dockerfile.static \
               .
 
   publish-github-release:

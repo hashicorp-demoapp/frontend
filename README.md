@@ -40,6 +40,22 @@ server {
 docker run -it -p 8080:80 -v $PWD/nginx.conf:/etc/nginx/conf.d/default.conf hasicorpdemoapp/frontend:v0.0.1
 ```
 
+# Static version
+The frontend can also be run as a static version. This is useful for testing the frontend without the backend. In this mode the graphQL backend has been replaced with
+a static json file `mockdata.json`, served from the Nginx server.
+
+You can build the static version using the following command:
+
+```
+make build_docker_static
+```
+
+Versions of the static frontend can also be found in the DockerHub repository at `hashicorpdemoapp/frontend:${SEMVER}.static`
+
+```
+docker run -it -p 80:80 hashicorpdemoapp/frontend:v0.0.8.static
+```
+
 # Creating a new release
 The build pipeline is setup with Circle CI to build and create a new Docker image whenever a new tag is pushed to this repo. To create a new release execute the following commands:
 
