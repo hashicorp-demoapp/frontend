@@ -10,8 +10,14 @@ import { setContext } from 'apollo-link-context'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloProvider } from '@apollo/react-hooks'
 
+let publicApiUrl = ""
+
+if (process.env.REACT_APP_PUBLIC_API_URL) {
+    publicApiUrl = process.env.REACT_APP_PUBLIC_API_URL
+}
+
 const httpLink = createHttpLink({
-    uri: '/api',
+    uri: `${publicApiUrl}/api`,
 })
 
 const authLink = setContext((_, { headers }) => {
