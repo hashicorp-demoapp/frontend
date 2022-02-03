@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react'
-import { useTheme } from 'next-themes'
-import { useDarkMode } from 'next-dark-mode'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import Theme from 'components/Theme'
 import Orders from 'components/Orders'
 
 export default function Header() {
@@ -47,7 +44,7 @@ export default function Header() {
           <div className="flex-1 px-8"></div>
           <Link href="/">
             <a className="flex cursor-pointer">
-              <Image src="/images/logo.svg" height={98} width={98} className="scale-[0.85] xs:scale-100" />
+              <Image src="/images/logo.svg" height={88} width={88} className="scale-[0.85] xs:scale-100" />
             </a>
           </Link>
           <div className="flex items-center justify-end flex-1 px-8 text-black/75">
@@ -57,7 +54,6 @@ export default function Header() {
               </span>
               <span className="hidden xs:block text-sm tracking-widest uppercase pt-px">Orders</span>
             </button>
-            <Theme />
           </div>
         </div>
         <div className="absolute left-0 top-0">

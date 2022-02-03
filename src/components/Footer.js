@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
+import Theme from 'components/Theme'
+
 import InfoIcon from '@hashicorp/flight-icons/svg/info-16.svg'
 import DocsIcon from '@hashicorp/flight-icons/svg/docs-link-16.svg'
 import LearnIcon from '@hashicorp/flight-icons/svg/learn-link-16.svg'
@@ -27,8 +29,11 @@ export default function Footer() {
           </ul>
         </div>
       </aside>
-      <div className="flex items-center justify-center w-screen bg-gray-200/50 dark:bg-black/50 py-6">
-        <p className="text-sm text-black/75 dark:text-white/75">{Copyright()}</p>
+      <div className="flex justify-center w-screen bg-gray-100/50 dark:bg-black/50 py-8 shadow-mid dark:shadow-highlight">
+        <div className="flex flex-col space-y-4 xs:space-y-0 xs:flex-row items-center justify-between max-w-[1080px] px-8 w-full">
+          <p className="text-sm text-black/75 dark:text-white/75">{Copyright()}. <span className="opacity-50">All rights reserved.</span></p>
+          <Theme />
+        </div>
       </div>
     </footer>
   )
