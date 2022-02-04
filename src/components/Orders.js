@@ -21,7 +21,7 @@ export default function Orders(props) {
       <div className={`${props.ordersVisible ? 'opacity-100 bg-white dark:bg-neutral-900 translate-x-0' : 'opacity-0 translate-x-[120px] pointer-events-none'} fixed top-0 right-0 bottom-0 w-[90%] max-w-[480px] pt-12 dark:text-white/90 shadow-high dark:shadow-highlight overflow-scroll transition duration-500 ease-in-out z-50`}>
       
         <div className="flex flex-col p-8 space-y-2 border-b border-gray-200 dark:border-white/10">
-          <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight capitalize sm:truncate">Order History</h1>
+          <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Order history</h1>
           <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Your previous coffee orders</p>
         </div>
         

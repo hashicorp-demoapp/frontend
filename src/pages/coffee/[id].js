@@ -52,7 +52,7 @@ export default function Coffee(props) {
   
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} />
       
       <CoffeeMenu isActive={id} />
     

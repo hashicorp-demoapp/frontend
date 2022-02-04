@@ -71,7 +71,7 @@ function CartItem(props) {
       <div className="relative flex flex-col items-start -ml-2 dark:invert">
         <span className="whitespace-nowrap text-black/75 uppercase text-[10px] tracking-widest text-center">{props.coffee.name}</span>
         <span className="whitespace-nowrap text-black/75 uppercase text-[10px] tracking-widest text-center"><NumberFormat displayType={'text'} prefix="$" value={(props.price/100).toFixed(2)} /></span>
-        <button className="whitespace-nowrap text-black/50 hover:text-red-600 uppercase text-[10px] tracking-widest text-center mt-1">Remove</button>
+        <button className="whitespace-nowrap text-black/50 hover:text-red-600 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 uppercase text-[10px] tracking-widest text-center mt-1 transition">Remove</button>
       </div>
     </li>
   )

@@ -6,7 +6,7 @@ import Cart from 'components/Cart'
 export default function Home(props) {    
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} />
 
       <main className="flex flex-col items-center justify-center w-full flex-1 text-center">
         <CoffeeMenu isHero={true} />
