@@ -47,7 +47,11 @@ function CartItems(props) {
   return (
     <ul className={`${props.allowOverflow ? 'flex-wrap' : 'overflow-x-auto overflow-y-hidden scroll-style'} flex items-center `}>
       {props.data.map((cart) => (
-        <CartItem coffee={cart.coffee[0]} count={cart.items} price={cart.price} />
+        <>
+          {cart.items.map((item) => (
+            <CartItem coffee={item.coffee[0]} count={item.amount} price={item.price} />
+          ))}
+        </>
       ))}
     </ul>
   )

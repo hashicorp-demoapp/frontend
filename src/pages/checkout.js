@@ -1,5 +1,8 @@
+import axios from 'axios'
+import useSWR from 'swr'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import NumberFormat from 'react-number-format'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
@@ -9,6 +12,9 @@ import PaymentForm from 'components/PaymentForm'
 
 export default function Checkout(props) {
   const router = useRouter();
+  
+  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
+  const { data, error } = useSWR("/api/get-cart", fetcher);
   
   const [hasPaid, setHasPaid] = useState(false);
   const [paymentFormIsVisible, setPaymentFormIsVisible] = useState(true);
@@ -40,10 +46,12 @@ export default function Checkout(props) {
         <section className="relative max-w-[1080px] w-full bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight pt-2 overflow-hidden">
           <Cart cartVisible={true} isInline={true} />
           
-          <div className="flex flex-col items-start bg-gray-50 border-t border-gray-100 mt-2 px-8 py-4">
-            <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Total to pay</p>
-            <p className="text-black/75 dark:text-white/75 font-semibold text-2xl sm:text-4xl">$18.00</p>
-          </div>
+          {data && (
+            <div className="flex flex-col items-start bg-gray-50 border-t border-gray-100 mt-2 px-8 py-4">
+              <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Total to pay</p>
+              <p className="text-black/75 dark:text-white/75 font-semibold text-2xl sm:text-4xl"><NumberFormat displayType={'text'} prefix="$" value={(data[0].total/100).toFixed(2)} /></p>
+            </div>
+          )}
         </section>
         
         <section className="relative max-w-[1080px] w-full bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight">
