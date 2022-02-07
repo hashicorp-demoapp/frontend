@@ -26,6 +26,8 @@ module.exports = {
         mid: "0 0 0 1px rgba(0, 0, 0, .03), 0 1px 3px rgba(0, 0, 0, .05), 0 16px 24px rgba(0, 0, 0, .02)",
         high: "0 0 0 1px rgba(0, 0, 0, .03), 0 1px 3px rgba(0, 0, 0, .05), 0 16px 24px rgba(0, 0, 0, .05)",
         highest: "0 0 0 1px rgba(0, 0, 0, .25), 0 1px 3px rgba(0, 0, 0, .05), 0 16px 24px rgba(0, 0, 0, .05)",
+        cart: "0 0 0 1px rgba(0, 0, 0, .05), 0 -1px 3px rgba(0, 0, 0, .05), 0 -16px 24px rgba(0, 0, 0, .05)",
+        darkCart: "inset 0 1px 0 rgba(255, 255, 255, .1), 0 -1px 3px rgba(0, 0, 0, .4), 0 -16px 24px rgba(0, 0, 0, .5)",
       },
     },
   },

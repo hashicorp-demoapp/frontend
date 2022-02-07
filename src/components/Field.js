@@ -40,7 +40,7 @@ function Input(props) {
     format = "####"
   }
   
-  if (props.type != 'text') {
+  if (props.type != 'text' && props.type != 'password') {
     content = <NumberFormat 
                 className={`${!props.isFocused && 'placeholder:text-black/0'} w-full py-3 bg-transparent border-b border-gray-200 dark:border-white/25 focus:border-gray-700 dark:focus:border-white/75 dark:text-white rounded-none outline-none transition`}
                 format={format}

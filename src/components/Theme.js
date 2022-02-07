@@ -88,7 +88,7 @@ export default function Theme() {
           {theme == 'light' && (
             <span>Light theme</span>
           )}
-          {(theme == 'autoLight' || theme == 'autoDark') && (
+          {(theme == 'autoLight' || theme == 'autoDark' || theme == 'system') && (
             <span>System theme</span>
           )}
           {theme == 'dark' && (

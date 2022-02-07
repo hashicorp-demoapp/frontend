@@ -9,18 +9,36 @@ import NumberFormat from 'react-number-format'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import CoffeeMenu from 'components/CoffeeMenu'
-import PayButton from 'components/PayButton'
-import PaymentForm from 'components/PaymentForm'
+import CartButton from 'components/CartButton'
+import Cart from 'components/Cart'
 
 import PrevIcon from '@hashicorp/flight-icons/svg/chevron-left-24.svg'
 import NextIcon from '@hashicorp/flight-icons/svg/chevron-right-24.svg'
+import MinusIcon from '@hashicorp/flight-icons/svg/minus-circle-24.svg'
+import PlusIcon from '@hashicorp/flight-icons/svg/plus-circle-24.svg'
 
-const Coffee = () => {
+export default function Coffee(props) {
   const router = useRouter();
   const { id } = router.query
   
   const prev_id = id - 1
   const next_id = parseInt(id) + 1
+  
+  const [amount, setAmount] = useState(1)
+  
+  const incCoffeeCount = () => {
+    const count = amount;
+    if (count <= 10) {
+      setAmount(count + 1)
+    }
+  };
+  
+  const decCoffeeCount = () => {
+    const count = amount;
+    if (count > 1) {
+      setAmount(count - 1)
+    }
+  };
   
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(() => '/api/get-coffee/' + id, fetcher);
@@ -28,17 +46,13 @@ const Coffee = () => {
   const { prev, prevError } = useSWR(() => '/api/get-coffee/' + prev_id, fetcher);
   const { next, nextError } = useSWR(() => '/api/get-coffee/' + next_id, fetcher);
   
-  const [paymentFormIsVisible, setPaymentFormIsVisible] = useState(false);
-  
   useEffect(() => {
-    if (paymentFormIsVisible) {
-      setPaymentFormIsVisible(false)
-    }
+    setAmount(1)
   }, [router.asPath])
   
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} />
       
       <CoffeeMenu isActive={id} />
     
@@ -49,11 +63,11 @@ const Coffee = () => {
         <section className="relative flex flex-col md:flex-row flex-shrink-0 max-w-[1080px] w-full md:h-[640px] bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight overflow-hidden z-20">
           {data ? (
             <>
-              <aside className={`${paymentFormIsVisible ? 'translate-y-[-85px] md:translate-y-0' : 'bg-gray-50 dark:bg-transparent md:bg-transparent'} relative flex items-center justify-center md:w-2/5 xl:w-1/2 h-[250px] md:h-full md:overflow-hidden z-10 transition duration-500 ease-in-out`}>
-                <img className={`${paymentFormIsVisible && 'md:translate-x-[-33%]'} scale-50 translate-y-[-40px] md:translate-y-[-10px] md:scale-100 max-w-min transition duration-500 ease-in-out`} src={`/images${data.image}`} width={800} height={800} />
+              <aside className={`${props.paymentFormIsVisible ? 'translate-y-[-85px] md:translate-y-0' : 'bg-gray-50 dark:bg-transparent md:bg-transparent'} relative flex items-center justify-center md:w-2/5 xl:w-1/2 h-[250px] md:h-full md:overflow-hidden z-10 transition duration-500 ease-in-out`}>
+                <img className={`${props.paymentFormIsVisible && 'md:translate-x-[-33%]'} scale-50 translate-y-[-40px] md:translate-y-[-10px] md:scale-100 max-w-min transition duration-500 ease-in-out`} src={`/images${data.image}`} width={800} height={800} />
               </aside>
               
-              <article className={`${paymentFormIsVisible ? 'opacity-0 translate-x-[20px]' : 'opacity-100'} relative flex flex-col justify-between w-full md:w-3/5 xl:w-1/2 p-6 space-y-4 md:space-y-0 text-left md:bg-gradient-to-r from-gray-50 dark:from-black/50 via-white dark:via-black/0 to-white dark:to-black/0 dark:text-white/90 shadow-crease dark:shadow-darkCrease md:shadow-fold dark:md:shadow-darkFold transition duration-500 ease-in-out z-20`}>
+              <article className={`${props.paymentFormIsVisible ? 'opacity-0 translate-x-[20px]' : 'opacity-100'} relative flex flex-col justify-between w-full md:w-3/5 xl:w-1/2 p-6 space-y-4 md:space-y-0 text-left md:bg-gradient-to-r from-gray-50 dark:from-black/50 via-white dark:via-black/0 to-white dark:to-black/0 dark:text-white/90 shadow-crease dark:shadow-darkCrease md:shadow-fold dark:md:shadow-darkFold transition duration-500 ease-in-out z-20`}>
               
                 <div className="flex flex-col md:p-8 md:pt-4 space-y-2">
                   <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight capitalize sm:truncate">{data.name}</h1>
@@ -74,14 +88,18 @@ const Coffee = () => {
                   </dl>
                 </div>
                 
-                <div className="flex flex-col w-full space-y-6 md:space-y-0">
-                  <p className="font-semibold tracking-tight text-4xl sm:text-5xl md:p-8 md:mb-4"><NumberFormat displayType={'text'} format="$#.##" value={data.price} /></p>
-                  <PayButton color={data.color} id={data.id} paymentFormIsVisible={paymentFormIsVisible} setPaymentFormIsVisible={setPaymentFormIsVisible} />
+                <div className="flex flex-col xs:flex-row w-full xs:space-x-4 space-y-4 xs:space-y-0 pt-8">
+                  <p className="flex xs:w-1/2 py-3 items-center justify-between font-semibold tracking-tight bg-gray-200/25 dark:bg-white/10 rounded-lg select-none">
+                    <CountButton action={decCoffeeCount} icon={MinusIcon} disabled={amount == 1} />
+                    <span className="text-2xl lg:text-4xl">
+                      <NumberFormat displayType={'text'} prefix="$" value={((data.price/100).toFixed(2) * amount).toFixed(2)} />
+                    </span>
+                    <CountButton action={incCoffeeCount} icon={PlusIcon} disabled={amount == 10} />
+                  </p>
+                  <CartButton color={data.color} id={data.id} amount={amount} setCartVisible={props.setCartVisible} />
                 </div>
                 
               </article>
-              
-              <PaymentForm paymentFormIsVisible={paymentFormIsVisible} setPaymentFormIsVisible={setPaymentFormIsVisible} />
             </>
           ) : (
             <div className="flex justify-center items-center w-full h-full min-h-[280px]">
@@ -95,7 +113,15 @@ const Coffee = () => {
       </main>  
     
       <Footer />
+      
+      <Cart isSticky={true} cartVisible={props.cartVisible} setCartVisible={props.setCartVisible} />
     </div>    
+  )
+}
+
+function CountButton(props) {
+  return (
+    <button onClick={props.action} className={`${props.disabled ? 'opacity-0 pointer-events-none' : 'opacity-50 hover:opacity-75 active:opacity-100'} flex items-center px-3 select-none flex-shrink-0 transition dark:invert`}><Image src={props.icon} /></button>
   )
 }
 
@@ -145,5 +171,3 @@ function HoverLink(props) {
     </Link>
   )
 }
-
-export default Coffee
