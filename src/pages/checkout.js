@@ -62,13 +62,19 @@ export default function Checkout(props) {
         <section className="relative max-w-[1080px] w-full bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight p-8">
           {props.isAuthed ? (
             <div className="flex items-center justify-between">
-              <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span> <b>dizzyup</b></p>
+              <p className="flex flex-col xs:flex-row xs:items-center text-black/75 dark:text-white/75 text-sm sm:text-base">
+                <span className="mr-2">Signed in as</span>
+                <span className="inline-flex">
+                  <span className="flex items-center mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span>
+                  <b>dizzyup</b>
+                </span>
+              </p>
               <button onClick={signOut} className="relative whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 -mx-1 uppercase text-[11px] tracking-widest text-center transition">Sign out</button>
             </div>
           ) : (
             <button onClick={signIn} className="bg-black/90 dark:bg-white/90 hover:bg-black dark:hover:bg-white text-white dark:text-black/75 shadow-subtle relative flex items-center justify-between w-full h-[72px] px-8 text-left text-white rounded-lg  group transition duration-500 ease-in-out overflow-hidden translate-x-0">
               <span className="absolute left-0 top-0 bottom-0 w-1/2 bg-gradient-to-r from-white/0 via-white/20 dark:via-white/75 to-white/0 shimmer transition ease-in-out"></span>
-              <span className="uppercase tracking-widest text-lg">Sign in to checkout</span>
+              <span className="uppercase tracking-widest leading-tight text-lg">Sign in to checkout</span>
               <span className="flex items-center invert dark:invert-0 group-hover:translate-x-[8px] transition duration-500 ease-in-out">
                 <Image src={ChevronsIcon} />
               </span>

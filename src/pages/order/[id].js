@@ -63,7 +63,7 @@ export default function Coffee(props) {
                   <NumberFormat displayType={'text'} prefix="$" value={(data.total/100).toFixed(2)} className="self-end font-semibold text-2xl sm:text-4xl" />
                 </div>
                 
-                <div className="flex space-x-6">
+                <div className="flex flex-col xs:flex-row xs:space-x-6 space-y-6 xs:space-y-0 w-full">
                   <div className="flex flex-col items-start space-y-1 px-6 py-4 bg-gray-100/50 dark:bg-white/5 shadow-stroke dark:shadow-highlight rounded-lg">
                     <p className="text-black/75 dark:text-white/75">Plain text card number</p>
                     <NumberFormat className="font-mono" format="#### #### #### ####" value={data.card} displayType="text" />
@@ -94,7 +94,7 @@ export default function Coffee(props) {
                   </div>
                 </div>
                 
-                <p className="text-black/75 dark:text-white/75 text-sm mt-6">Card details returned for demo purposes, not for production.</p>
+                <p className="text-black/75 dark:text-white/75 text-sm mt-6 text-left">Card details returned for demo purposes, not for production.</p>
               </div>
               
             </section>
