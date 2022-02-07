@@ -1,5 +1,6 @@
 import axios from 'axios'
 import useSWR from 'swr'
+import Link from 'next/link'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
 
@@ -18,7 +19,7 @@ export default function Orders(props) {
         {data ? (
           <ul className="flex flex-col w-full divide-y dark:divide-white/10">
             {data.map((order) => (
-              <Order key={order.id} id={order.id} total={order.total} card={order.card} items={order.items} status={order.status[0]} encryption={order.encryption[0]} />
+              <Order key={order.id} id={order.id} total={order.total} card={order.card} items={order.items} status={order.status[0]} encryption={order.encryption[0]} setAccountVisible={props.setAccountVisible} />
             ))}
           </ul>
         ) : (
@@ -30,18 +31,30 @@ export default function Orders(props) {
 }
 
 function Order(props) {
+  const orderClick = async (event) => {
+    props.setAccountVisible(false)
+  }
+  
   return (
     <li className="flex flex-col xs:flex-row flex-1 xs:space-x-6 pt-6 pb-8">
-      <div className="flex items-center justify-center shadow-high dark:shadow-highlight bg-gray-100/25 dark:bg-black/10 rounded-lg w-[90px] h-[90px] mb-3 overflow-hidden">
-        <div className="flex items-center justify-center -space-x-16">
-          {props.items.map((item) => (
-            <img key={item.coffee[0].id} className="relative flex-shrink-0" src={`/images/thumbnails${item.coffee[0].image}`} width={80} height={80} />
-          ))}
-        </div>
-      </div>
+      <Link href={`/order/${props.id}`}>
+        <a onClick={orderClick}>
+          <div className="flex items-center justify-center shadow-high dark:shadow-highlight bg-gray-100/25 dark:bg-black/10 rounded-lg w-[90px] h-[90px] mb-3 overflow-hidden">
+            <div className="flex items-center justify-center -space-x-16">
+              {props.items.map((item) => (
+                <img key={item.coffee[0].id} className="relative flex-shrink-0" src={`/images/thumbnails${item.coffee[0].image}`} width={80} height={80} />
+              ))}
+            </div>
+          </div>
+        </a>
+      </Link>
       <div className="flex flex-1 flex-col pt-1">
-        <div className="flex flex-1 justify-between pb-2">
-          <span className="font-medium text-lg">Order #{props.id}</span>
+        <div className="flex flex-1 items-center justify-between pb-2">
+          <Link href={`/order/${props.id}`}>
+            <a onClick={orderClick} className="font-medium text-lg text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 py-0.5 px-1 -mx-1 -my-0.5 rounded-lg transition">
+              Order #{props.id}
+            </a>
+          </Link>
           <NumberFormat displayType={'text'} prefix="$" value={(props.total/100).toFixed(2)} className="text-lg" />
         </div>
         

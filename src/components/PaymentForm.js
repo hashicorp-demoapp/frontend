@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
 
@@ -10,6 +11,8 @@ import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-24.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-24.svg'
 
 export default function PaymentForm(props) {
+  const router = useRouter();
+  
   const [hasAutofilled, setHasAutofilled] = useState(false);
   
   const [visaSelected, setVisaSelected] = useState(true);
@@ -24,7 +27,7 @@ export default function PaymentForm(props) {
   const formComplete = cardholderName != "" && cardNumber != "" && expiryDate != "" && cvcNumber != "";
   
   const submit = async (event) => {
-    props.setHasPaid(true);
+    router.push('/order/1')
     event.preventDefault();
   };
   
@@ -58,41 +61,35 @@ export default function PaymentForm(props) {
   };
   
   return (
-    <>
-      {props.hasPaid ? (
-        <PaymentStatus />
-      ) : (
-        <form className="flex flex-col w-full p-8 text-left" onSubmit={submit}>
-          <div className="space-y-2 pb-8">
-            <h2 className="font-semibold text-2xl sm:text-3xl leading-none sm:leading-tight sm:truncate">Make payment</h2>
-            <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Use any card details or <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 pt-0.5 pb-1 px-1 -mx-1 -my-1 rounded-lg transition" onClick={autofill}>autofill</button>. No payment will be taken.</p>
-          </div>
-          
-          <fieldset className="mb-4">
-            <ul className="flex space-x-4" onChange={onCardChange}>
-              <Radio id="card-visa" label="Visa" value="visa" isChecked={visaSelected} />
-              <Radio id="card-mastercard" label="Mastercard" value="mastercard" isChecked={mastercardSelected} />
-              <Radio id="card-amex" label="Amex" value="amex" isChecked={amexSelected} />
-            </ul>
-          </fieldset>
-          
-          <fieldset className="flex">
-            <Field value={cardholderName} setter={setCardholderName} id="cardholder" type="text" label="Cardholder Name*" placeholder="Enter name" />
-          </fieldset>
-          
-          <fieldset className="flex">
-            <Field value={cardNumber} setter={setCardNumber} id="number" type="cardnumber" label="Card Number*" placeholder="Enter card number" />
-          </fieldset>
-          
-          <fieldset className="grid grid-cols-2 gap-6">
-            <Field value={expiryDate} setter={setExpiryDate} id="expiry" type="cardexpiry" label="Expiry Date*" placeholder="MM/YYYY" />
-            <Field value={cvcNumber} setter={setCvcNumber} id="cvc" type="cardcvc" label="CVC*" placeholder="***" />
-          </fieldset>
-                    
-          <SubmitButton disabled={!formComplete} />
-        </form>
-      )}
-    </>
+    <form className="flex flex-col w-full p-8 text-left" onSubmit={submit}>
+      <div className="space-y-2 pb-8">
+        <h2 className="font-semibold text-2xl sm:text-3xl leading-none sm:leading-tight sm:truncate">Make payment</h2>
+        <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Use any card details or <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 pt-0.5 pb-1 px-1 -mx-1 -my-1 rounded-lg transition" onClick={autofill}>autofill</button>. No payment will be taken.</p>
+      </div>
+      
+      <fieldset className="mb-4">
+        <ul className="flex space-x-4" onChange={onCardChange}>
+          <Radio id="card-visa" label="Visa" value="visa" isChecked={visaSelected} />
+          <Radio id="card-mastercard" label="Mastercard" value="mastercard" isChecked={mastercardSelected} />
+          <Radio id="card-amex" label="Amex" value="amex" isChecked={amexSelected} />
+        </ul>
+      </fieldset>
+      
+      <fieldset className="flex">
+        <Field value={cardholderName} setter={setCardholderName} id="cardholder" type="text" label="Cardholder Name*" placeholder="Enter name" />
+      </fieldset>
+      
+      <fieldset className="flex">
+        <Field value={cardNumber} setter={setCardNumber} id="number" type="cardnumber" label="Card Number*" placeholder="Enter card number" />
+      </fieldset>
+      
+      <fieldset className="grid grid-cols-2 gap-6">
+        <Field value={expiryDate} setter={setExpiryDate} id="expiry" type="cardexpiry" label="Expiry Date*" placeholder="MM/YYYY" />
+        <Field value={cvcNumber} setter={setCvcNumber} id="cvc" type="cardcvc" label="CVC*" placeholder="***" />
+      </fieldset>
+                
+      <SubmitButton disabled={!formComplete} />
+    </form>
   )
 }
 
@@ -106,40 +103,5 @@ function SubmitButton(props) {
         <Image src={ChevronsIcon} />
       </span>
     </button>
-  )
-}
-
-function PaymentStatus(props) {
-  
-  return (
-    <div className="flex flex-col text-left p-8 dark:text-white/90">
-      <div className="space-y-2 pb-8">
-        <h2 className="font-semibold text-2xl sm:text-3xl leading-none sm:leading-tight capitalize sm:truncate">Payment received</h2>
-        <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">(But not taken, because this is just a demo)</p>
-      </div>
-      
-      <div className="flex flex-col items-start space-y-2 pb-5 mb-5 border-b border-gray-200 dark:border-white/10">
-        <p className="text-black/75 dark:text-white/75">Status</p>
-        <p className="flex space-x-3 text-base">
-          <Image src={CheckIcon} className="icon-green" />
-          <span>Payment processed successfully</span>
-        </p>
-      </div>
-      
-      <div className="flex flex-col items-start space-y-2 pb-5 mb-5">
-        <p className="text-black/75 dark:text-white/75">Encryption Status</p>
-        <p className="flex space-x-3 text-base">
-          <Image src={FailIcon} className="icon-red" />
-          <span>Encryption is disabled</span>
-        </p>
-      </div>
-      
-      <div className="flex flex-col items-start space-y-1 px-6 py-4 bg-gray-100/50 dark:bg-white/5 shadow-stroke dark:shadow-highlight rounded-lg">
-        <p className="text-black/75 dark:text-white/75">Plain text card number</p>
-        <NumberFormat className="font-mono" format="#### #### #### ####" value="1234123412341234" displayType="text" />
-      </div>
-      
-      <p className="text-black/75 dark:text-white/75 text-sm mt-6">Card details returned for demo purposes, not for production.</p>
-    </div>
   )
 }

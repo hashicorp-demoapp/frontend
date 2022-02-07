@@ -1,6 +1,7 @@
-import { useState } from 'react'
 import axios from 'axios'
 import useSWR from 'swr'
+import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
 
@@ -11,6 +12,10 @@ import ChevronsIcon from '@hashicorp/flight-icons/svg/chevrons-right-24.svg'
 import AvatarIcon from '@hashicorp/flight-icons/svg/user-circle-16.svg'
 
 export default function Account(props) {
+  const router = useRouter();
+  
+  const timer = useRef(null);
+  
   const [isCreatingAccount, setIsCreatingAccount] = useState(false)
   
   const [username, setUsername] = useState('');
@@ -31,17 +36,29 @@ export default function Account(props) {
   
   const signIn = async (event) => {
     event.preventDefault();
-    props.setIsAuthed(true);
+    
+    if (router.pathname == '/checkout') {
+      props.setAccountVisible(false)
+      
+      timer.current = setTimeout(() => {
+        props.setIsAuthed(true);
+      }, 500);
+    } else {
+      props.setIsAuthed(true);
+    }
   };
 
   const signOut = async (event) => {
     event.preventDefault();
     props.setIsAuthed(false);
-    
   };
   
   const signinComplete = username != "" && password != '';
   const signupComplete = username != "" && password != '' && confirmPassword != '';
+  
+  useEffect(() => {
+    return () => clearTimeout(timer.current);
+  }, []);
   
   return (
     <>
@@ -78,7 +95,7 @@ export default function Account(props) {
         <div className="flex flex-col px-8 pt-6">
           {props.isAuthed ? (
             <>
-              <Orders />
+              <Orders setAccountVisible={props.setAccountVisible} />
             </>
           ) : (
             <form onSubmit={signIn}>
