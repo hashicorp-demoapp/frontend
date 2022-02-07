@@ -47,7 +47,7 @@ export default function Checkout(props) {
           <Cart cartVisible={true} isInline={true} />
           
           {data && (
-            <div className="flex flex-col items-start bg-gray-50 border-t border-gray-100 mt-2 px-8 py-4">
+            <div className="flex flex-col items-start bg-gray-50 dark:bg-black/25 border-t border-gray-100 dark:border-white/10 mt-2 px-8 py-4">
               <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Total to pay</p>
               <p className="text-black/75 dark:text-white/75 font-semibold text-2xl sm:text-4xl"><NumberFormat displayType={'text'} prefix="$" value={(data[0].total/100).toFixed(2)} /></p>
             </div>

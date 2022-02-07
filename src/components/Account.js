@@ -5,8 +5,10 @@ import Image from 'next/image'
 import NumberFormat from 'react-number-format'
 
 import Field from 'components/Field'
+import Orders from 'components/Orders'
 
 import ChevronsIcon from '@hashicorp/flight-icons/svg/chevrons-right-24.svg'
+import AvatarIcon from '@hashicorp/flight-icons/svg/user-circle-16.svg'
 
 export default function Account(props) {
   const [isCreatingAccount, setIsCreatingAccount] = useState(false)
@@ -30,6 +32,11 @@ export default function Account(props) {
   const signIn = async (event) => {
     event.preventDefault();
     props.setIsAuthed(true);
+  };
+
+  const signOut = async (event) => {
+    event.preventDefault();
+    props.setIsAuthed(false);
     
   };
   
@@ -46,30 +53,35 @@ export default function Account(props) {
           {props.isAuthed ? (
             <>
               <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Your account</h1>
-              <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <b>dizzyup</b></p>
+              <div className="flex items-center justify-between">
+                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span> <b>dizzyup</b></p>
+                <button onClick={signOut} className="relative whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 -mx-1 uppercase text-[11px] tracking-widest text-center transition">Sign out</button>
+              </div>
             </>
           ) : (
             <>
               {isCreatingAccount ? (
                 <>
                   <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Create account</h1>
-                  <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Already have an account? <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 py-1 px-1 -mx-1 -my-1 rounded-lg transition" onClick={switchToSignIn}>Sign in</button></p>
+                  <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Already have an account? <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 pt-0.5 pb-1 px-1 -mx-1 -my-1 rounded-lg transition" onClick={switchToSignIn}>Sign in</button></p>
                 </>
               ) : (
                 <>
                   <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Sign in</h1>
-                  <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Or create a <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 py-1 px-1 -mx-1 -my-1 rounded-lg transition" onClick={switchToNewAccount}>new account</button></p>
+                  <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Or create a <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 pt-0.5 pb-1 px-1 -mx-1 -my-1 rounded-lg transition" onClick={switchToNewAccount}>new account</button></p>
                 </>
               )}
             </>
           )}
         </div>
         
-        <div className="flex flex-col px-8">
+        <div className="flex flex-col px-8 pt-6">
           {props.isAuthed ? (
-            <p className="py-8">Signed in</p>
+            <>
+              <Orders />
+            </>
           ) : (
-            <form onSubmit={signIn} className="pt-6">
+            <form onSubmit={signIn}>
               {isCreatingAccount ? (
                 <>
                   <fieldset className="flex">

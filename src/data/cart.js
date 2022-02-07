@@ -1,6 +1,6 @@
 export const cart = [
   {
-    total: 1800,
+    total: 1700,
     items: [
       {
         id: 1,
@@ -45,7 +45,7 @@ export const cart = [
       {
         id: 3,
         amount: 1,
-        price: 350,
+        price: 250,
         coffee: [
           {
             id: 9,

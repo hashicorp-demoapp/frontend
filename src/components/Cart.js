@@ -45,15 +45,15 @@ export default function Cart(props) {
 
 function CartItems(props) {
   return (
-    <ul className={`${props.allowOverflow ? 'flex-wrap' : 'overflow-x-auto overflow-y-hidden scroll-style'} flex items-center `}>
+    <>
       {props.data.map((cart) => (
-        <>
+        <ul key="cart" className={`${props.allowOverflow ? 'flex-wrap' : 'overflow-x-auto overflow-y-hidden scroll-style'} flex items-center `}>
           {cart.items.map((item) => (
-            <CartItem coffee={item.coffee[0]} count={item.amount} price={item.price} />
+            <CartItem key={item.id} coffee={item.coffee[0]} count={item.amount} price={item.price} />
           ))}
-        </>
+        </ul>
       ))}
-    </ul>
+    </>
   )
 }
 
@@ -72,10 +72,10 @@ function CartItem(props) {
         </div>
         <span className="absolute right-5 top-3 text-sm text-white dark:text-black px-2 bg-black/75 dark:bg-white/90 backdrop-blur-md rounded-full">{props.count}</span>
       </div>
-      <div className="relative flex flex-col items-start -ml-2 dark:invert">
-        <span className="whitespace-nowrap text-black/75 uppercase text-[10px] tracking-widest text-center">{props.coffee.name}</span>
-        <span className="whitespace-nowrap text-black/75 uppercase text-[10px] tracking-widest text-center"><NumberFormat displayType={'text'} prefix="$" value={(props.price/100).toFixed(2)} /></span>
-        <button className="whitespace-nowrap text-black/50 hover:text-red-600 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 uppercase text-[10px] tracking-widest text-center mt-1 transition">Remove</button>
+      <div className="relative flex flex-col items-start -ml-2">
+        <span className="whitespace-nowrap text-black/75 dark:text-white/75 uppercase text-[10px] tracking-widest text-center">{props.coffee.name}</span>
+        <span className="whitespace-nowrap text-black/75 dark:text-white/75 uppercase text-[10px] tracking-widest text-center"><NumberFormat displayType={'text'} prefix="$" value={(props.price/100).toFixed(2)} /></span>
+        <button className="whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 uppercase text-[10px] tracking-widest text-center mt-1 transition">Remove</button>
       </div>
     </li>
   )

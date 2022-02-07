@@ -65,7 +65,7 @@ export default function PaymentForm(props) {
         <form className="flex flex-col w-full p-8 text-left" onSubmit={submit}>
           <div className="space-y-2 pb-8">
             <h2 className="font-semibold text-2xl sm:text-3xl leading-none sm:leading-tight sm:truncate">Make payment</h2>
-            <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Use any card details or <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 py-1 px-1 -mx-1 rounded-lg transition" onClick={autofill}>autofill</button>. No payment will be taken.</p>
+            <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Use any card details or <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 pt-0.5 pb-1 px-1 -mx-1 -my-1 rounded-lg transition" onClick={autofill}>autofill</button>. No payment will be taken.</p>
           </div>
           
           <fieldset className="mb-4">
