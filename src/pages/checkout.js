@@ -36,7 +36,7 @@ export default function Checkout(props) {
     <div className="flex flex-col min-h-screen">
       <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} />
 
-      <main className="relative flex flex-col items-center justify-center w-full flex-1 space-y-12 py-12 px-8 text-center z-30">
+      <main className="relative flex flex-col items-center justify-center w-full flex-1 space-y-12 py-12 px-8 text-center dark:text-white/90 z-30">
         <header className="flex items-center justify-between max-w-[1080px] w-full xs:px-8 space-x-4">
           <div className="flex flex-col text-left space-y-2">
             <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Checkout</h1>
