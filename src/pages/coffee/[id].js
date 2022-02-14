@@ -17,88 +17,109 @@ import NextIcon from '@hashicorp/flight-icons/svg/chevron-right-24.svg'
 import MinusIcon from '@hashicorp/flight-icons/svg/minus-circle-24.svg'
 import PlusIcon from '@hashicorp/flight-icons/svg/plus-circle-24.svg'
 
+import { queryVarFetcher } from 'gql/apolloClient';
+import { COFFEE_QUERY, COFFEE_IMG_QUERY, COFFEE_INGREDIENTS_QUERY } from 'gql/gqlQueries';
+
 export default function Coffee(props) {
   const router = useRouter();
   const { id } = router.query
-  
+
   const prev_id = id - 1
   const next_id = parseInt(id) + 1
-  
+
   const [amount, setAmount] = useState(1)
-  
+
   const incCoffeeCount = () => {
     const count = amount;
     if (count <= 10) {
       setAmount(count + 1)
     }
   };
-  
+
   const decCoffeeCount = () => {
     const count = amount;
     if (count > 1) {
       setAmount(count - 1)
     }
   };
-  
+
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(() => '/api/get-coffee/' + id, fetcher);
-  
-  const { prev, prevError } = useSWR(() => '/api/get-coffee/' + prev_id, fetcher);
-  const { next, nextError } = useSWR(() => '/api/get-coffee/' + next_id, fetcher);
-  
+  // const { data, error } = useSWR(() => '/api/get-coffee/' + id, fetcher);
+  const { data, error } = useSWR({
+    query: COFFEE_QUERY,
+    variables: { coffeeID: String(id) }
+  }, queryVarFetcher);
+
+  // If data exits, set to coffee object
+  let coffee;
+  if (data) coffee = data.data.coffee
+
+  const { data: idata, error: ierror } = useSWR({
+    query: COFFEE_INGREDIENTS_QUERY,
+    variables: { coffeeID: String(id) }
+  }, queryVarFetcher);
+
+  // If data exits, set to coffee object
+  let ingredients;
+  if (idata) ingredients = idata.data.coffeeIngredients
+
+  console.log(idata)
+  console.log(ierror)
+
   useEffect(() => {
     setAmount(1)
   }, [router.asPath])
-  
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} />
-      
+
       <CoffeeMenu isActive={id} />
-    
+
       <main className="relative flex items-center justify-center w-full flex-1 py-12 px-8 text-center z-30">
-      
+
         <PrevCoffee id={id} />
-        
+
         <section className="relative flex flex-col md:flex-row flex-shrink-0 max-w-[1080px] w-full md:h-[640px] bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight overflow-hidden z-20">
-          {data ? (
+          {coffee ? (
             <>
               <aside className={`${props.paymentFormIsVisible ? 'translate-y-[-85px] md:translate-y-0' : 'bg-gray-50 dark:bg-transparent md:bg-transparent'} relative flex items-center justify-center md:w-2/5 xl:w-1/2 h-[250px] md:h-full md:overflow-hidden z-10 transition duration-500 ease-in-out`}>
-                <img className={`${props.paymentFormIsVisible && 'md:translate-x-[-33%]'} scale-50 translate-y-[-40px] md:translate-y-[-10px] md:scale-100 max-w-min transition duration-500 ease-in-out`} src={`/images${data.image}`} width={800} height={800} />
+                <img className={`${props.paymentFormIsVisible && 'md:translate-x-[-33%]'} scale-50 translate-y-[-40px] md:translate-y-[-10px] md:scale-100 max-w-min transition duration-500 ease-in-out`} src={`/images${coffee.image}`} width={800} height={800} />
               </aside>
-              
+
               <article className={`${props.paymentFormIsVisible ? 'opacity-0 translate-x-[20px]' : 'opacity-100'} relative flex flex-col justify-between w-full md:w-3/5 xl:w-1/2 p-6 space-y-4 md:space-y-0 text-left md:bg-gradient-to-r from-gray-50 dark:from-black/50 via-white dark:via-black/0 to-white dark:to-black/0 dark:text-white/90 shadow-crease dark:shadow-darkCrease md:shadow-fold dark:md:shadow-darkFold transition duration-500 ease-in-out z-20`}>
-              
+
                 <div className="flex flex-col md:p-8 md:pt-4 space-y-2">
-                  <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight capitalize sm:truncate">{data.name}</h1>
-                  <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">{data.teaser}</p>
+                  <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight capitalize sm:truncate">{coffee.name}</h1>
+                  <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">{coffee.teaser}</p>
                 </div>
-                
+
                 <div className="flex flex-col md:px-8">
                   <dl className="grid sm:grid-cols-3">
                     <dt className="text-black/75 dark:text-white/75 text-sm sm:border-b border-gray-200 dark:border-white/10 sm:py-2 pt-2 sm:pt-3">Collection</dt>
-                    <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{data.collection}</dd>
+                    <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{coffee.collection}</dd>
                     <dt className="text-black/75 dark:text-white/75 text-sm sm:border-b border-gray-200 dark:border-white/10 sm:py-2 pt-4 sm:pt-3">Origin</dt>
-                    <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{data.origin}</dd>
+                    <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{coffee.origin}</dd>
                     <dt className="text-black/75 dark:text-white/75 text-sm sm:py-2 pt-4 sm:pt-3">Ingredients</dt>
                     <dd className="col-span-2 py-2 pt-2.5">
-                      <span className="block line-clamp-1">20ml Espresso</span>
-                      <span className="block line-clamp-1">30ml Semi Skimmed Milk</span>
+                      {ingredients && ingredients.map((i) => (
+                        <span className="block line-clamp-1">{`${i.quantity} ${i.unit} ${i.name} `}</span>
+                      ))}
                     </dd>
                   </dl>
                 </div>
-                
+
                 <div className="flex flex-col xs:flex-row w-full xs:space-x-4 space-y-4 xs:space-y-0 pt-8">
                   <p className="flex xs:w-1/2 py-3 items-center justify-between font-semibold tracking-tight bg-gray-200/25 dark:bg-white/10 rounded-lg select-none">
                     <CountButton action={decCoffeeCount} icon={MinusIcon} disabled={amount == 1} />
                     <span className="text-2xl lg:text-4xl">
-                      <NumberFormat displayType={'text'} prefix="$" value={((data.price/100).toFixed(2) * amount).toFixed(2)} />
+                      <NumberFormat displayType={'text'} prefix="$" value={((coffee.price / 100).toFixed(2) * amount).toFixed(2)} />
                     </span>
                     <CountButton action={incCoffeeCount} icon={PlusIcon} disabled={amount == 10} />
                   </p>
-                  <CartButton color={data.color} id={data.id} amount={amount} setCartVisible={props.setCartVisible} />
+                  <CartButton color={data.color} id={coffee.id} amount={amount} setCartVisible={props.setCartVisible} />
                 </div>
-                
+
               </article>
             </>
           ) : (
@@ -107,15 +128,15 @@ export default function Coffee(props) {
             </div>
           )}
         </section>
-        
+
         <NextCoffee id={id} />
-        
-      </main>  
-    
+
+      </main>
+
       <Footer />
-      
+
       <Cart isSticky={true} cartVisible={props.cartVisible} setCartVisible={props.setCartVisible} />
-    </div>    
+    </div>
   )
 }
 
@@ -127,14 +148,22 @@ function CountButton(props) {
 
 function PrevCoffee(props) {
   const prev_id = parseInt(props.id) - 1
-  
+
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(() => '/api/get-coffee/' + prev_id, fetcher);
-  
+  // const { data, error } = useSWR(() => '/api/get-coffee/' + prev_id, fetcher);
+  const { data, error } = useSWR({
+    query: COFFEE_IMG_QUERY,
+    variables: { coffeeID: String(prev_id) }
+  }, queryVarFetcher);
+
+  // If data exits, set to coffee object
+  let coffee;
+  if (data) coffee = data.data.coffee
+
   return (
     <div className="hidden 2xl:flex flex-1 flex-col items-center justify-center relative -mx-8 h-full overflow-hidden">
-      {data ? (
-        <HoverLink id={prev_id} image={data.image} icon={PrevIcon} direction="prev" />
+      {coffee ? (
+        <HoverLink id={prev_id} image={coffee.image} icon={PrevIcon} direction="prev" />
       ) : (
         <div />
       )}
@@ -144,14 +173,22 @@ function PrevCoffee(props) {
 
 function NextCoffee(props) {
   const next_id = parseInt(props.id) + 1
-  
+
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(() => '/api/get-coffee/' + next_id, fetcher);
-  
+  // const { data, error } = useSWR(() => '/api/get-coffee/' + next_id, fetcher);
+  const { data, error } = useSWR({
+    query: COFFEE_IMG_QUERY,
+    variables: { coffeeID: String(next_id) }
+  }, queryVarFetcher);
+
+  // If data exits, set to coffee object
+  let coffee;
+  if (data) coffee = data.data.coffee
+
   return (
     <div className="hidden 2xl:flex flex-1 flex-col items-center justify-center relative -mx-8 h-full overflow-hidden">
-      {data ? (
-        <HoverLink id={next_id} image={data.image} icon={NextIcon} direction="next" />
+      {coffee ? (
+        <HoverLink id={next_id} image={coffee.image} icon={NextIcon} direction="next" />
       ) : (
         <div></div>
       )}
