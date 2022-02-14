@@ -82,11 +82,11 @@ export default function Coffee(props) {
         <section className="relative flex flex-col md:flex-row flex-shrink-0 max-w-[1080px] w-full md:h-[640px] bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight overflow-hidden z-20">
           {coffee ? (
             <>
-              <aside className={`${props.paymentFormIsVisible ? 'translate-y-[-85px] md:translate-y-0' : 'bg-gray-50 dark:bg-transparent md:bg-transparent'} relative flex items-center justify-center md:w-2/5 xl:w-1/2 h-[250px] md:h-full md:overflow-hidden z-10 transition duration-500 ease-in-out`}>
-                <img className={`${props.paymentFormIsVisible && 'md:translate-x-[-33%]'} scale-50 translate-y-[-40px] md:translate-y-[-10px] md:scale-100 max-w-min transition duration-500 ease-in-out`} src={`/images${coffee.image}`} width={800} height={800} />
+              <aside className="bg-gray-50 dark:bg-transparent md:bg-transparent relative flex items-center justify-center md:w-2/5 xl:w-1/2 h-[250px] md:h-full md:overflow-hidden z-10 transition duration-500 ease-in-out">
+                <img className="scale-50 translate-y-[-40px] md:translate-y-[-10px] md:scale-100 max-w-min transition duration-500 ease-in-out" src={`/images${coffee.image}`} width={800} height={800} />
               </aside>
 
-              <article className={`${props.paymentFormIsVisible ? 'opacity-0 translate-x-[20px]' : 'opacity-100'} relative flex flex-col justify-between w-full md:w-3/5 xl:w-1/2 p-6 space-y-4 md:space-y-0 text-left md:bg-gradient-to-r from-gray-50 dark:from-black/50 via-white dark:via-black/0 to-white dark:to-black/0 dark:text-white/90 shadow-crease dark:shadow-darkCrease md:shadow-fold dark:md:shadow-darkFold transition duration-500 ease-in-out z-20`}>
+              <article className="relative flex flex-col justify-between w-full md:w-3/5 xl:w-1/2 p-6 space-y-4 md:space-y-0 text-left md:bg-gradient-to-r from-gray-50 dark:from-black/50 via-white dark:via-black/0 to-white dark:to-black/0 dark:text-white/90 shadow-crease dark:shadow-darkCrease md:shadow-fold dark:md:shadow-darkFold transition duration-500 ease-in-out z-20">
 
                 <div className="flex flex-col md:p-8 md:pt-4 space-y-2">
                   <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight capitalize sm:truncate">{coffee.name}</h1>
