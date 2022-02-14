@@ -54,6 +54,8 @@ export default function Coffee(props) {
   let coffee;
   if (data) coffee = data.data.coffee
 
+  console.log(coffee)
+
   const { data: idata, error: ierror } = useSWR({
     query: COFFEE_INGREDIENTS_QUERY,
     variables: { coffeeID: String(id) }
@@ -62,9 +64,6 @@ export default function Coffee(props) {
   // If data exits, set to coffee object
   let ingredients;
   if (idata) ingredients = idata.data.coffeeIngredients
-
-  console.log(idata)
-  console.log(ierror)
 
   useEffect(() => {
     setAmount(1)
@@ -117,7 +116,7 @@ export default function Coffee(props) {
                     </span>
                     <CountButton action={incCoffeeCount} icon={PlusIcon} disabled={amount == 10} />
                   </p>
-                  <CartButton color={data.color} id={coffee.id} amount={amount} setCartVisible={props.setCartVisible} />
+                  <CartButton color={coffee.color} id={coffee.id} amount={amount} setCartVisible={props.setCartVisible} />
                 </div>
 
               </article>

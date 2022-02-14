@@ -21,6 +21,7 @@ const COFFEE_QUERY = gql`
       collection
       origin
       color
+      price
     }
   }
 `;
@@ -43,10 +44,22 @@ const COFFEE_INGREDIENTS_QUERY = gql`
   }
 `;
 
+const ALL_ORDERS_QUERY = gql`
+  query GetAllOrders {
+    orders {
+      id
+      items {
+        coffee { name, price, image }
+        quantity
+      }
+    }
+  }
+`;
 
 export {
   ALL_COFFEES_QUERY,
   COFFEE_QUERY,
   COFFEE_IMG_QUERY,
-  COFFEE_INGREDIENTS_QUERY
+  COFFEE_INGREDIENTS_QUERY,
+  ALL_ORDERS_QUERY
 };
