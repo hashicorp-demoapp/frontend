@@ -5,6 +5,9 @@ import { ALL_COFFEES_QUERY } from 'gql/gqlQueries';
 
 import useSWR from 'swr'
 import Link from 'next/link'
+import Image from 'next/image'
+
+import ErrorIcon from '@hashicorp/flight-icons/svg/alert-triangle-24.svg'
 
 var Element = Scroll.Element
 var scroller = Scroll.scroller
@@ -36,34 +39,54 @@ export default function CoffeeMenu(props) {
     <>
       {props.isHero == true ? (
         <>
-          {error &&
-            <h4 className="flex items-center space-x-2 font-medium text-lg mt-16">
-              Unable to query all coffees. Check console for error messages.
-            </h4>
-          }
-          <ul className="grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-0 xs:gap-8 pt-8 pb-16 items-center justify-center">
-            {coffees && coffees.map((coffee) => (
-              <CoffeeMenuItem isInHero={props.isHero} coffee={coffee} key={coffee.id} />
-            ))}
-          </ul>
+          {coffees ? (
+            <ul className="grid xs:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-0 xs:gap-8 pt-8 pb-16 items-center justify-center">
+              {coffees.map((coffee) => (
+                <CoffeeMenuItem isInHero={props.isHero} coffee={coffee} key={coffee.id} />
+              ))}
+            </ul>
+          ) : (
+            <div className="flex items-center justify-center py-12">
+              {error ? (
+                <div className="flex flex-col items-center text-black/75 dark:text-white/75">
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
+                  <h4 className="mt-4">Unable to query all coffees.</h4>
+                  <p className="text-sm opacity-75">Check the console for error messages.</p>
+                </div>
+              ) : (
+                <li className="flex justify-center items-center w-full">
+                  <span className="animate-ping w-3 h-3 rounded-full bg-gray-200 dark:bg-white/25"></span>
+                </li>
+              )}
+            </div>
+          )}
         </>
       ) : (
-        <>
-          {error &&
-            <h4 className="flex items-center space-x-2 font-medium text-lg mt-16">
-              Unable to query all coffees. Check console for error messages.
-            </h4>
-          }
-          <nav className="relative z-10 flex items-center justify-center px-0 bg-white/50 dark:bg-black/25 shadow-low dark:shadow-highlight">
+        <nav className="relative z-10 flex items-center justify-center px-0 bg-white/50 dark:bg-black/25 shadow-low dark:shadow-highlight">
+          {coffees ? (
             <Element id="containerElement" className="flex items-center h-[180px] overflow-x-auto scroll-style">
-              {coffees && coffees.map((coffee) => (
-                <Element name={`coffee-${coffee.id} `} key={coffee.id} className="flex-shrink-0">
+              {coffees.map((coffee) => (
+                <Element name={`coffee-${coffee.id}`} key={coffee.id} className="flex-shrink-0">
                   <CoffeeMenuItem coffee={coffee} isActive={props.isActive} />
                 </Element>
               ))}
             </Element>
-          </nav>
-        </>
+          ) : (
+            <div className="flex items-center h-[180px]">
+              {error ? (
+                <div className="flex flex-col items-center text-black/75 dark:text-white/75">
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
+                  <h4 className="mt-4">Unable to query all coffees.</h4>
+                  <p className="text-sm opacity-75">Check the console for error messages.</p>
+                </div>
+              ) : (
+                <li className="flex justify-center items-center w-full">
+                  <span className="animate-ping w-3 h-3 rounded-full bg-gray-200 dark:bg-white/25"></span>
+                </li>
+              )}
+            </div>
+          )}
+        </nav>
       )}
     </>
   )

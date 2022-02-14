@@ -10,6 +10,7 @@ import Orders from 'components/Orders'
 
 import ChevronsIcon from '@hashicorp/flight-icons/svg/chevrons-right-24.svg'
 import AvatarIcon from '@hashicorp/flight-icons/svg/user-circle-16.svg'
+import ErrorIcon from '@hashicorp/flight-icons/svg/alert-circle-16.svg'
 
 import { mutationFetcher } from 'gql/apolloClient';
 import { SIGNUP_MUTATION, LOGIN_MUTATION, SIGNOUT_MUTATION } from 'gql/gqlMutations'
@@ -20,20 +21,29 @@ export default function Account(props) {
   const timer = useRef(null);
 
   const [isCreatingAccount, setIsCreatingAccount] = useState(false)
+  
+  const [hasErrors, setHasErrors] = useState(false)
+  const [errorMessages, setErrorMessages] = useState([''])
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const dismiss = async (event) => {
+    setHasErrors(false)
+    setErrorMessages([''])
     props.setAccountVisible(false);
   };
 
   const switchToNewAccount = async (event) => {
+    setHasErrors(false)
+    setErrorMessages([''])
     setIsCreatingAccount(true);
   };
 
   const switchToSignIn = async (event) => {
+    setHasErrors(false)
+    setErrorMessages([''])
     setIsCreatingAccount(false);
   };
 
@@ -41,6 +51,8 @@ export default function Account(props) {
     event.preventDefault();
 
     if (isCreatingAccount) {
+      setHasErrors(false)
+      
       // Create new account
       mutationFetcher({
         mutation: SIGNUP_MUTATION,
@@ -50,10 +62,12 @@ export default function Account(props) {
         setUsername(data.data.signUp.username)
         successfulAuth()
       }).catch(err => {
-        // TODO: Make this look better
-        alert(err)
+        setHasErrors(true)
+        setErrorMessages([err])
       })
     } else {
+      setHasErrors(false)
+      
       // Sign into existing account
       mutationFetcher({
         mutation: LOGIN_MUTATION,
@@ -63,13 +77,16 @@ export default function Account(props) {
         setUsername(data.data.login.username)
         successfulAuth()
       }).catch(err => {
-        // TODO: Make this look better
-        alert(err)
+        setHasErrors(true)
+        setErrorMessages([err])
       })
     }
   };
 
   const successfulAuth = () => {
+    setHasErrors(false)
+    setErrorMessages([''])
+    
     if (router.pathname == '/checkout') {
       props.setAccountVisible(false)
 
@@ -91,8 +108,8 @@ export default function Account(props) {
       localStorage.removeItem("token")
       props.setIsAuthed(false);
     }).catch(err => {
-      // TODO: Make this look better
-      alert(err)
+      setHasErrors(true)
+      setErrorMessages([err])
     })
   };
 
@@ -142,6 +159,13 @@ export default function Account(props) {
             </>
           ) : (
             <form onSubmit={signIn}>
+              {hasErrors && errorMessages.map((error) => (
+                <div className="flex items-center bg-red-600/90 border border-red-600 rounded-lg px-3 py-2 space-x-2">
+                  <span className="flex items-center invert opacity-75"><Image src={ErrorIcon} /></span>
+                  <p className="text-sm text-white/90">{error.message}</p>
+                </div>
+              ))}
+                
               {isCreatingAccount ? (
                 <>
                   <fieldset className="flex">
