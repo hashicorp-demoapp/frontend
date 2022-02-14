@@ -21,7 +21,7 @@ export default function Account(props) {
   const timer = useRef(null);
 
   const [isCreatingAccount, setIsCreatingAccount] = useState(false)
-  
+
   const [hasErrors, setHasErrors] = useState(false)
   const [errorMessages, setErrorMessages] = useState([''])
 
@@ -47,18 +47,34 @@ export default function Account(props) {
     setIsCreatingAccount(false);
   };
 
+  // Check if already authed
+  if (typeof window !== "undefined") {
+    if (localStorage.getItem("token") && localStorage.getItem("username")) {
+      if (router.pathname == '/checkout') {
+        props.setAccountVisible(false)
+
+        timer.current = setTimeout(() => {
+          props.setIsAuthed(true);
+        }, 500);
+      } else {
+        props.setIsAuthed(true);
+      }
+    }
+  }
+
   const signIn = async (event) => {
     event.preventDefault();
 
     if (isCreatingAccount) {
       setHasErrors(false)
-      
+
       // Create new account
       mutationFetcher({
         mutation: SIGNUP_MUTATION,
         variables: { username, password }
       }).then(data => {
         localStorage.setItem("token", data.data.signUp.token)
+        localStorage.setItem("username", data.data.signUp.username)
         setUsername(data.data.signUp.username)
         successfulAuth()
       }).catch(err => {
@@ -67,13 +83,14 @@ export default function Account(props) {
       })
     } else {
       setHasErrors(false)
-      
+
       // Sign into existing account
       mutationFetcher({
         mutation: LOGIN_MUTATION,
         variables: { username, password }
       }).then(data => {
         localStorage.setItem("token", data.data.login.token)
+        localStorage.setItem("username", data.data.login.username)
         setUsername(data.data.login.username)
         successfulAuth()
       }).catch(err => {
@@ -86,7 +103,7 @@ export default function Account(props) {
   const successfulAuth = () => {
     setHasErrors(false)
     setErrorMessages([''])
-    
+
     if (router.pathname == '/checkout') {
       props.setAccountVisible(false)
 
@@ -106,6 +123,7 @@ export default function Account(props) {
       mutation: SIGNOUT_MUTATION,
     }).then(data => {
       localStorage.removeItem("token")
+      localStorage.removeItem("username")
       props.setIsAuthed(false);
     }).catch(err => {
       setHasErrors(true)
@@ -131,7 +149,7 @@ export default function Account(props) {
             <>
               <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Your account</h1>
               <div className="flex items-center justify-between">
-                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span> <b>{`${username}`}</b></p>
+                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span> <b>{username}</b></p>
                 <button onClick={signOut} className="relative whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 -mx-1 uppercase text-[11px] tracking-widest text-center transition">Sign out</button>
               </div>
             </>
@@ -165,7 +183,7 @@ export default function Account(props) {
                   <p className="text-sm text-white/90">{error.message}</p>
                 </div>
               ))}
-                
+
               {isCreatingAccount ? (
                 <>
                   <fieldset className="flex">

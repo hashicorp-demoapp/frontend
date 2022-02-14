@@ -55,8 +55,6 @@ export default function Coffee(props) {
   let coffee;
   if (data) coffee = data.data.coffee
 
-  console.log(coffee)
-
   const { data: idata, error: ierror } = useSWR({
     query: COFFEE_INGREDIENTS_QUERY,
     variables: { coffeeID: String(id) }
@@ -65,6 +63,25 @@ export default function Coffee(props) {
   // If data exits, set to coffee object
   let ingredients;
   if (idata) ingredients = idata.data.coffeeIngredients
+
+  const [_, setCart] = useState("")
+
+  let cart = {}
+  if (localStorage.getItem("cart")) cart = JSON.parse(localStorage.getItem("cart"))
+
+  const addToCart = async (event) => {
+    cart[id] = {
+      coffee: coffee,
+      quantity: amount,
+    }
+    localStorage.setItem("cart", JSON.stringify(cart))
+
+    // Refreshes cart
+    setCart(amount)
+
+    // Show cart
+    props.setCartVisible(true)
+  };
 
   useEffect(() => {
     setAmount(1)
@@ -117,7 +134,7 @@ export default function Coffee(props) {
                     </span>
                     <CountButton action={incCoffeeCount} icon={PlusIcon} disabled={amount == 10} />
                   </p>
-                  <CartButton color={coffee.color} id={coffee.id} amount={amount} setCartVisible={props.setCartVisible} />
+                  <CartButton action={addToCart} coffee={coffee} amount={amount} setCartVisible={props.setCartVisible} />
                 </div>
 
               </article>

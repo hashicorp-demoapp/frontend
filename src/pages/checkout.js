@@ -16,18 +16,40 @@ import AvatarIcon from '@hashicorp/flight-icons/svg/user-circle-16.svg'
 
 export default function Checkout(props) {
   const router = useRouter();
-  
-  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR("/api/get-cart", fetcher);
-    
+  // const fetcher = async (url) => await axios.get(url).then((res) => res.data);
+  // const { data, error } = useSWR("/api/get-cart", fetcher);
+
+  const [_, setTotal] = useState("")
+
+  let username = ""
+  if (props.isAuthed) {
+    username = localStorage.getItem("username")
+  }
+
+  let total = 0
+  let cart = {}
+  if (typeof window !== "undefined") {
+    if (localStorage.getItem("cart")) cart = JSON.parse(localStorage.getItem("cart"))
+    total = Object.values(cart).reduce((t, next) => {
+      return t + (next.coffee.price * next.quantity)
+    }, 0)
+  }
+
+  const getTotal = () => {
+    total = Object.values(cart).reduce((t, next) => {
+      return t + (next.coffee.price * next.quantity)
+    }, 0)
+    setTotal(total)
+  }
+
   const dismiss = async (event) => {
     router.back()
   }
-  
+
   const signIn = async (event) => {
     props.setAccountVisible(true)
   }
-  
+
   const signOut = async (event) => {
     props.setIsAuthed(false)
   }
@@ -42,23 +64,23 @@ export default function Checkout(props) {
             <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Checkout</h1>
             <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Review and pay for your order <span className="opacity-50">(except not really)</span></p>
           </div>
-          
+
           <button className="flex items-center justify-center px-4 h-10 border border-gray-500/25 dark:border-white/20 rounded-lg uppercase tracking-widest text-sm text-black/75 dark:text-white/75 hover:text-black/100 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/10 transition" onClick={dismiss}>
             <span>Cancel</span>
           </button>
         </header>
-      
+
         <section className="relative max-w-[1080px] w-full bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight pt-2 overflow-hidden">
-          <Cart cartVisible={true} isInline={true} />
-          
-          {data && (
+          <Cart cartVisible={true} isInline={true} onRemoveItem={getTotal} />
+
+          {cart && (
             <div className="flex flex-col items-start bg-gray-50 dark:bg-black/25 border-t border-gray-100 dark:border-white/10 mt-2 px-8 py-4">
               <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Total to pay</p>
-              <p className="text-black/75 dark:text-white/75 font-semibold text-2xl sm:text-4xl"><NumberFormat displayType={'text'} prefix="$" value={(data[0].total/100).toFixed(2)} /></p>
+              <p className="text-black/75 dark:text-white/75 font-semibold text-2xl sm:text-4xl"><NumberFormat displayType={'text'} prefix="$" value={(total / 100).toFixed(2)} /></p>
             </div>
           )}
         </section>
-        
+
         <section className="relative max-w-[1080px] w-full bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight p-8">
           {props.isAuthed ? (
             <div className="flex items-center justify-between">
@@ -66,7 +88,7 @@ export default function Checkout(props) {
                 <span className="mr-2">Signed in as</span>
                 <span className="inline-flex">
                   <span className="flex items-center mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span>
-                  <b>dizzyup</b>
+                  <b>{username}</b>
                 </span>
               </p>
               <button onClick={signOut} className="relative whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 -mx-1 uppercase text-[11px] tracking-widest text-center transition">Sign out</button>
@@ -80,9 +102,9 @@ export default function Checkout(props) {
               </span>
             </button>
           )}
-          
+
         </section>
-        
+
         {props.isAuthed && (
           <section className="relative max-w-[1080px] w-full bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight">
             <PaymentForm />

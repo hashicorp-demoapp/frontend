@@ -56,10 +56,23 @@ const ALL_ORDERS_QUERY = gql`
   }
 `;
 
+const ORDER_QUERY = gql`
+  query GetOrder($orderID: String!) {
+    order(id: $orderID) {
+      id
+      items {
+        coffee { name, price, image }
+        quantity
+      }
+    }
+  }
+`;
+
 export {
   ALL_COFFEES_QUERY,
   COFFEE_QUERY,
   COFFEE_IMG_QUERY,
   COFFEE_INGREDIENTS_QUERY,
-  ALL_ORDERS_QUERY
+  ALL_ORDERS_QUERY,
+  ORDER_QUERY
 };
