@@ -81,7 +81,7 @@ export default function PaymentForm(props) {
     })
   };
 
-  const submitPayment = () => {
+  const submitPayment = async () => {
     // Set cardtype
     let cardType = "Visa"
     if (mastercardSelected) cardType = "Mastercard"

@@ -1,6 +1,16 @@
 version: '3.3'
 services:
-  product-api1:
+  public-api:
+    image: 'hashicorpdemoapp/public-api:v0.0.6'
+    environment:
+      - PRODUCT_API_URI=http://product-api:9090
+      - PAYMENT_API_URI=http://payments:8080
+    links:
+      - 'product-api:product-api'
+      - 'payments:payments'
+    ports:
+      - '8080:8080'
+  product-api:
     image: 'hashicorpdemoapp/product-api:v0.0.20'
     volumes:
       - type: bind
@@ -13,12 +23,10 @@ services:
   product-db:
     image: 'hashicorpdemoapp/product-api-db:v0.0.20'
     ports:
-      - '15432:5432'
+      - '5432:5432'
     environment:
       - POSTGRES_DB=products
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=postgres
   payments:
     image: 'hashicorpdemoapp/payments:latest'
-    ports:
-      - "18000:8080"

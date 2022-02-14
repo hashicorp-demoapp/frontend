@@ -103,7 +103,7 @@ export default function Order(props) {
                   <NumberFormat displayType={'text'} prefix="$" value={(total / 100).toFixed(2)} className="self-end font-semibold text-2xl sm:text-4xl pr-3" />
                 </div>
 
-                {pay && (
+                {Object.keys(pay).length > 0 && (
                   <>
                     <div className="flex flex-wrap flex-col md:flex-row w-full">
                       <div className="flex flex-col items-start space-y-1 px-6 py-4 bg-gray-100/50 dark:bg-white/5 shadow-stroke dark:shadow-highlight rounded-lg mb-6 md:mr-6">
