@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
+import imageLoader from '../../loader'
 
 import Field from 'components/Field'
 import Orders from 'components/Orders'
@@ -149,7 +150,7 @@ export default function Account(props) {
             <>
               <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Your account</h1>
               <div className="flex items-center justify-between">
-                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span> <b>{username}</b></p>
+                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" loader={imageLoader} /></span> <b>{username}</b></p>
                 <button onClick={signOut} className="relative whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 -mx-1 uppercase text-[11px] tracking-widest text-center transition">Sign out</button>
               </div>
             </>
@@ -179,7 +180,7 @@ export default function Account(props) {
             <form onSubmit={signIn}>
               {hasErrors && errorMessages.map((error) => (
                 <div className="flex items-center bg-red-600/90 border border-red-600 rounded-lg px-3 py-2 space-x-2">
-                  <span className="flex items-center invert opacity-75"><Image src={ErrorIcon} /></span>
+                  <span className="flex items-center invert opacity-75"><Image src={ErrorIcon} loader={imageLoader} /></span>
                   <p className="text-sm text-white/90">{error.message}</p>
                 </div>
               ))}
@@ -229,7 +230,7 @@ function SignInButton(props) {
       <span className={`${props.disabled ? 'opacity-0' : 'opacity-100'} absolute left-0 top-0 bottom-0 w-1/2 bg-gradient-to-r from-white/0 via-white/20 dark:via-white/75 to-white/0 shimmer transition ease-in-out`}></span>
       <span className="uppercase tracking-widest text-lg">{props.signUp == true ? 'Create account' : 'Sign In'}</span>
       <span className={`${props.disabled ? 'opacity-0' : 'opacity-75 group-hover:opacity-100'} flex items-center invert dark:invert-0 group-hover:translate-x-[8px] transition duration-500 ease-in-out`}>
-        <Image src={ChevronsIcon} />
+        <Image src={ChevronsIcon} loader={imageLoader} />
       </span>
     </button>
   )

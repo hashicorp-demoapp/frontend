@@ -116,9 +116,9 @@ export default function Order(props) {
                         <p className="text-black/75 dark:text-white/75">Status</p>
                         <p className="flex space-x-3 text-base">
                           {pay.message.includes("success") ? (
-                            <Image src={CheckIcon} className="icon-green" />
+                            <Image src={CheckIcon} className="icon-green" loader={imageLoader} />
                           ) : (
-                            <Image src={FailIcon} className="icon-red" />
+                            <Image src={FailIcon} className="icon-red" loader={imageLoader} />
                           )}
                           <span>{pay.message.split(",")[0]}</span>
                         </p>
@@ -128,9 +128,9 @@ export default function Order(props) {
                         <p className="text-black/75 dark:text-white/75">Encryption Status</p>
                         <p className="flex space-x-3 text-base">
                           {!pay.card_ciphertext.includes("Disabled") ? (
-                            <Image src={CheckIcon} className="icon-green" />
+                            <Image src={CheckIcon} className="icon-green" loader={imageLoader} />
                           ) : (
-                            <Image src={FailIcon} className="icon-red" />
+                            <Image src={FailIcon} className="icon-red" loader={imageLoader} />
                           )}
                           <span>{pay.card_ciphertext}</span>
                         </p>

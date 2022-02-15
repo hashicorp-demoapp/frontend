@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
+import imageLoader from '../../loader'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
@@ -87,7 +88,7 @@ export default function Checkout(props) {
               <p className="flex flex-col xs:flex-row xs:items-center text-black/75 dark:text-white/75 text-sm sm:text-base">
                 <span className="mr-2">Signed in as</span>
                 <span className="inline-flex">
-                  <span className="flex items-center mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span>
+                  <span className="flex items-center mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" loader={imageLoader} /></span>
                   <b>{username}</b>
                 </span>
               </p>
@@ -98,7 +99,7 @@ export default function Checkout(props) {
               <span className="absolute left-0 top-0 bottom-0 w-1/2 bg-gradient-to-r from-white/0 via-white/20 dark:via-white/75 to-white/0 shimmer transition ease-in-out"></span>
               <span className="uppercase tracking-widest leading-tight text-lg">Sign in to checkout</span>
               <span className="flex items-center invert dark:invert-0 group-hover:translate-x-[8px] transition duration-500 ease-in-out">
-                <Image src={ChevronsIcon} />
+                <Image src={ChevronsIcon} loader={imageLoader} />
               </span>
             </button>
           )}

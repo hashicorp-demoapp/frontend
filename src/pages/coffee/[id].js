@@ -146,7 +146,7 @@ export default function Coffee(props) {
             <div className="flex items-center justify-center w-full">
               {error ? (
                 <div className="flex flex-col items-center justify-center text-black/75 dark:text-white/75 h-full min-h-[280px]">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} />
                   <h4 className="mt-4">Unable to query the selected coffee.</h4>
                   <p className="text-sm opacity-75">Check the console for error messages.</p>
                 </div>
@@ -172,7 +172,7 @@ export default function Coffee(props) {
 
 function CountButton(props) {
   return (
-    <button onClick={props.action} className={`${props.disabled ? 'opacity-0 pointer-events-none' : 'opacity-50 hover:opacity-75 active:opacity-100'} flex items-center px-3 select-none flex-shrink-0 transition dark:invert`}><Image src={props.icon} /></button>
+    <button onClick={props.action} className={`${props.disabled ? 'opacity-0 pointer-events-none' : 'opacity-50 hover:opacity-75 active:opacity-100'} flex items-center px-3 select-none flex-shrink-0 transition dark:invert`}><Image src={props.icon} loader={imageLoader} /></button>
   )
 }
 
@@ -231,7 +231,7 @@ function HoverLink(props) {
     <Link href={`/coffee/${props.id}`} scroll={false}>
       <a className="relative group">
         <span className={`${props.direction == 'next' ? 'translate-x-[-10px]' : 'translate-x-[10px]'} absolute left-1/2 top-1/2 w-16 h-16 -ml-8 -mt-8 flex items-center justify-center bg-black/75 backdrop-blur-md shadow-high rounded-full opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 group-hover:translate-x-0 z-20 transition duration-500 ease-in-out`}>
-          <Image src={props.icon} className="invert" />
+          <Image src={props.icon} className="invert" loader={imageLoader} />
         </span>
         <img className="relative max-w-min transition duration-500 ease-in-out opacity-50 group-hover:opacity-75" src={`/images${props.image}`} width={640} height={640} loader={imageLoader} />
       </a>

@@ -50,7 +50,7 @@ export default function CoffeeMenu(props) {
             <div className="flex items-center justify-center py-12">
               {error ? (
                 <div className="flex flex-col items-center text-black/75 dark:text-white/75">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} />
                   <h4 className="mt-4">Unable to query all coffees.</h4>
                   <p className="text-sm opacity-75">Check the console for error messages.</p>
                 </div>
@@ -76,7 +76,7 @@ export default function CoffeeMenu(props) {
             <div className="flex items-center h-[180px]">
               {error ? (
                 <div className="flex flex-col items-center text-black/75 dark:text-white/75">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} />
                   <h4 className="mt-4">Unable to query all coffees.</h4>
                   <p className="text-sm opacity-75">Check the console for error messages.</p>
                 </div>
