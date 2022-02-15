@@ -70,12 +70,12 @@ export default function Order(props) {
                   {order.items.map((item) => (
                     <div className="flex items-center flex-shrink-0">
                       {item.amount > 2 && (
-                        <img className="relative mr-[-170px] scale-90 z-0 flex-shrink-0 opacity-80" src={`/images/thumbnails${item.coffee.image}`} width={200} height={200} loader={imageLoader} />
+                        <img className="relative mr-[-170px] scale-90 z-0 flex-shrink-0 opacity-80" src={`/images/thumbnails${item.coffee.image}`} width={200} height={200} />
                       )}
                       {item.amount > 1 && (
-                        <img className="relative mr-[-170px] scale-95 z-0 flex-shrink-0 opacity-90" src={`/images/thumbnails${item.coffee.image}`} width={200} height={200} loader={imageLoader} />
+                        <img className="relative mr-[-170px] scale-95 z-0 flex-shrink-0 opacity-90" src={`/images/thumbnails${item.coffee.image}`} width={200} height={200} />
                       )}
-                      <img key={item.coffee.id} className="test relative flex-shrink-0" src={`/images/thumbnails${item.coffee.image}`} width={200} height={200} loader={imageLoader} />
+                      <img key={item.coffee.id} className="test relative flex-shrink-0" src={`/images/thumbnails${item.coffee.image}`} width={200} height={200} />
                     </div>
                   ))}
                 </div>
@@ -90,7 +90,7 @@ export default function Order(props) {
                     {order.items.map((item) => (
                       <li key={item.id} className="flex items-center justify-between border-b border-dashed border-gray-200 dark:border-white/20 last:border-none py-3 pr-3">
                         <span className="flex items-center pl-1">
-                          <img key={item.coffee.id} className="relative flex-shrink-0" src={`/images/thumbnails${item.coffee.image}`} width={40} height={40} loader={imageLoader} />
+                          <img key={item.coffee.id} className="relative flex-shrink-0" src={`/images/thumbnails${item.coffee.image}`} width={40} height={40} loader={imageLoader} unoptimized />
                           {item.quantity} x {item.coffee.name}
                         </span>
                         <NumberFormat displayType={'text'} prefix="$" value={(item.coffee.price / 100).toFixed(2)} className="opacity-75" />
@@ -112,9 +112,9 @@ export default function Order(props) {
                         <p className="text-black/75 dark:text-white/75">Status</p>
                         <p className="flex space-x-3 text-base">
                           {pay.message.includes("success") ? (
-                            <Image src={CheckIcon} className="icon-green" loader={imageLoader} />
+                            <Image src={CheckIcon} className="icon-green" loader={imageLoader} unoptimized />
                           ) : (
-                            <Image src={FailIcon} className="icon-red" loader={imageLoader} />
+                            <Image src={FailIcon} className="icon-red" loader={imageLoader} unoptimized />
                           )}
                           <span>{pay.message.split(",")[0]}</span>
                         </p>
@@ -124,9 +124,9 @@ export default function Order(props) {
                         <p className="text-black/75 dark:text-white/75">Encryption Status</p>
                         <p className="flex space-x-3 text-base">
                           {!pay.card_ciphertext.includes("Disabled") ? (
-                            <Image src={CheckIcon} className="icon-green" loader={imageLoader} />
+                            <Image src={CheckIcon} className="icon-green" loader={imageLoader} unoptimized />
                           ) : (
-                            <Image src={FailIcon} className="icon-red" loader={imageLoader} />
+                            <Image src={FailIcon} className="icon-red" loader={imageLoader} unoptimized />
                           )}
                           <span>{pay.card_ciphertext}</span>
                         </p>

@@ -20,6 +20,8 @@ export default function Account(props) {
   const timer = useRef(null);
 
   const [isCreatingAccount, setIsCreatingAccount] = useState(false)
+  const [signInFieldsComplete, setSignInFieldsComplete] = useState(false)
+  const [signUpFieldsComplete, setSignUpFieldsComplete] = useState(false)
 
   const [hasErrors, setHasErrors] = useState(false)
   const [errorMessages, setErrorMessages] = useState([''])
@@ -112,9 +114,20 @@ export default function Account(props) {
       setErrorMessages([err])
     })
   };
-
-  const signinComplete = username != "" && password != '';
-  const signupComplete = username != "" && password != '' && confirmPassword != '';
+  
+  useEffect(() => {
+    if (username != "" && password != '') {
+      setSignInFieldsComplete(true)
+    } else {
+      setSignInFieldsComplete(false)
+    }
+    
+    if (username != "" && password != '' && confirmPassword != '') {
+      setSignUpFieldsComplete(true)
+    } else {
+      setSignUpFieldsComplete(false)
+    }
+  })
 
   useEffect(() => {
     return () => clearTimeout(timer.current);
@@ -131,15 +144,14 @@ export default function Account(props) {
             <>
               <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Your account</h1>
               <div className="flex items-center justify-between">
-                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" loader={imageLoader} /></span> <b>{props.username}</b></p>
+                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" loader={imageLoader} unoptimized /></span> <b>{props.username}</b></p>
                 <button onClick={signOut} className="relative whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 -mx-1 uppercase text-[11px] tracking-widest text-center transition">Sign out</button>
               </div>
             </>
           ) : (
             <>
               {isCreatingAccount ? (
-                <>
-                  <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Create account</h1>
+                <>                  <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Create account</h1>
                   <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Already have an account? <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 pt-0.5 pb-1 px-1 -mx-1 -my-1 rounded-lg transition" onClick={switchToSignIn}>Sign in</button></p>
                 </>
               ) : (
@@ -161,7 +173,7 @@ export default function Account(props) {
             <form onSubmit={signIn}>
               {hasErrors && errorMessages.map((error, index) => (
                 <div key={index} className="flex items-center bg-red-600/90 border border-red-600 rounded-lg px-3 py-2 space-x-2">
-                  <span className="flex items-center invert opacity-75 flex-shrink-0"><Image src={ErrorIcon} loader={imageLoader} /></span>
+                  <span className="flex items-center invert opacity-75 flex-shrink-0"><Image src={ErrorIcon} loader={imageLoader} unoptimized /></span>
                   <p className="text-sm text-white/90">{error.message}</p>
                 </div>
               ))}
@@ -178,7 +190,7 @@ export default function Account(props) {
                     <Field value={confirmPassword} setter={setConfirmPassword} id="confirmPassword" type="password" label="Confirm password" placeholder="Confirm password" />
                   </fieldset>
 
-                  <SignInButton disabled={!signupComplete} signUp={true} />
+                  <SignInButton disabled={!signUpFieldsComplete} signUp="true" />
                 </>
               ) : (
                 <>
@@ -189,7 +201,7 @@ export default function Account(props) {
                     <Field value={password} setter={setPassword} id="password" type="password" label="Password" placeholder="Enter password" />
                   </fieldset>
 
-                  <SignInButton disabled={!signinComplete} />
+                  <SignInButton disabled={!signInFieldsComplete} />
                 </>
               )}
             </form>
@@ -211,7 +223,7 @@ function SignInButton(props) {
       <span className={`${props.disabled ? 'opacity-0' : 'opacity-100'} absolute left-0 top-0 bottom-0 w-1/2 bg-gradient-to-r from-white/0 via-white/20 dark:via-white/75 to-white/0 shimmer transition ease-in-out`}></span>
       <span className="uppercase tracking-widest text-lg">{props.signUp == true ? 'Create account' : 'Sign In'}</span>
       <span className={`${props.disabled ? 'opacity-0' : 'opacity-75 group-hover:opacity-100'} flex items-center invert dark:invert-0 group-hover:translate-x-[8px] transition duration-500 ease-in-out`}>
-        <Image src={ChevronsIcon} loader={imageLoader} />
+        <img src={ChevronsIcon.src} />
       </span>
     </button>
   )

@@ -50,7 +50,7 @@ export default function CoffeeMenu(props) {
             <div className="flex items-center justify-center py-12">
               {error ? (
                 <div className="flex flex-col items-center text-black/75 dark:text-white/75">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} />
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} unoptimized />
                   <h4 className="mt-4">Unable to query all coffees.</h4>
                   <p className="text-sm opacity-75">Check the console for error messages.</p>
                 </div>
@@ -76,7 +76,7 @@ export default function CoffeeMenu(props) {
             <div className="flex items-center h-[180px]">
               {error ? (
                 <div className="flex flex-col items-center text-black/75 dark:text-white/75">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} />
+                  <Image src={ErrorIcon} className="opacity-50 dark:invert" loader={imageLoader} unoptimized />
                   <h4 className="mt-4">Unable to query all coffees.</h4>
                   <p className="text-sm opacity-75">Check the console for error messages.</p>
                 </div>
@@ -102,7 +102,7 @@ function CoffeeMenuItem(props) {
         <li className="flex">
           <Link href={`/coffee/${props.coffee.id}`}>
             <a className="relative flex flex-col items-center group bg-white/0 hover:bg-white/100 dark:hover:bg-white/5 hover:shadow-high dark:hover:shadow-highlight rounded-xl pb-4 transition ease-in-out duration-500">
-              <img className="flex-shrink-0 group-hover:scale-125 transition ease-in-out duration-500" src={`/images/thumbnails${props.coffee.image} `} width={200} height={200} loader={imageLoader} />
+              <img className="flex-shrink-0 group-hover:scale-125 transition ease-in-out duration-500" src={`/images/thumbnails${props.coffee.image} `} width={200} height={200} />
               <span className="font-medium text-black/75 dark:text-white/90 text-center">{`${props.coffee.name} `}</span>
             </a>
           </Link>
@@ -112,7 +112,7 @@ function CoffeeMenuItem(props) {
           <Link href={`/coffee/${props.coffee.id}`} scroll={false}>
             <a className="relative flex flex-col items-center group">
               <div className="flex flex-col items-center w-full h-full overflow-hidden">
-                <img className={`${activeState ? 'scale-125' : 'scale-100'} flex - shrink - 0 group - hover: scale - 125 transition ease -in -out duration - 500`} src={`/images/thumbnails${props.coffee.image}`} width={120} height={120} loader={imageLoader} />
+                <img className={`${activeState ? 'scale-125' : 'scale-100'} flex - shrink - 0 group - hover: scale - 125 transition ease -in -out duration - 500`} src={`/images/thumbnails${props.coffee.image}`} width={120} height={120} />
               </div>
               <span className="absolute left-1/2 bottom-2 translate-x-[-50%] translate-y-[4px] group-hover:translate-y-0 whitespace-nowrap text-black/75 uppercase text-[10px] tracking-widest text-center bg-gray-50 backdrop-blur-md py-0.5 px-2 shadow-mid rounded-full opacity-0 group-hover:opacity-100 transition ease-in-out duration-500 hover:delay-500">{`${props.coffee.name} `}</span>
               <span className={`${activeState ? 'opacity-100 group-hover:translate-y-[8px]' : 'opacity-0'} flex bg - black / 75 dark: bg - white / 75 w - 1.5 h - 1.5 rounded - full transition duration - 300`}></span>
