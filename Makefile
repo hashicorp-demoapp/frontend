@@ -1,4 +1,4 @@
-VERSION=v0.0.7
+VERSION=v0.0.8
 REPOSITORY=hashicorpdemoapp/frontend
 
 build_docker:

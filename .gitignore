@@ -1,3 +1,5 @@
+out
+
 # Logs
 logs
 *.log
@@ -104,3 +106,4 @@ dist
 .tern-port
 
 build
+*.DS_Store
