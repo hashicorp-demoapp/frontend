@@ -1,4 +1,3 @@
-import axios from 'axios'
 import useSWR from 'swr'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -45,14 +44,12 @@ export default function Coffee(props) {
     }
   };
 
-  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  // const { data, error } = useSWR(() => '/api/get-coffee/' + id, fetcher);
   const { data, error } = useSWR({
     query: COFFEE_QUERY,
     variables: { coffeeID: String(id) }
   }, queryVarFetcher);
 
-  // If data exits, set to coffee object
+  // If data exists, set to coffee object
   let coffee;
   if (data) coffee = data.data.coffee
 
@@ -61,38 +58,30 @@ export default function Coffee(props) {
     variables: { coffeeID: String(id) }
   }, queryVarFetcher);
 
-  // If data exits, set to coffee object
+  // If data exists, set to coffee object
   let ingredients;
   if (idata) ingredients = idata.data.coffeeIngredients
 
-  const [_, setCart] = useState("")
-
-  let cart = {}
-  if (typeof window !== "undefined") {
-    if (localStorage.getItem("cart")) cart = JSON.parse(localStorage.getItem("cart"))
-  }
-
   const addToCart = async (event) => {
-    cart[id] = {
+    props.cart[id] = {
       coffee: coffee,
       quantity: amount,
     }
-    if (typeof window !== "undefined") localStorage.setItem("cart", JSON.stringify(cart))
-
+    
     // Refreshes cart
-    setCart(amount)
+    props.setCart({...props.cart});
 
     // Show cart
     props.setCartVisible(true)
   };
-
+  
   useEffect(() => {
     setAmount(1)
   }, [router.asPath])
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} />
+      <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} token={props.token} setToken={props.setToken} username={props.username} setUsername={props.setUsername} />
 
       <CoffeeMenu isActive={id} />
 
@@ -109,24 +98,26 @@ export default function Coffee(props) {
 
               <article className="relative flex flex-col justify-between w-full md:w-3/5 xl:w-1/2 p-6 space-y-4 md:space-y-0 text-left md:bg-gradient-to-r from-gray-50 dark:from-black/50 via-white dark:via-black/0 to-white dark:to-black/0 dark:text-white/90 shadow-crease dark:shadow-darkCrease md:shadow-fold dark:md:shadow-darkFold transition duration-500 ease-in-out z-20">
 
-                <div className="flex flex-col md:p-8 md:pt-4 space-y-2">
-                  <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight capitalize sm:truncate">{coffee.name}</h1>
-                  <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">{coffee.teaser}</p>
-                </div>
-
-                <div className="flex flex-col md:px-8">
-                  <dl className="grid sm:grid-cols-3">
-                    <dt className="text-black/75 dark:text-white/75 text-sm sm:border-b border-gray-200 dark:border-white/10 sm:py-2 pt-2 sm:pt-3">Collection</dt>
-                    <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{coffee.collection}</dd>
-                    <dt className="text-black/75 dark:text-white/75 text-sm sm:border-b border-gray-200 dark:border-white/10 sm:py-2 pt-4 sm:pt-3">Origin</dt>
-                    <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{coffee.origin}</dd>
-                    <dt className="text-black/75 dark:text-white/75 text-sm sm:py-2 pt-4 sm:pt-3">Ingredients</dt>
-                    <dd className="col-span-2 py-2 pt-2.5">
-                      {ingredients && ingredients.map((i) => (
-                        <span className="block line-clamp-1">{`${i.quantity} ${i.unit} ${i.name} `}</span>
-                      ))}
-                    </dd>
-                  </dl>
+                <div className="flex flex-col space-y-8">
+                  <div className="flex flex-col md:p-8 md:pt-4 space-y-2">
+                    <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight capitalize sm:truncate">{coffee.name}</h1>
+                    <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">{coffee.teaser}</p>
+                  </div>
+  
+                  <div className="flex flex-col md:px-8">
+                    <dl className="grid sm:grid-cols-3">
+                      <dt className="text-black/75 dark:text-white/75 text-sm sm:border-b border-gray-200 dark:border-white/10 sm:py-2 pt-2 sm:pt-3">Collection</dt>
+                      <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{coffee.collection}</dd>
+                      <dt className="text-black/75 dark:text-white/75 text-sm sm:border-b border-gray-200 dark:border-white/10 sm:py-2 pt-4 sm:pt-3">Origin</dt>
+                      <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{coffee.origin}</dd>
+                      <dt className="text-black/75 dark:text-white/75 text-sm sm:py-2 pt-4 sm:pt-3">Ingredients</dt>
+                      <dd className="col-span-2 py-2 pt-2.5">
+                        {ingredients && ingredients.map((ingredient, index) => (
+                          <span key={index} className="block line-clamp-1">{`${ingredient.quantity}${ingredient.unit} ${ingredient.name} `}</span>
+                        ))}
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
 
                 <div className="flex flex-col xs:flex-row w-full xs:space-x-4 space-y-4 xs:space-y-0 pt-8">
@@ -165,7 +156,7 @@ export default function Coffee(props) {
 
       <Footer />
 
-      <Cart isSticky={true} cartVisible={props.cartVisible} setCartVisible={props.setCartVisible} />
+      <Cart isSticky={true} cartVisible={props.cartVisible} setCartVisible={props.setCartVisible} cart={props.cart} setCart={props.setCart} />
     </div>
   )
 }
@@ -179,14 +170,12 @@ function CountButton(props) {
 function PrevCoffee(props) {
   const prev_id = parseInt(props.id) - 1
 
-  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  // const { data, error } = useSWR(() => '/api/get-coffee/' + prev_id, fetcher);
   const { data, error } = useSWR({
     query: COFFEE_IMG_QUERY,
     variables: { coffeeID: String(prev_id) }
   }, queryVarFetcher);
 
-  // If data exits, set to coffee object
+  // If data exists, set to coffee object
   let coffee;
   if (data) coffee = data.data.coffee
 
@@ -204,14 +193,12 @@ function PrevCoffee(props) {
 function NextCoffee(props) {
   const next_id = parseInt(props.id) + 1
 
-  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  // const { data, error } = useSWR(() => '/api/get-coffee/' + next_id, fetcher);
   const { data, error } = useSWR({
     query: COFFEE_IMG_QUERY,
     variables: { coffeeID: String(next_id) }
   }, queryVarFetcher);
 
-  // If data exits, set to coffee object
+  // If data exists, set to coffee object
   let coffee;
   if (data) coffee = data.data.coffee
 

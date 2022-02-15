@@ -1,5 +1,3 @@
-import axios from 'axios'
-import useSWR from 'swr'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -48,21 +46,6 @@ export default function Account(props) {
     setIsCreatingAccount(false);
   };
 
-  // Check if already authed
-  if (typeof window !== "undefined") {
-    if (localStorage.getItem("token") && localStorage.getItem("username")) {
-      if (router.pathname == '/checkout') {
-        props.setAccountVisible(false)
-
-        timer.current = setTimeout(() => {
-          props.setIsAuthed(true);
-        }, 500);
-      } else {
-        props.setIsAuthed(true);
-      }
-    }
-  }
-
   const signIn = async (event) => {
     event.preventDefault();
 
@@ -74,9 +57,8 @@ export default function Account(props) {
         mutation: SIGNUP_MUTATION,
         variables: { username, password }
       }).then(data => {
-        localStorage.setItem("token", data.data.signUp.token)
-        localStorage.setItem("username", data.data.signUp.username)
-        setUsername(data.data.signUp.username)
+        props.setToken(data.data.signUp.token)
+        props.setUsername(data.data.signUp.username)
         successfulAuth()
       }).catch(err => {
         setHasErrors(true)
@@ -90,9 +72,8 @@ export default function Account(props) {
         mutation: LOGIN_MUTATION,
         variables: { username, password }
       }).then(data => {
-        localStorage.setItem("token", data.data.login.token)
-        localStorage.setItem("username", data.data.login.username)
-        setUsername(data.data.login.username)
+        props.setToken(data.data.login.token)
+        props.setUsername(data.data.login.username)
         successfulAuth()
       }).catch(err => {
         setHasErrors(true)
@@ -123,8 +104,8 @@ export default function Account(props) {
     mutationFetcher({
       mutation: SIGNOUT_MUTATION,
     }).then(data => {
-      localStorage.removeItem("token")
-      localStorage.removeItem("username")
+      props.setToken('')
+      props.setUsername('')
       props.setIsAuthed(false);
     }).catch(err => {
       setHasErrors(true)
@@ -143,14 +124,14 @@ export default function Account(props) {
     <>
       <div className={`${props.accountVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'} fixed inset-0 bg-gray-600/10 dark:bg-black/25 z-50 transition duration-500 ease-in-out`} onClick={dismiss}></div>
 
-      <div className={`${props.accountVisible ? 'opacity-100 bg-white dark:bg-neutral-900 translate-x-0' : 'opacity-0 translate-x-[120px] pointer-events-none'} fixed top-0 right-0 bottom-0 w-[90%] max-w-[480px] pt-12 dark:text-white/90 shadow-high dark:shadow-highlight overflow-scroll transition duration-500 ease-in-out z-50`}>
+      <div className={`${props.accountVisible ? 'opacity-100 bg-white dark:bg-neutral-900 translate-x-0' : 'opacity-0 translate-x-[120px] pointer-events-none'} fixed flex flex-col top-0 right-0 bottom-0 w-[90%] max-w-[480px] pt-12 dark:text-white/90 shadow-high dark:shadow-highlight overflow-scroll transition duration-500 ease-in-out z-50`}>
 
         <div className="flex flex-col p-8 space-y-2 border-b border-gray-200 dark:border-white/10">
           {props.isAuthed ? (
             <>
               <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Your account</h1>
               <div className="flex items-center justify-between">
-                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" loader={imageLoader} /></span> <b>{username}</b></p>
+                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" loader={imageLoader} /></span> <b>{props.username}</b></p>
                 <button onClick={signOut} className="relative whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 -mx-1 uppercase text-[11px] tracking-widest text-center transition">Sign out</button>
               </div>
             </>
@@ -171,16 +152,16 @@ export default function Account(props) {
           )}
         </div>
 
-        <div className="flex flex-col px-8 pt-6">
+        <div className="flex flex-col px-8 pt-6 flex-auto">
           {props.isAuthed ? (
             <>
               <Orders setAccountVisible={props.setAccountVisible} />
             </>
           ) : (
             <form onSubmit={signIn}>
-              {hasErrors && errorMessages.map((error) => (
-                <div className="flex items-center bg-red-600/90 border border-red-600 rounded-lg px-3 py-2 space-x-2">
-                  <span className="flex items-center invert opacity-75"><Image src={ErrorIcon} loader={imageLoader} /></span>
+              {hasErrors && errorMessages.map((error, index) => (
+                <div key={index} className="flex items-center bg-red-600/90 border border-red-600 rounded-lg px-3 py-2 space-x-2">
+                  <span className="flex items-center invert opacity-75 flex-shrink-0"><Image src={ErrorIcon} loader={imageLoader} /></span>
                   <p className="text-sm text-white/90">{error.message}</p>
                 </div>
               ))}

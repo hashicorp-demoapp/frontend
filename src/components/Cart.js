@@ -1,5 +1,3 @@
-import axios from 'axios'
-import useSWR from 'swr'
 import Image from 'next/image'
 import { useState } from 'react'
 import NumberFormat from 'react-number-format'
@@ -12,41 +10,33 @@ import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-16.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-16.svg'
 
 export default function Cart(props) {
-  // const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  // const { data, error } = useSWR("/api/get-cart", fetcher);
-
-  const [_, setCart] = useState("")
-
-  let cart = {}
-  if (typeof window !== "undefined") {
-    if (localStorage.getItem("cart")) cart = JSON.parse(localStorage.getItem("cart"))
-  }
-
-  const removeItemFromCart = (coffeeID) => {
-    delete cart[coffeeID]
-    localStorage.setItem("cart", JSON.stringify(cart))
-
+  const removeItemFromCart = (coffeeID) => {   
+    delete props.cart[coffeeID]
+    
     if (props.onRemoveItem != undefined) {
-      console.log('hello')
       props.onRemoveItem()
+    }
+    
+    if (props.isSticky && Object.keys(props.cart).length === 0) {
+      props.setCartVisible(false)
     }
 
     // Refreshes cart
-    setCart(cart)
+    props.setCart({...props.cart})
   };
-
+  
   return (
     <>
       {props.isSticky ? (
         <div className={`${props.cartVisible ? 'sticky h-[240px] xs:h-[150px]' : 'relative h-[0px]'} flex items-end w-screen bottom-0 z-40`}>
           <div className={`${props.cartVisible ? 'opacity-100 translate-y-[0]' : 'opacity-0 translate-y-[240px] xs:translate-y-[150px]'} fixed bottom-0 w-screen h-[240px] xs:h-[150px] flex items-center justify-center bg-white/80 dark:bg-black/80 backdrop-blur-lg bottom-0 shadow-cart dark:shadow-darkCart transition ease-in-out duration-500`}>
             <div className="flex flex-col xs:flex-row xs:items-center xs:space-x-8 xs:pr-8">
-              {cart ? (
+              {props.cart && Object.keys(props.cart).length !== 0 ? (
                 <div className="flex xs:border-r border-gray-200 dark:border-white/20 h-[150px]">
-                  <CartItems data={cart} removeItemFromCart={removeItemFromCart} />
+                  <CartItems data={props.cart} removeItemFromCart={removeItemFromCart} />
                 </div>
               ) : (
-                <p className="py-8">No items</p>
+                <p className="py-8">No items in your cart</p>
               )}
 
               <CheckoutButton color="#000" setCartVisible={props.setCartVisible} />
@@ -55,10 +45,10 @@ export default function Cart(props) {
         </div>
       ) : (
         <div className="flex">
-          {cart ? (
-            <CartItems data={cart} allowOverflow={true} removeItemFromCart={removeItemFromCart} />
+          {props.cart && Object.keys(props.cart).length !== 0 ? (
+            <CartItems data={props.cart} allowOverflow={true} removeItemFromCart={removeItemFromCart} />
           ) : (
-            <p className="py-8">No items</p>
+            <p className="py-8 px-8">No items in your cart</p>
           )}
         </div>
       )}

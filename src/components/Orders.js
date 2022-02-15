@@ -1,9 +1,7 @@
-import axios from 'axios'
 import useSWR from 'swr'
 import Link from 'next/link'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
-import imageLoader from '../../loader'
 
 import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-16.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-16.svg'
@@ -12,11 +10,9 @@ import { queryFetcher } from 'gql/apolloClient';
 import { ALL_ORDERS_QUERY } from 'gql/gqlQueries';
 
 export default function Orders(props) {
-  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  // const { data, error } = useSWR("/api/get-orders", fetcher);
   const { data, error } = useSWR(ALL_ORDERS_QUERY, queryFetcher);
 
-  // If data exits, set to coffees object
+  // If data exists, set to coffees object
   let orders;
   if (data) orders = data.data.orders
 
@@ -24,7 +20,7 @@ export default function Orders(props) {
     <>
       <h2 className="font-semibold text-2xl sm:text-3xl leading-none sm:leading-tight sm:truncate">Order history</h2>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col flex-auto">
         {orders ? (
           <ul className="flex flex-col w-full divide-y dark:divide-white/10">
             {orders.map((order) => (
@@ -32,7 +28,9 @@ export default function Orders(props) {
             ))}
           </ul>
         ) : (
-          <p className="py-8">No orders</p>
+          <div className="flex items-center justify-center h-full bg-gray-100/75 dark:bg-black/25 border border-gray-200/50 dark:border-white/10 rounded-lg mt-6 mb-8">
+            <p className="py-8 px-4 text-black/50 dark:text-white/50">No orders placed yet</p>
+          </div>
         )}
       </div>
     </>

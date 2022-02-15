@@ -1,4 +1,3 @@
-import axios from 'axios'
 import useSWR from 'swr'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -21,8 +20,6 @@ export default function Order(props) {
   const router = useRouter();
   const { id } = router.query
 
-  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  // const { data, error } = useSWR(() => '/api/get-order/' + id, fetcher);
   const { data, error } = useSWR({
     query: ORDER_QUERY,
     variables: { orderID: String(id) }
@@ -32,7 +29,7 @@ export default function Order(props) {
     router.back()
   }
 
-  // If data exits, set to order object
+  // If data exists, set to order object
   let order;
   if (data) order = data.data.order
 
@@ -55,7 +52,7 @@ export default function Order(props) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} />
+      <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} token={props.token} setToken={props.setToken} username={props.username} setUsername={props.setUsername} />
 
       <main className="relative flex flex-col items-center justify-center w-full flex-1 space-y-12 py-12 px-8 text-center dark:text-white/90 z-30">
         {order && (
