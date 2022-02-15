@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import imageLoader from '../../loader'
 
 import Account from 'components/Account'
 import { useState } from 'react'
@@ -46,20 +47,20 @@ export default function Header(props) {
           <div className="flex-1 px-8"></div>
           <Link href="/">
             <a className="flex cursor-pointer">
-              <Image src="/images/logo.svg" height={88} width={88} className="scale-[0.85] xs:scale-100" />
+              <Image src="/images/logo.svg" height={88} width={88} className="scale-[0.85] xs:scale-100" loader={imageLoader} />
             </a>
           </Link>
           <div className="flex items-center justify-end flex-1 px-8 text-black/75">
             <button onClick={showAccount} className="flex items-center space-x-2 opacity-75 hover:opacity-100 transition duration-500 ease-in-out dark:invert">
               <span className="hidden xs:block text-sm tracking-widest uppercase pt-px">{isAuthed ? "Account" : "Sign in"}</span>
               <span className="flex flex-shrink-0">
-                <Image src="/images/user.svg" height={24} width={40} />
+                <Image src="/images/user.svg" height={24} width={40} loader={imageLoader} />
               </span>
             </button>
           </div>
         </div>
         <div className="absolute left-0 top-0">
-          <Image src="/images/demo.svg" height={88} width={88} />
+          <Image src="/images/demo.svg" height={88} width={88} loader={imageLoader} />
         </div>
       </header>
 

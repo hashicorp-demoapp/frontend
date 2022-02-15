@@ -3,6 +3,7 @@ import useSWR from 'swr'
 import Link from 'next/link'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
+import imageLoader from '../../loader'
 
 import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-16.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-16.svg'
@@ -54,7 +55,7 @@ function Order(props) {
           <div className="flex items-center justify-center shadow-high dark:shadow-highlight bg-gray-100/25 dark:bg-black/10 rounded-lg w-[90px] h-[90px] mb-3 overflow-hidden">
             <div className="flex items-center justify-center -space-x-16">
               {props.items.map((item) => (
-                <img key={item.coffee.id} className="relative flex-shrink-0" src={`/images/thumbnails${item.coffee.image}`} width={80} height={80} />
+                <img key={item.coffee.id} className="relative flex-shrink-0" src={`/images/thumbnails${item.coffee.image}`} width={80} height={80} loader={imageLoader} />
               ))}
             </div>
           </div>

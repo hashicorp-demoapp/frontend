@@ -6,6 +6,8 @@ import NumberFormat from 'react-number-format'
 
 import CheckoutButton from 'components/CheckoutButton'
 
+import imageLoader from '../../loader'
+
 import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-16.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-16.svg'
 
@@ -86,12 +88,12 @@ function CartItem(props) {
       <div className="relative flex flex-col items-center overflow-hidden">
         <div className="flex">
           {props.count > 2 && (
-            <img className="relative mr-[-85px] scale-90 z-0 flex-shrink-0 opacity-80" src={`/images/thumbnails${props.coffee.image}`} width={100} height={100} />
+            <img className="relative mr-[-85px] scale-90 z-0 flex-shrink-0 opacity-80" src={`/images/thumbnails${props.coffee.image}`} width={100} height={100} loader={imageLoader} />
           )}
           {props.count > 1 && (
-            <img className="relative mr-[-85px] scale-95 z-0 flex-shrink-0 opacity-90" src={`/images/thumbnails${props.coffee.image}`} width={100} height={100} />
+            <img className="relative mr-[-85px] scale-95 z-0 flex-shrink-0 opacity-90" src={`/images/thumbnails${props.coffee.image}`} width={100} height={100} loader={imageLoader} />
           )}
-          <img className="relative flex-shrink-0" src={`/images/thumbnails${props.coffee.image}`} width={100} height={100} />
+          <img className="relative flex-shrink-0" src={`/images/thumbnails${props.coffee.image}`} width={100} height={100} loader={imageLoader} />
         </div>
         <span className="absolute right-5 top-3 text-sm text-white dark:text-black px-2 bg-black/75 dark:bg-white/90 backdrop-blur-md rounded-full">{props.count}</span>
       </div>

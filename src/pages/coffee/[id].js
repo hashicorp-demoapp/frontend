@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format'
+import imageLoader from '../../../loader'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
@@ -67,14 +68,16 @@ export default function Coffee(props) {
   const [_, setCart] = useState("")
 
   let cart = {}
-  if (localStorage.getItem("cart")) cart = JSON.parse(localStorage.getItem("cart"))
+  if (typeof window !== "undefined") {
+    if (localStorage.getItem("cart")) cart = JSON.parse(localStorage.getItem("cart"))
+  }
 
   const addToCart = async (event) => {
     cart[id] = {
       coffee: coffee,
       quantity: amount,
     }
-    localStorage.setItem("cart", JSON.stringify(cart))
+    if (typeof window !== "undefined") localStorage.setItem("cart", JSON.stringify(cart))
 
     // Refreshes cart
     setCart(amount)
@@ -101,7 +104,7 @@ export default function Coffee(props) {
           {coffee ? (
             <>
               <aside className="bg-gray-50 dark:bg-transparent md:bg-transparent relative flex items-center justify-center md:w-2/5 xl:w-1/2 h-[250px] md:h-full md:overflow-hidden z-10 transition duration-500 ease-in-out">
-                <img className="scale-50 translate-y-[-40px] md:translate-y-[-10px] md:scale-100 max-w-min transition duration-500 ease-in-out" src={`/images${coffee.image}`} width={800} height={800} />
+                <img className="scale-50 translate-y-[-40px] md:translate-y-[-10px] md:scale-100 max-w-min transition duration-500 ease-in-out" src={`/images${coffee.image}`} width={800} height={800} loader={imageLoader} />
               </aside>
 
               <article className="relative flex flex-col justify-between w-full md:w-3/5 xl:w-1/2 p-6 space-y-4 md:space-y-0 text-left md:bg-gradient-to-r from-gray-50 dark:from-black/50 via-white dark:via-black/0 to-white dark:to-black/0 dark:text-white/90 shadow-crease dark:shadow-darkCrease md:shadow-fold dark:md:shadow-darkFold transition duration-500 ease-in-out z-20">
@@ -190,7 +193,7 @@ function PrevCoffee(props) {
   return (
     <div className="hidden 2xl:flex flex-1 flex-col items-center justify-center relative -mx-8 h-full overflow-hidden">
       {coffee ? (
-        <HoverLink id={prev_id} image={coffee.image} icon={PrevIcon} direction="prev" />
+        <HoverLink id={prev_id} image={coffee.image} icon={PrevIcon} direction="prev" loader={imageLoader} />
       ) : (
         <div />
       )}
@@ -215,7 +218,7 @@ function NextCoffee(props) {
   return (
     <div className="hidden 2xl:flex flex-1 flex-col items-center justify-center relative -mx-8 h-full overflow-hidden">
       {coffee ? (
-        <HoverLink id={next_id} image={coffee.image} icon={NextIcon} direction="next" />
+        <HoverLink id={next_id} image={coffee.image} icon={NextIcon} direction="next" loader={imageLoader} />
       ) : (
         <div></div>
       )}
@@ -230,7 +233,7 @@ function HoverLink(props) {
         <span className={`${props.direction == 'next' ? 'translate-x-[-10px]' : 'translate-x-[10px]'} absolute left-1/2 top-1/2 w-16 h-16 -ml-8 -mt-8 flex items-center justify-center bg-black/75 backdrop-blur-md shadow-high rounded-full opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 group-hover:translate-x-0 z-20 transition duration-500 ease-in-out`}>
           <Image src={props.icon} className="invert" />
         </span>
-        <img className="relative max-w-min transition duration-500 ease-in-out opacity-50 group-hover:opacity-75" src={`/images${props.image}`} width={640} height={640} />
+        <img className="relative max-w-min transition duration-500 ease-in-out opacity-50 group-hover:opacity-75" src={`/images${props.image}`} width={640} height={640} loader={imageLoader} />
       </a>
     </Link>
   )

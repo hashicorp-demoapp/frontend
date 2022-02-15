@@ -6,6 +6,7 @@ import { ALL_COFFEES_QUERY } from 'gql/gqlQueries';
 import useSWR from 'swr'
 import Link from 'next/link'
 import Image from 'next/image'
+import imageLoader from '../../loader';
 
 import ErrorIcon from '@hashicorp/flight-icons/svg/alert-triangle-24.svg'
 
@@ -101,7 +102,7 @@ function CoffeeMenuItem(props) {
         <li className="flex">
           <Link href={`/coffee/${props.coffee.id}`}>
             <a className="relative flex flex-col items-center group bg-white/0 hover:bg-white/100 dark:hover:bg-white/5 hover:shadow-high dark:hover:shadow-highlight rounded-xl pb-4 transition ease-in-out duration-500">
-              <img className="flex-shrink-0 group-hover:scale-125 transition ease-in-out duration-500" src={`/images/thumbnails${props.coffee.image} `} width={200} height={200} />
+              <img className="flex-shrink-0 group-hover:scale-125 transition ease-in-out duration-500" src={`/images/thumbnails${props.coffee.image} `} width={200} height={200} loader={imageLoader} />
               <span className="font-medium text-black/75 dark:text-white/90 text-center">{`${props.coffee.name} `}</span>
             </a>
           </Link>
@@ -111,7 +112,7 @@ function CoffeeMenuItem(props) {
           <Link href={`/coffee/${props.coffee.id}`} scroll={false}>
             <a className="relative flex flex-col items-center group">
               <div className="flex flex-col items-center w-full h-full overflow-hidden">
-                <img className={`${activeState ? 'scale-125' : 'scale-100'} flex - shrink - 0 group - hover: scale - 125 transition ease -in -out duration - 500`} src={`/images/thumbnails${props.coffee.image}`} width={120} height={120} />
+                <img className={`${activeState ? 'scale-125' : 'scale-100'} flex - shrink - 0 group - hover: scale - 125 transition ease -in -out duration - 500`} src={`/images/thumbnails${props.coffee.image}`} width={120} height={120} loader={imageLoader} />
               </div>
               <span className="absolute left-1/2 bottom-2 translate-x-[-50%] translate-y-[4px] group-hover:translate-y-0 whitespace-nowrap text-black/75 uppercase text-[10px] tracking-widest text-center bg-gray-50 backdrop-blur-md py-0.5 px-2 shadow-mid rounded-full opacity-0 group-hover:opacity-100 transition ease-in-out duration-500 hover:delay-500">{`${props.coffee.name} `}</span>
               <span className={`${activeState ? 'opacity-100 group-hover:translate-y-[8px]' : 'opacity-0'} flex bg - black / 75 dark: bg - white / 75 w - 1.5 h - 1.5 rounded - full transition duration - 300`}></span>
