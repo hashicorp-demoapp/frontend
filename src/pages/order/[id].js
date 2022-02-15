@@ -14,7 +14,6 @@ import FailIcon from '@hashicorp/flight-icons/svg/x-square-16.svg'
 
 import { queryVarFetcher } from 'gql/apolloClient';
 import { ORDER_QUERY } from 'gql/gqlQueries';
-import { orders } from 'data/orders'
 
 export default function Order(props) {
   const router = useRouter();
