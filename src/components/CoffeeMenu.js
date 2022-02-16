@@ -13,17 +13,17 @@ var Element = Scroll.Element
 var scroller = Scroll.scroller
 
 export default function CoffeeMenu(props) {
-  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(ALL_COFFEES_QUERY, queryFetcher);
 
   // If data exits, set to coffees object
   let coffees;
   if (data) coffees = data.data.coffees
 
-  const activeItem = 'coffee-' + props.isActive
-
+  let activeItem;
+  if (props.isActive) activeItem = 'coffee-' + props.isActive
+  
   useEffect(() => {
-    if (coffees) {
+    if (coffees && activeItem) {
       scroller.scrollTo(activeItem, {
         duration: 500,
         delay: 50,
