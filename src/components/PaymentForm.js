@@ -63,10 +63,16 @@ export default function PaymentForm(props) {
       // Process payment
       const payment = await submitPayment()
       
-      state.orders[orderID] = {
-        ...orderItems,
-        payment: {
-          ...payment
+      if (payment) {
+        state.orders[orderID] = {
+          ...orderItems,
+          payment: {
+            ...payment
+          }
+        }
+      } else {
+        state.orders[orderID] = {
+          ...orderItems
         }
       }
       
