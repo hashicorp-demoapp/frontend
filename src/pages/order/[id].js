@@ -7,6 +7,7 @@ import NumberFormat from 'react-number-format'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
+import Fallback from 'components/Fallback'
 
 import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-16.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-16.svg'
@@ -22,7 +23,6 @@ export default function Order(props) {
     query: ORDER_QUERY,
     variables: { orderID: String(id) }
   }, queryVarFetcher);
-
   const dismiss = async (event) => {
     router.back()
   }
@@ -53,17 +53,17 @@ export default function Order(props) {
       <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} token={props.token} setToken={props.setToken} username={props.username} setUsername={props.setUsername} />
 
       <main className="relative flex flex-col items-center justify-center w-full flex-1 space-y-12 py-12 px-8 text-center dark:text-white/90 z-30">
-        {order && (
-          <>
-            <header className="flex items-center items-start max-w-[1080px] w-full xs:px-8 space-x-4">
-              <div className="flex flex-col text-left space-y-2">
-                <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Order confirmation</h1>
-                <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">(Order confirmed, but no payment was taken, because this is just a demo)</p>
-              </div>
-            </header>
-
-            <section className="relative max-w-[1080px] w-full bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight">
-
+      
+        <header className="flex items-center items-start max-w-[1080px] w-full xs:px-8 space-x-4">
+          <div className="flex flex-col text-left space-y-2">
+            <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Order confirmation</h1>
+            <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">(Order confirmed, but no payment was taken, because this is just a demo)</p>
+          </div>
+        </header>
+        
+        <section className="relative max-w-[1080px] w-full bg-white dark:bg-[#0B0B0B] rounded-xl shadow-high dark:shadow-highlight">
+          {order ? (
+            <>
               <div className="flex items-center justify-center bg-gray-100/25 dark:bg-black/10 border-b border-gray-100 dark:border-white/10 mb-3 overflow-hidden">
                 <div className="flex items-center justify-center -space-x-20">
                   {order.items.map((item) => (
@@ -96,8 +96,7 @@ export default function Order(props) {
                       </li>
                     ))}
                   </ul>
-                  <NumberFormat displayType={'text'} prefix="$" value={(total / 100).toFixed(2)} className="self-end font-semibold text-2xl sm:text-4xl pr-3" />
-                </div>
+                  <NumberFormat displayType={'text'} prefix="$" value={(total / 100).toFixed(2)} className="self-end font-semibold text-2xl sm:text-4xl pr-3" />                </div>
 
                 {Object.keys(pay).length > 0 && (
                   <>
@@ -136,10 +135,11 @@ export default function Order(props) {
                   </>
                 )}
               </div>
-
-            </section>
-          </>
-        )}
+            </>
+          ) : (
+            <Fallback error={error} message="Unable to query the selected order" />
+          )}
+        </section>
       </main>
 
       <Footer />

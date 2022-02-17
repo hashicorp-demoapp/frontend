@@ -7,6 +7,7 @@ import NumberFormat from 'react-number-format'
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
+import Fallback from 'components/Fallback'
 import CoffeeMenu from 'components/CoffeeMenu'
 import CartButton from 'components/CartButton'
 import Cart from 'components/Cart'
@@ -133,19 +134,7 @@ export default function Coffee(props) {
               </article>
             </>
           ) : (
-            <div className="flex items-center justify-center w-full">
-              {error ? (
-                <div className="flex flex-col items-center justify-center text-black/75 dark:text-white/75 h-full min-h-[280px]">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
-                  <h4 className="mt-4">Unable to query the selected coffee.</h4>
-                  <p className="text-sm opacity-75">Check the console for error messages.</p>
-                </div>
-              ) : (
-                <div className="flex justify-center items-center w-full h-full min-h-[280px]">
-                  <span className="animate-ping w-3 h-3 rounded-full bg-gray-200 dark:bg-white/25"></span>
-                </div>
-              )}
-            </div>
+            <Fallback error={error} message="Unable to query the selected coffee" />
           )}
         </section>
 
