@@ -74,7 +74,7 @@ export default function Order() {
                     <div key={index} className="relative flex items-center flex-shrink-0">
                       {item.quantity > 3 && (
                         <span className="absolute top-24 left-8 w-12 h-12 flex-shrink-0 inline-flex items-center justify-center bg-gray-200/25 dark:bg-white/10 rounded-full">
-                          <Image src={PlusIcon} className="opacity-25 dark:invert" loader={imageLoader} unoptimized />
+                          <Image src={PlusIcon} className="opacity-25 dark:invert" />
                         </span>
                       )}
                       {item.quantity > 2 && (
