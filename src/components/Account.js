@@ -1,7 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import { useContext, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
+
+import AppContext from "components/AppContext";
 
 import Field from 'components/Field'
 import Orders from 'components/Orders'
@@ -13,9 +15,10 @@ import ErrorIcon from '@hashicorp/flight-icons/svg/alert-circle-16.svg'
 import { mutationFetcher } from 'gql/apolloClient';
 import { SIGNUP_MUTATION, LOGIN_MUTATION, SIGNOUT_MUTATION } from 'gql/gqlMutations'
 
-export default function Account(props) {
+export default function Account() {
+  const state = useContext(AppContext);
+  
   const router = useRouter();
-
   const timer = useRef(null);
 
   const [isCreatingAccount, setIsCreatingAccount] = useState(false)
@@ -32,7 +35,7 @@ export default function Account(props) {
   const dismiss = async (event) => {
     setHasErrors(false)
     setErrorMessages([''])
-    props.setAccountVisible(false);
+    state.setAccountVisible(false);
   };
 
   const switchToNewAccount = async (event) => {
@@ -58,8 +61,8 @@ export default function Account(props) {
         mutation: SIGNUP_MUTATION,
         variables: { username, password }
       }).then(data => {
-        props.setToken(data.data.signUp.token)
-        props.setUsername(data.data.signUp.username)
+        state.setToken(data.data.signUp.token)
+        state.setCurrentUser(data.data.signUp.username)
         successfulAuth()
       }).catch(err => {
         setHasErrors(true)
@@ -73,8 +76,8 @@ export default function Account(props) {
         mutation: LOGIN_MUTATION,
         variables: { username, password }
       }).then(data => {
-        props.setToken(data.data.login.token)
-        props.setUsername(data.data.login.username)
+        state.setToken(data.data.login.token)
+        state.setCurrentUser(data.data.login.username)
         successfulAuth()
       }).catch(err => {
         setHasErrors(true)
@@ -88,13 +91,13 @@ export default function Account(props) {
     setErrorMessages([''])
 
     if (router.pathname == '/checkout') {
-      props.setAccountVisible(false)
+      state.setAccountVisible(false)
 
       timer.current = setTimeout(() => {
-        props.setIsAuthed(true);
+        state.setIsAuthed(true);
       }, 500);
     } else {
-      props.setIsAuthed(true);
+      state.setIsAuthed(true);
     }
   }
 
@@ -105,13 +108,16 @@ export default function Account(props) {
     mutationFetcher({
       mutation: SIGNOUT_MUTATION,
     }).then(data => {
-      props.setToken('')
-      props.setUsername('')
-      props.setIsAuthed(false);
+      state.setToken('')
+      state.setCurrentUser('')
+      state.setIsAuthed(false);
     }).catch(err => {
       setHasErrors(true)
       setErrorMessages([err])
     })
+    
+    router.push('/');
+    state.setAccountVisible(false)
   };
 
   useEffect(() => {
@@ -134,23 +140,24 @@ export default function Account(props) {
 
   return (
     <>
-      <div className={`${props.accountVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'} fixed inset-0 bg-gray-600/10 dark:bg-black/25 z-50 transition duration-500 ease-in-out`} onClick={dismiss}></div>
+      <div className={`${state.accountVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'} fixed inset-0 bg-gray-600/10 dark:bg-black/25 z-50 transition duration-500 ease-in-out`} onClick={dismiss}></div>
 
-      <div className={`${props.accountVisible ? 'opacity-100 bg-white dark:bg-neutral-900 translate-x-0' : 'opacity-0 translate-x-[120px] pointer-events-none'} fixed flex flex-col top-0 right-0 bottom-0 w-[90%] max-w-[480px] pt-12 dark:text-white/90 shadow-high dark:shadow-highlight overflow-scroll transition duration-500 ease-in-out z-50`}>
+      <div className={`${state.accountVisible ? 'opacity-100 bg-white dark:bg-neutral-900 translate-x-0' : 'opacity-0 translate-x-[120px] pointer-events-none'} fixed flex flex-col top-0 right-0 bottom-0 w-[90%] max-w-[480px] pt-12 dark:text-white/90 shadow-high dark:shadow-highlight overflow-scroll transition duration-500 ease-in-out z-50`}>
 
         <div className="flex flex-col p-8 space-y-2 border-b border-gray-200 dark:border-white/10">
-          {props.isAuthed ? (
+          {state.isAuthed ? (
             <>
               <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Your account</h1>
               <div className="flex items-center justify-between">
-                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span> <b>{props.username}</b></p>
+                <p className="flex items-center text-black/75 dark:text-white/75 text-sm sm:text-base">Signed in as <span className="flex items-center ml-2 mr-1 opacity-75"><Image src={AvatarIcon} className="dark:invert" /></span> <b>{state.currentUser}</b></p>
                 <button onClick={signOut} className="relative whitespace-nowrap text-black/50 dark:text-white/50 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-600/10 rounded-md px-2 py-1 -mx-2 -mx-1 uppercase text-[11px] tracking-widest text-center transition">Sign out</button>
               </div>
             </>
           ) : (
             <>
               {isCreatingAccount ? (
-                <>                  <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Create account</h1>
+                <>
+                  <h1 className="font-semibold text-4xl sm:text-5xl leading-none sm:leading-tight sm:truncate">Create account</h1>
                   <p className="text-black/75 dark:text-white/75 text-sm sm:text-base">Already have an account? <button className="text-blue-500 dark:text-blue-400 underline hover:bg-blue-50 dark:hover:bg-blue-500/25 pt-0.5 pb-1 px-1 -mx-1 -my-1 rounded-lg transition" onClick={switchToSignIn}>Sign in</button></p>
                 </>
               ) : (
@@ -164,9 +171,9 @@ export default function Account(props) {
         </div>
 
         <div className="flex flex-col px-8 pt-6 flex-auto">
-          {props.isAuthed ? (
+          {state.isAuthed ? (
             <>
-              <Orders setAccountVisible={props.setAccountVisible} />
+              <Orders />
             </>
           ) : (
             <form onSubmit={signIn}>

@@ -1,6 +1,8 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import NumberFormat from 'react-number-format'
+
+import AppContext from "components/AppContext";
 
 import CheckoutButton from 'components/CheckoutButton'
 
@@ -8,43 +10,45 @@ import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-16.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-16.svg'
 
 export default function Cart(props) {
+  const state = useContext(AppContext);
+  
   const removeItemFromCart = (coffeeID) => {
-    delete props.cart[coffeeID]
+    delete state.cart[coffeeID]
 
     if (props.onRemoveItem != undefined) {
       props.onRemoveItem()
     }
 
-    if (props.isSticky && Object.keys(props.cart).length === 0) {
-      props.setCartVisible(false)
+    if (props.isSticky && Object.keys(state.cart).length === 0) {
+      state.setCartVisible(false)
     }
 
     // Refreshes cart
-    props.setCart({ ...props.cart })
+    state.setCart({ ...state.cart })
   };
 
   return (
     <>
       {props.isSticky ? (
-        <div className={`${props.cartVisible ? 'sticky h-[240px] xs:h-[150px]' : 'relative h-[0px]'} flex items-end w-screen bottom-0 z-40`}>
-          <div className={`${props.cartVisible ? 'opacity-100 translate-y-[0]' : 'opacity-0 translate-y-[240px] xs:translate-y-[150px]'} fixed bottom-0 w-screen h-[240px] xs:h-[150px] flex items-center justify-center bg-white/80 dark:bg-black/80 backdrop-blur-lg bottom-0 shadow-cart dark:shadow-darkCart transition ease-in-out duration-500`}>
+        <div className={`${state.cartVisible ? 'sticky h-[240px] xs:h-[150px]' : 'relative h-[0px]'} flex items-end w-screen bottom-0 z-40`}>
+          <div className={`${state.cartVisible ? 'opacity-100 translate-y-[0]' : 'opacity-0 translate-y-[240px] xs:translate-y-[150px]'} fixed bottom-0 w-screen h-[240px] xs:h-[150px] flex items-center justify-center bg-white/80 dark:bg-black/80 backdrop-blur-lg bottom-0 shadow-cart dark:shadow-darkCart transition ease-in-out duration-500`}>
             <div className="flex flex-col xs:flex-row xs:items-center xs:space-x-8 xs:pr-8">
-              {props.cart && Object.keys(props.cart).length !== 0 ? (
+              {state.cart && Object.keys(state.cart).length !== 0 ? (
                 <div className="flex xs:border-r border-gray-200 dark:border-white/20 h-[150px]">
-                  <CartItems data={props.cart} removeItemFromCart={removeItemFromCart} />
+                  <CartItems data={state.cart} removeItemFromCart={removeItemFromCart} />
                 </div>
               ) : (
                 <p className="py-8">No items in your cart</p>
               )}
 
-              <CheckoutButton color="#000" setCartVisible={props.setCartVisible} />
+              <CheckoutButton color="#000" />
             </div>
           </div>
         </div>
       ) : (
         <div className="flex">
-          {props.cart && Object.keys(props.cart).length !== 0 ? (
-            <CartItems data={props.cart} allowOverflow={true} removeItemFromCart={removeItemFromCart} />
+          {state.cart && Object.keys(state.cart).length !== 0 ? (
+            <CartItems data={state.cart} allowOverflow={true} removeItemFromCart={removeItemFromCart} />
           ) : (
             <p className="py-8 px-8">No items in your cart</p>
           )}

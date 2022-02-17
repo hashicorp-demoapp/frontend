@@ -1,15 +1,16 @@
+import { useContext, useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-
+import AppContext from "components/AppContext";
 
 import Account from 'components/Account'
-import { useState } from 'react'
 
-export default function Header(props) {
+export default function Header() {
+  const state = useContext(AppContext);
 
   const showAccount = async (event) => {
-    props.setAccountVisible(true);
+    state.setAccountVisible(true);
   };
 
   return (
@@ -49,7 +50,7 @@ export default function Header(props) {
           </Link>
           <div className="flex items-center justify-end flex-1 px-8 text-black/75">
             <button onClick={showAccount} className="flex items-center space-x-2 opacity-75 hover:opacity-100 transition duration-500 ease-in-out dark:invert">
-              <span className="hidden xs:block text-sm tracking-widest uppercase pt-px">{props.isAuthed ? "Account" : "Sign in"}</span>
+              <span className="hidden xs:block text-sm tracking-widest uppercase pt-px">{state.isAuthed ? "Account" : "Sign in"}</span>
               <span className="flex flex-shrink-0">
                 <Image src="/images/user.svg" height={24} width={40} />
               </span>
@@ -61,7 +62,7 @@ export default function Header(props) {
         </div>
       </header>
 
-      <Account accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} username={props.username} setUsername={props.setUsername} token={props.token} setToken={props.setToken} />
+      <Account />
     </>
   )
 }

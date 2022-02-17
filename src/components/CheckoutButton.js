@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 
 import ChevronsIcon from '@hashicorp/flight-icons/svg/chevrons-right-24.svg'
 
-export default function CheckoutButton(props) {
+export default function CheckoutButton(props) {  
   const router = useRouter()
 
   const handleClick = async (event) => {
