@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
   const [orders, setOrders] = useLocalStorage("orders", {});
   const [cartVisible, setCartVisible] = useState(false);
   const [accountVisible, setAccountVisible] = useState(false);
-  
+
   useEffect(() => {
     if (cart && Object.keys(cart).length !== 0) {
       setCartVisible(true)

@@ -1,11 +1,9 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-let publicApiUrl = "http://localhost:8080"
+let publicApiUrl = process.env.NEXT_PUBLIC_PUBLIC_API_URL
 
-if (process.env.NEXT_PUBLIC_PUBLIC_API_URL) {
-  publicApiUrl = process.env.NEXT_PUBLIC_PUBLIC_API_URL
-}
+if (publicApiUrl === "") publicApiUrl = "http://localhost:8080"
 
 const httpLink = createHttpLink({
   uri: `${publicApiUrl}/api`,
