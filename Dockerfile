@@ -20,8 +20,7 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN yarn build
+RUN NEXT_PUBLIC_PUBLIC_API_URL=APP_NEXT_PUBLIC_API_URL yarn build
 
 # Production image, copy all the files and run next
 FROM node:16-alpine AS runner
@@ -40,11 +39,14 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
 
 USER nextjs
 
 EXPOSE 3000
 
 ENV PORT 3000
+
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 CMD ["node_modules/.bin/next", "start"]

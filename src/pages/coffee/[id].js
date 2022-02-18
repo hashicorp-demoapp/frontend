@@ -2,11 +2,14 @@ import useSWR from 'swr'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format'
+
+import AppContext from "components/AppContext";
 
 import Header from 'components/Header'
 import Footer from 'components/Footer'
+import Fallback from 'components/Fallback'
 import CoffeeMenu from 'components/CoffeeMenu'
 import CartButton from 'components/CartButton'
 import Cart from 'components/Cart'
@@ -20,7 +23,9 @@ import ErrorIcon from '@hashicorp/flight-icons/svg/alert-triangle-24.svg'
 import { queryVarFetcher } from 'gql/apolloClient';
 import { COFFEE_QUERY, COFFEE_IMG_QUERY, COFFEE_INGREDIENTS_QUERY } from 'gql/gqlQueries';
 
-export default function Coffee(props) {
+export default function Coffee() {
+  const state = useContext(AppContext);
+  
   const router = useRouter();
   const { id } = router.query
 
@@ -62,16 +67,16 @@ export default function Coffee(props) {
   if (idata) ingredients = idata.data.coffeeIngredients
 
   const addToCart = async (event) => {
-    props.cart[id] = {
+    state.cart[id] = {
       coffee: coffee,
       quantity: amount,
     }
 
     // Refreshes cart
-    props.setCart({ ...props.cart });
+    state.setCart({ ...state.cart });
 
     // Show cart
-    props.setCartVisible(true)
+    state.setCartVisible(true)
   };
 
   useEffect(() => {
@@ -80,7 +85,7 @@ export default function Coffee(props) {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header accountVisible={props.accountVisible} setAccountVisible={props.setAccountVisible} isAuthed={props.isAuthed} setIsAuthed={props.setIsAuthed} token={props.token} setToken={props.setToken} username={props.username} setUsername={props.setUsername} />
+      <Header />
 
       <CoffeeMenu isActive={id} />
 
@@ -127,25 +132,13 @@ export default function Coffee(props) {
                     </span>
                     <CountButton action={incCoffeeCount} icon={PlusIcon} disabled={amount == 10} />
                   </p>
-                  <CartButton action={addToCart} coffee={coffee} amount={amount} setCartVisible={props.setCartVisible} />
+                  <CartButton action={addToCart} coffee={coffee} amount={amount} />
                 </div>
 
               </article>
             </>
           ) : (
-            <div className="flex items-center justify-center w-full">
-              {error ? (
-                <div className="flex flex-col items-center justify-center text-black/75 dark:text-white/75 h-full min-h-[280px]">
-                  <Image src={ErrorIcon} className="opacity-50 dark:invert" />
-                  <h4 className="mt-4">Unable to query the selected coffee.</h4>
-                  <p className="text-sm opacity-75">Check the console for error messages.</p>
-                </div>
-              ) : (
-                <div className="flex justify-center items-center w-full h-full min-h-[280px]">
-                  <span className="animate-ping w-3 h-3 rounded-full bg-gray-200 dark:bg-white/25"></span>
-                </div>
-              )}
-            </div>
+            <Fallback error={error} message="Unable to query the selected coffee" />
           )}
         </section>
 
@@ -155,7 +148,7 @@ export default function Coffee(props) {
 
       <Footer />
 
-      <Cart isSticky={true} cartVisible={props.cartVisible} setCartVisible={props.setCartVisible} cart={props.cart} setCart={props.setCart} />
+      <Cart isSticky={true} />
     </div>
   )
 }

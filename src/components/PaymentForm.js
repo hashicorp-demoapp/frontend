@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import NumberFormat from 'react-number-format'
 
+
+import AppContext from 'components/AppContext'
 
 import Field from 'components/Field'
 import Radio from 'components/Radio'
@@ -11,11 +13,13 @@ import ChevronsIcon from '@hashicorp/flight-icons/svg/chevrons-right-24.svg'
 import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-24.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-24.svg'
 
-import { mutationFetcher } from 'gql/apolloClient'
+import { client, mutationFetcher } from 'gql/apolloClient'
+import { ALL_ORDERS_QUERY } from 'gql/gqlQueries'
 import { CREATE_ORDER_MUTATION, SUBMIT_PAYMENT_MUTATION } from 'gql/gqlMutations'
-import { order } from 'tailwindcss/defaultTheme'
 
 export default function PaymentForm(props) {
+  const state = useContext(AppContext);
+
   const router = useRouter();
 
   const [hasAutofilled, setHasAutofilled] = useState(false);
@@ -37,24 +41,17 @@ export default function PaymentForm(props) {
   const formComplete = cardholderName != "" && cardNumber != "" && expiryDate != "" && cvcNumber != "";
 
   let total = 0
-  let cart = {}
-  if (typeof window !== "undefined") {
-    if (localStorage.getItem("cart")) cart = JSON.parse(localStorage.getItem("cart"))
-    total = Object.values(cart).reduce((t, next) => {
-      return t + (next.coffee.price * next.quantity)
-    }, 0)
-  }
-
-  let orders = {}
-  if (localStorage.getItem("orders")) orders = JSON.parse(localStorage.getItem("orders"))
+  total = Object.values(state.cart).reduce((t, next) => {
+    return t + (next.coffee.price * next.quantity)
+  }, 0)
 
   const submit = async (event) => {
     event.preventDefault();
 
     let orderItems = []
 
-    for (const coffeeID in cart) {
-      const item = cart[coffeeID]
+    for (const coffeeID in state.cart) {
+      const item = state.cart[coffeeID]
       orderItems.push({ coffee: { id: item.coffee.id }, quantity: item.quantity })
     }
 
@@ -65,18 +62,36 @@ export default function PaymentForm(props) {
       const orderID = data.data.order.id
 
       // Process payment
-      const pay = await submitPayment()
-      orders[orderID] = pay
-      localStorage.setItem("orders", JSON.stringify(orders))
+      const payment = await submitPayment()
+
+      if (payment) {
+        state.orders[orderID] = {
+          ...orderItems,
+          payment: {
+            ...payment
+          }
+        }
+      } else {
+        state.orders[orderID] = {
+          ...orderItems
+        }
+      }
+
+      state.setOrders({ ...state.orders })
 
       setOrderID(orderID)
 
       // Clear cart
-      localStorage.removeItem("cart")
+      state.setCart({})
+
+      await client.refetchQueries({
+        include: [{ query: ALL_ORDERS_QUERY }],
+      });
 
       // Go to order page
       router.push(`/order/${orderID}`)
     }).catch(err => {
+      console.log([err])
       setHasErrors(true)
       setErrorMessages([err])
     })
@@ -101,6 +116,7 @@ export default function PaymentForm(props) {
     }).then(data => {
       return data.data.pay
     }).catch(err => {
+      console.log([err])
       setHasErrors(true)
       setErrorMessages([err])
     })
