@@ -5,6 +5,7 @@ import Image from 'next/image'
 import NumberFormat from 'react-number-format'
 
 import AppContext from 'components/AppContext'
+import Fallback from 'components/Fallback'
 
 import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-16.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-16.svg'
@@ -24,15 +25,23 @@ export default function Orders() {
       <h2 className="font-semibold text-2xl sm:text-3xl leading-none sm:leading-tight sm:truncate">Order history</h2>
 
       <div className="flex flex-col flex-auto">
-        {orders && Object.keys(orders).length !== 0 ? (
-          <ul className="flex flex-col w-full divide-y dark:divide-white/10">
-            {orders.slice(0).reverse().map((order) => (
-              <Order key={order.id} id={order.id} items={order.items} />
-            ))}
-          </ul>
+        {orders ? (
+          <>
+            {Object.keys(orders).length !== 0 ? (
+              <ul className="flex flex-col w-full divide-y dark:divide-white/10">
+                {orders.slice(0).reverse().map((order) => (
+                  <Order key={order.id} id={order.id} items={order.items} />
+                ))}
+              </ul>
+            ) : (
+              <div className="flex items-center justify-center h-full bg-gray-100/75 dark:bg-black/25 border border-gray-200/50 dark:border-white/10 rounded-lg mt-6 mb-8">
+                <p className="py-8 px-4 text-black/50 dark:text-white/50">No orders placed yet</p>
+              </div>
+            )}
+          </>
         ) : (
           <div className="flex items-center justify-center h-full bg-gray-100/75 dark:bg-black/25 border border-gray-200/50 dark:border-white/10 rounded-lg mt-6 mb-8">
-            <p className="py-8 px-4 text-black/50 dark:text-white/50">No orders placed yet</p>
+            <Fallback error={error} message="Unable to query orders" />
           </div>
         )}
       </div>
