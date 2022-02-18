@@ -39,12 +39,16 @@ export default function Account() {
   };
 
   const switchToNewAccount = async (event) => {
+    setPassword('')
+    setConfirmPassword('')
     setHasErrors(false)
     setErrorMessages([''])
     setIsCreatingAccount(true);
   };
 
   const switchToSignIn = async (event) => {
+    setPassword('')
+    setConfirmPassword('')
     setHasErrors(false)
     setErrorMessages([''])
     setIsCreatingAccount(false);
@@ -128,7 +132,7 @@ export default function Account() {
       setSignInFieldsComplete(false)
     }
 
-    if (username != "" && password != '' && confirmPassword != '') {
+    if (username != "" && password != '' && (confirmPassword == password)) {
       setSignUpFieldsComplete(true)
     } else {
       setSignUpFieldsComplete(false)
