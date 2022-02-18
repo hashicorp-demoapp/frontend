@@ -14,6 +14,8 @@ import PaymentForm from 'components/PaymentForm'
 import ChevronsIcon from '@hashicorp/flight-icons/svg/chevrons-right-24.svg'
 import AvatarIcon from '@hashicorp/flight-icons/svg/user-circle-16.svg'
 
+import { client } from 'gql/apolloClient';
+
 export default function Checkout() {
   const state = useContext(AppContext);
 
