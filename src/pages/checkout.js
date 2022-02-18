@@ -16,7 +16,7 @@ import AvatarIcon from '@hashicorp/flight-icons/svg/user-circle-16.svg'
 
 export default function Checkout() {
   const state = useContext(AppContext);
-  
+
   const router = useRouter();
 
   const [_, setTotal] = useState("")
@@ -47,6 +47,7 @@ export default function Checkout() {
     state.setToken('')
     state.setCurrentUser('')
     state.setIsAuthed(false)
+    client.resetStore();
   }
 
   return (

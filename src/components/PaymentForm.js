@@ -18,7 +18,7 @@ import { CREATE_ORDER_MUTATION, SUBMIT_PAYMENT_MUTATION } from 'gql/gqlMutations
 
 export default function PaymentForm(props) {
   const state = useContext(AppContext);
-  
+
   const router = useRouter();
 
   const [hasAutofilled, setHasAutofilled] = useState(false);
@@ -59,10 +59,10 @@ export default function PaymentForm(props) {
       variables: { orderItems }
     }).then(async (data) => {
       const orderID = data.data.order.id
-      
+
       // Process payment
       const payment = await submitPayment()
-      
+
       if (payment) {
         state.orders[orderID] = {
           ...orderItems,
@@ -75,11 +75,11 @@ export default function PaymentForm(props) {
           ...orderItems
         }
       }
-      
-      state.setOrders({...state.orders})
-      
+
+      state.setOrders({ ...state.orders })
+
       setOrderID(orderID)
-      
+
       // Clear cart
       state.setCart({})
 

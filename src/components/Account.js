@@ -12,12 +12,12 @@ import ChevronsIcon from '@hashicorp/flight-icons/svg/chevrons-right-24.svg'
 import AvatarIcon from '@hashicorp/flight-icons/svg/user-circle-16.svg'
 import ErrorIcon from '@hashicorp/flight-icons/svg/alert-circle-16.svg'
 
-import { mutationFetcher } from 'gql/apolloClient';
+import { client, mutationFetcher } from 'gql/apolloClient';
 import { SIGNUP_MUTATION, LOGIN_MUTATION, SIGNOUT_MUTATION } from 'gql/gqlMutations'
 
 export default function Account() {
   const state = useContext(AppContext);
-  
+
   const router = useRouter();
   const timer = useRef(null);
 
@@ -111,11 +111,12 @@ export default function Account() {
       state.setToken('')
       state.setCurrentUser('')
       state.setIsAuthed(false);
+      client.resetStore();
     }).catch(err => {
       setHasErrors(true)
       setErrorMessages([err])
     })
-    
+
     router.push('/');
     state.setAccountVisible(false)
   };

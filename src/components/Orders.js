@@ -13,7 +13,7 @@ import { queryFetcher } from 'gql/apolloClient';
 import { ALL_ORDERS_QUERY } from 'gql/gqlQueries';
 
 export default function Orders() {
-  const { data, error } = useSWR(ALL_ORDERS_QUERY, queryFetcher);
+  const { data, error } = useSWR({ query: ALL_ORDERS_QUERY, fetchPolicy: "network-only" }, queryFetcher);
 
   // If data exists, set to orders object
   let orders;
@@ -42,7 +42,7 @@ export default function Orders() {
 
 function Order(props) {
   const state = useContext(AppContext);
-  
+
   const orderClick = async (event) => {
     state.setAccountVisible(false)
   }
@@ -50,12 +50,12 @@ function Order(props) {
   const total = props.items.reduce((t, next) => {
     return t + (next.coffee.price * next.quantity)
   }, 0)
-  
+
   let localOrder = {}
-        
+
   // if order exists in localStorage, return payment information
   if (state.orders[props.id]) localOrder = state.orders[props.id]
-  
+
   let hasPayment = false
   if (localOrder.payment) hasPayment = true
 
@@ -101,7 +101,7 @@ function Order(props) {
               )}
               <span>{localOrder.payment.message.split(",")[0]}</span>
             </p>
-            
+
             <p className="flex space-x-2 pb-4">
               {!localOrder.payment.card_ciphertext.includes("Disabled") ? (
                 <Image src={CheckIcon} className="icon-green" />
@@ -110,7 +110,7 @@ function Order(props) {
               )}
               <span>{localOrder.payment.card_ciphertext}</span>
             </p>
-            
+
             <div className="flex flex-col items-start space-y-0 px-3 py-2 bg-gray-100/50 dark:bg-white/5 shadow-stroke dark:shadow-highlight rounded-lg">
               <p className="text-sm text-black/75 dark:text-white/75">Plain text card number</p>
               <NumberFormat className="font-mono" format="#### #### #### ####" value={localOrder.payment.card_plaintext} displayType="text" />
