@@ -13,7 +13,8 @@ import ChevronsIcon from '@hashicorp/flight-icons/svg/chevrons-right-24.svg'
 import CheckIcon from '@hashicorp/flight-icons/svg/check-circle-24.svg'
 import FailIcon from '@hashicorp/flight-icons/svg/x-square-24.svg'
 
-import { mutationFetcher } from 'gql/apolloClient'
+import { client, mutationFetcher } from 'gql/apolloClient'
+import { ALL_ORDERS_QUERY } from 'gql/gqlQueries'
 import { CREATE_ORDER_MUTATION, SUBMIT_PAYMENT_MUTATION } from 'gql/gqlMutations'
 
 export default function PaymentForm(props) {
@@ -82,6 +83,10 @@ export default function PaymentForm(props) {
 
       // Clear cart
       state.setCart({})
+
+      await client.refetchQueries({
+        include: [{ query: ALL_ORDERS_QUERY }],
+      });
 
       // Go to order page
       router.push(`/order/${orderID}`)

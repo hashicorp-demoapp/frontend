@@ -13,7 +13,7 @@ var Element = Scroll.Element
 var scroller = Scroll.scroller
 
 export default function CoffeeMenu(props) {
-  const { data, error } = useSWR({ query: ALL_COFFEES_QUERY }, queryFetcher);
+  const { data, error } = useSWR(ALL_COFFEES_QUERY, queryFetcher);
 
   // If data exits, set to coffees object
   let coffees;

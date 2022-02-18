@@ -26,33 +26,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-const queryFetcher = async (q) => {
-  let queryBody = { query: q.query }
-
-  if (q.fetchPolicy) queryBody["fetchPolicy"] = q.fetchPolicy
-
-  return await client.query(queryBody);
-}
-const queryVarFetcher = async (q) => {
-  let queryBody = {
-    query: q.query,
-    variables: q.variables
-  }
-
-  if (q.fetchPolicy) queryBody["fetchPolicy"] = q.fetchPolicy
-
-  return await client.query(queryBody)
-};
-const mutationFetcher = async (q) => {
-  let mutationBody = {
-    mutation: q.mutation,
-    variables: q.variables
-  }
-
-  if (q.fetchPolicy) mutationBody["fetchPolicy"] = q.fetchPolicy
-
-  return await client.mutate(mutationBody)
-};
+const queryFetcher = async (query) => await client.query({ query: query });
+const queryVarFetcher = async (q) => await client.query({
+  query: q.query,
+  variables: q.variables
+});
+const mutationFetcher = async (q) => await client.mutate({
+  mutation: q.mutation,
+  variables: q.variables
+});
 
 export {
   client,

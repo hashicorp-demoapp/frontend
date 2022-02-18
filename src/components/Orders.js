@@ -13,7 +13,7 @@ import { queryFetcher } from 'gql/apolloClient';
 import { ALL_ORDERS_QUERY } from 'gql/gqlQueries';
 
 export default function Orders() {
-  const { data, error } = useSWR({ query: ALL_ORDERS_QUERY, fetchPolicy: "network-only" }, queryFetcher);
+  const { data, error } = useSWR(ALL_ORDERS_QUERY, queryFetcher);
 
   // If data exists, set to orders object
   let orders;
