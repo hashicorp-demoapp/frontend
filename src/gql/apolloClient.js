@@ -4,6 +4,7 @@ import { setContext } from '@apollo/client/link/context';
 let publicApiUrl = process.env.NEXT_PUBLIC_PUBLIC_API_URL
 
 if (publicApiUrl === "") publicApiUrl = "http://localhost:8080"
+if (publicApiUrl === "/") publicApiUrl = ""
 
 const httpLink = createHttpLink({
   uri: `${publicApiUrl}/api`,
