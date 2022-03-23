@@ -111,9 +111,21 @@ export default function Coffee() {
                   <div className="flex flex-col md:px-8">
                     <dl className="grid sm:grid-cols-3">
                       <dt className="text-black/75 dark:text-white/75 text-sm sm:border-b border-gray-200 dark:border-white/10 sm:py-2 pt-2 sm:pt-3">Collection</dt>
-                      <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{coffee.collection}</dd>
+                      <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">
+                        {coffee.collection != '' ? (
+                          <span>{coffee.collection}</span>
+                        ) : (
+                          <span className="italic opacity-40">Unavailable</span>
+                        )}
+                      </dd>
                       <dt className="text-black/75 dark:text-white/75 text-sm sm:border-b border-gray-200 dark:border-white/10 sm:py-2 pt-4 sm:pt-3">Origin</dt>
-                      <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">{coffee.origin}</dd>
+                      <dd className="text-lg col-span-2 border-b border-gray-200 dark:border-white/10 py-2 pt-0 sm:pt-2">
+                        {coffee.origin != '' ? (
+                          <span>{coffee.origin}</span>
+                        ) : (
+                          <span className="italic opacity-40">Unavailable</span>
+                        )}
+                      </dd>
                       <dt className="text-black/75 dark:text-white/75 text-sm sm:py-2 pt-4 sm:pt-3">Ingredients</dt>
                       <dd className="col-span-2 py-2 pt-2.5">
                         {ingredients && ingredients.map((ingredient, index) => (
