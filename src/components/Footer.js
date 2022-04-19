@@ -32,7 +32,7 @@ export default function Footer() {
       </aside>
       <div className="flex justify-center w-screen bg-gray-100/50 dark:bg-black/50 py-8 shadow-mid dark:shadow-highlight">
         <div className="flex flex-col space-y-4 xs:space-y-0 xs:flex-row items-center justify-between max-w-[1080px] px-8 w-full">
-          <p className="text-sm text-black/75 dark:text-white/75">{Copyright()}. <span className="opacity-50">All rights reserved.</span></p>
+          <p className="text-sm text-black/75 dark:text-white/75">{Copyright()}. <span className="opacity-50">All rights reserved. {FooterFlag()}</span></p>
           <Theme />
         </div>
       </div>
@@ -58,4 +58,8 @@ function Copyright() {
   let year = newDate.getFullYear();
 
   return `© ${year} HashiCorp`
+}
+
+function FooterFlag() {
+  return process.env.NEXT_PUBLIC_FOOTER_FLAG
 }
