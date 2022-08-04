@@ -8,6 +8,9 @@ if (publicApiUrl === "/") publicApiUrl = ""
 
 const httpLink = createHttpLink({
   uri: `${publicApiUrl}/api`,
+  fetchOptions: {
+    mode: 'no-cors',
+  },
 })
 
 const authLink = setContext((_, { headers }) => {
