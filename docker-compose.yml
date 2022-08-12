@@ -25,6 +25,7 @@ services:
     environment:
       - OTEL_SERVICE_NAME=hashicups-frontend
       - OTEL_TRACE_HOST=jaeger
+      - OTEL_TRACE_PORT=14268
       - NEXT_PUBLIC_PUBLIC_API_URL=/
       - NEXT_PUBLIC_FOOTER_FLAG=HashiCups
     networks:

@@ -19,11 +19,12 @@ const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node')
 const { OTTracePropagator } = require('@opentelemetry/propagator-ot-trace')
 
 const hostName = process.env.OTEL_TRACE_HOST || 'localhost'
+const hostPort = process.env.OTEL_TRACE_PORT || '14268'
 const serviceName = process.env.OTEL_SERVICE_NAME || 'hashicups-frontend'
 
 const options = {
   tags: [],
-  endpoint: `http://${hostName}:14268/api/traces`,
+  endpoint: `http://${hostName}:${hostPort}/api/traces`,
 }
 
 const initTracing = () => {

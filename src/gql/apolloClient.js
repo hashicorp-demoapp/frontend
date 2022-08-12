@@ -7,10 +7,7 @@ if (publicApiUrl === "") publicApiUrl = "http://localhost:8080"
 if (publicApiUrl === "/") publicApiUrl = ""
 
 const httpLink = createHttpLink({
-  uri: `${publicApiUrl}/api`,
-  fetchOptions: {
-    mode: 'no-cors',
-  },
+  uri: `${publicApiUrl}/api`
 })
 
 const authLink = setContext((_, { headers }) => {
@@ -18,6 +15,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
+      'Access-Control-Allow-Origin': '*',
       Authorization: token ? `${token}` : "",
     }
   }
