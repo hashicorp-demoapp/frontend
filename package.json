@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "next dev -p 4001",
     "build": "next build",
+    "export": "next build && next export",
     "start": "next start -p 4001"
   },
   "dependencies": {
@@ -13,7 +14,7 @@
     "flatted": "^3.2.4",
     "graphql": "^16.3.0",
     "miragejs": "^0.1.43",
-    "next": "latest",
+    "next": "^12.1.0",
     "next-dark-mode": "^3.0.0",
     "next-themes": "^0.0.15",
     "react": "^17.0.2",

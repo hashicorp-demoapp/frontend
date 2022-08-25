@@ -7,7 +7,7 @@ export default function Fallback(props) {
     <div className="flex items-center justify-center w-full">
       {props.error ? (
         <div className={`${props.minHeight ? 'min-h-[280px]' : 'min-h-[180px]'} flex flex-col items-center justify-center text-black/75 dark:text-white/75 h-full`}>
-          <Image src={ErrorIcon} className="opacity-50 dark:invert" />
+          <Image src={ErrorIcon} className="opacity-50 dark:invert" unoptimized={true}/>
           <h4 className="mt-4">{props.message}</h4>
           <p className="text-sm opacity-75">Check the console for error messages</p>
         </div>

@@ -104,18 +104,18 @@ function Order(props) {
           <>
             <p className="flex space-x-2 pt-3">
               {localOrder.payment.message.includes("success") ? (
-                <Image src={CheckIcon} className="icon-green" />
+                <Image src={CheckIcon} className="icon-green" unoptimized={true}/>
               ) : (
-                <Image src={FailIcon} className="icon-red" />
+                <Image src={FailIcon} className="icon-red" unoptimized={true}/>
               )}
               <span>{localOrder.payment.message.split(",")[0]}</span>
             </p>
 
             <p className="flex space-x-2 pb-4">
               {!localOrder.payment.card_ciphertext.includes("Disabled") ? (
-                <Image src={CheckIcon} className="icon-green" />
+                <Image src={CheckIcon} className="icon-green" unoptimized={true}/>
               ) : (
-                <Image src={FailIcon} className="icon-red" />
+                <Image src={FailIcon} className="icon-red" unoptimized={true}/>
               )}
               <span>{localOrder.payment.card_ciphertext}</span>
             </p>

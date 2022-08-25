@@ -20,6 +20,7 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
+RUN rm -r node_modules/@next/swc-linux-x64-gnu
 RUN NEXT_PUBLIC_PUBLIC_API_URL=APP_NEXT_PUBLIC_API_URL NEXT_PUBLIC_FOOTER_FLAG=APP_PUBLIC_FOOTER_FLAG yarn build
 
 # Production image, copy all the files and run next
