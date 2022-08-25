@@ -74,7 +74,7 @@ export default function Order() {
                     <div key={index} className="relative flex items-center flex-shrink-0">
                       {item.quantity > 3 && (
                         <span className="absolute top-24 left-8 w-12 h-12 flex-shrink-0 inline-flex items-center justify-center bg-gray-200/25 dark:bg-white/10 rounded-full">
-                          <Image src={PlusIcon} className="opacity-25 dark:invert" />
+                          <Image src={PlusIcon} className="opacity-25 dark:invert" unoptimized={true}/>
                         </span>
                       )}
                       {item.quantity > 2 && (
@@ -120,9 +120,9 @@ export default function Order() {
                         <p className="text-black/75 dark:text-white/75">Status</p>
                         <p className="flex space-x-3 text-base">
                           {localOrder.payment.message.includes("success") ? (
-                            <Image src={CheckIcon} className="icon-green" />
+                            <Image src={CheckIcon} className="icon-green" unoptimized={true}/>
                           ) : (
-                            <Image src={FailIcon} className="icon-red" />
+                            <Image src={FailIcon} className="icon-red" unoptimized={true}/>
                           )}
                           <span>{localOrder.payment.message.split(",")[0]}</span>
                         </p>
@@ -132,9 +132,9 @@ export default function Order() {
                         <p className="text-black/75 dark:text-white/75">Encryption Status</p>
                         <p className="flex space-x-3 text-base">
                           {!localOrder.payment.card_ciphertext.includes("Disabled") ? (
-                            <Image src={CheckIcon} className="icon-green" />
+                            <Image src={CheckIcon} className="icon-green" unoptimized={true}/>
                           ) : (
-                            <Image src={FailIcon} className="icon-red" />
+                            <Image src={FailIcon} className="icon-red" unoptimized={true}/>
                           )}
                           <span>{localOrder.payment.card_ciphertext}</span>
                         </p>

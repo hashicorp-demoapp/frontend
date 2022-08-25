@@ -167,7 +167,7 @@ export default function Coffee() {
 
 function CountButton(props) {
   return (
-    <button onClick={props.action} className={`${props.disabled ? 'opacity-0 pointer-events-none' : 'opacity-50 hover:opacity-75 active:opacity-100'} flex items-center px-3 select-none flex-shrink-0 transition dark:invert`}><Image src={props.icon} /></button>
+    <button onClick={props.action} className={`${props.disabled ? 'opacity-0 pointer-events-none' : 'opacity-50 hover:opacity-75 active:opacity-100'} flex items-center px-3 select-none flex-shrink-0 transition dark:invert`}><Image src={props.icon} unoptimized={true}/></button>
   )
 }
 
@@ -222,7 +222,7 @@ function HoverLink(props) {
     <Link href={`/coffee/${props.id}`} scroll={false}>
       <a className="relative group">
         <span className={`${props.direction == 'next' ? 'translate-x-[-10px]' : 'translate-x-[10px]'} absolute left-1/2 top-1/2 w-16 h-16 -ml-8 -mt-8 flex items-center justify-center bg-black/75 backdrop-blur-md shadow-high rounded-full opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 group-hover:translate-x-0 z-20 transition duration-500 ease-in-out`}>
-          <Image src={props.icon} className="invert" />
+          <Image src={props.icon} className="invert" unoptimized={true}/>
         </span>
         <img className="relative max-w-min transition duration-500 ease-in-out opacity-50 group-hover:opacity-75" src={`/images${props.image}`} width={640} height={640} />
       </a>
