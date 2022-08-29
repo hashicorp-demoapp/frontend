@@ -17,13 +17,13 @@ To run the application using the Docker container you need to add nginx configur
 For the frontend only image:
 
 ```
-docker run -it -p 3000:3000 hashicorpdemoapp/frontend:v1.0.6
+docker run -it -p 3000:3000 hashicorpdemoapp/frontend:v1.0.9
 ```
 
 For the frontend (with nginx) image:
 
 ```
-docker run -it -p 80:80 -v $PWD/nginx.conf:/etc/nginx/conf.d/default.conf --env NEXT_PUBLIC_FOOTER_FLAG=test123 hashicorpdemoapp/frontend-nginx
+docker run -it -p 80:80 -v $PWD/nginx.conf:/etc/nginx/conf.d/default.conf --env NEXT_PUBLIC_FOOTER_FLAG=test123 hashicorpdemoapp/frontend-nginx:v1.0.9
 ```
 
 # Creating a new release
