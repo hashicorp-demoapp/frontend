@@ -79,7 +79,7 @@ jobs:
           name: docker buildx build and push (nginx)
           command: |
             docker buildx build --platform linux/amd64,linux/arm64 \
-              -f Dockerfile \
+              -f Dockerfile.nginx \
               -t hashicorpdemoapp/frontend-nginx:${CIRCLE_TAG} \
               --push \
               .
