@@ -12,7 +12,7 @@
     "@tailwindcss/line-clamp": "^0.3.0",
     "axios": "^0.24.0",
     "flatted": "^3.2.4",
-    "graphql": "^16.3.0",
+    "graphql": "^16.8.1",
     "miragejs": "^0.1.43",
     "next": "^12.1.0",
     "next-dark-mode": "^3.0.0",
